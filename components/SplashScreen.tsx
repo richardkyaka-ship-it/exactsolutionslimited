@@ -133,7 +133,7 @@ export default function SplashScreen() {
             <div className="grid md:grid-cols-3 gap-4">
               {/* WhatsApp Button */}
               <a
-                href="https://wa.me/254720876787?text=Hello!%20I'm%20interested%20in%20your%20services."
+                href="https://wa.me/254720876787?text=Hi,%20I'm%20reaching%20out%20about%20your%20services"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center justify-center gap-3 px-6 py-4 bg-primary text-white border border-primary hover:bg-primary/90 transition-colors duration-300"
@@ -153,7 +153,7 @@ export default function SplashScreen() {
 
               {/* Email Button */}
               <a
-                href="mailto:accounts@exactsolutions.co.ke"
+                href="mailto:expert@exactsolutions.co.ke"
                 className="group flex items-center justify-center gap-3 px-6 py-4 bg-transparent text-white border border-gray-800 hover:border-primary hover:bg-primary hover:text-white transition-colors duration-300"
               >
                 <Mail className="w-5 h-5" />
@@ -171,10 +171,10 @@ export default function SplashScreen() {
                   <div className="space-y-4">
                     <div>
                       <a
-                        href="mailto:accounts@exactsolutions.co.ke"
+                        href="mailto:expert@exactsolutions.co.ke"
                         className="text-sm text-gray-400 hover:text-white transition-colors duration-300"
                       >
-                        accounts@exactsolutions.co.ke
+                        expert@exactsolutions.co.ke
                       </a>
                     </div>
                     <div className="space-y-2">
