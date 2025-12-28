@@ -39,3 +39,162 @@ body {
   scrollbar-color: #1a1a1a #000000;
 }
 
+/* Custom Radio Button Styling */
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #1f1f1f;
+  border-radius: 50%;
+  background-color: #1a1a1a;
+  position: relative;
+}
+
+input[type="radio"]:checked {
+  background-color: #ff6600;
+  border-color: #ff6600;
+}
+
+input[type="radio"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #000000;
+}
+
+/* Navigation Overlay - Optimized for 60fps */
+.nav-overlay {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.25s step-end;
+  transform: translateZ(0);
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.nav-overlay.closing {
+  transition:
+    opacity 0.2s cubic-bezier(0.4, 0, 1, 1),
+    visibility 0.2s step-start;
+}
+
+/* Navigation Items - Separate animation layers */
+.nav-item {
+  transform: translateY(20px) translateZ(0);
+  opacity: 0;
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.2s ease-out;
+  will-change: transform, opacity;
+}
+
+.nav-overlay:not(.closing) .nav-item {
+  transform: translateY(0) translateZ(0);
+  opacity: 1;
+}
+
+/* On close - faster exit */
+.nav-overlay.closing .nav-item {
+  transition:
+    transform 0.2s cubic-bezier(0.4, 0, 1, 1),
+    opacity 0.15s ease-in;
+}
+
+/* Force GPU acceleration on everything */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Smooth scrolling but instant during transitions */
+html {
+  scroll-behavior: smooth;
+}
+
+html.transitioning {
+  scroll-behavior: auto !important;
+}
+
+/* Prevent layout shifts */
+body {
+  overflow-x: hidden;
+}
+
+/* Optimize image rendering */
+img {
+  content-visibility: auto;
+}
+
+/* Custom easing curves for premium feel */
+:root {
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --ease-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+}
+
+/* Force layer creation for animations */
+.animate-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+/* View Transition API Styles */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(root) {
+  animation-name: fade-out;
+}
+
+::view-transition-new(root) {
+  animation-name: fade-in;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Simple page transition */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

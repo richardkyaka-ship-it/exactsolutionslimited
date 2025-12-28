@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import Navigation from '@/components/Navigation'
+import { ViewTransitions } from 'next-view-transitions'
+import PageTransition from '@/components/PageTransition'
+import Preloader from '@/components/Preloader'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -20,10 +24,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={inter.variable}>
-        {children}
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en" className="dark">
+        <body className={`${inter.variable} font-inter antialiased bg-black text-white min-h-screen overflow-x-hidden`} suppressHydrationWarning>
+          <Preloader />
+          <Navigation />
+          <main className="relative">
+            <PageTransition>
+              {children}
+            </PageTransition>
+          </main>
+        </body>
+      </html>
+    </ViewTransitions>
   )
 }

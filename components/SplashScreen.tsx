@@ -1,6 +1,7 @@
 'use client'
 
 import { Phone, Zap, Container, Building2, Mail, MessageCircle } from 'lucide-react'
+import { Link } from 'next-view-transitions'
 
 const PHONE_NUMBERS = [
   '+254720876787',
@@ -43,7 +44,7 @@ export default function SplashScreen() {
           <div className="mb-20">
             <div className="h-20 md:h-28"></div>
           </div>
-          
+
           <div className="space-y-12">
             <div>
               <div className="text-sm md:text-base text-gray-500 uppercase tracking-[0.15em] mb-6 font-light">
@@ -87,7 +88,7 @@ export default function SplashScreen() {
             </div>
             <div className="h-px w-16 bg-primary/40 mt-6"></div>
           </div>
-          
+
           <div className="grid md:grid-cols-3 gap-12 md:gap-16 lg:gap-20">
             {CATEGORIES.map((category) => {
               const Icon = category.icon
@@ -98,11 +99,11 @@ export default function SplashScreen() {
                       <Icon className="w-6 h-6 text-primary/70 group-hover:text-primary transition-colors duration-300" />
                     </div>
                   </div>
-                  
+
                   <h3 className="text-xl md:text-2xl font-medium text-white mb-3 group-hover:text-primary/90 transition-colors duration-300 leading-tight">
                     {category.title}
                   </h3>
-                  
+
                   <p className="text-sm text-gray-500 leading-relaxed">
                     {category.tagline}
                   </p>
@@ -127,8 +128,11 @@ export default function SplashScreen() {
             <p className="text-sm text-gray-500 mt-6">
               Ready to discuss your project?
             </p>
+            <p className="text-gray-500 text-sm mt-4">
+              For detailed inquiries, use our <Link href="/contact" className="text-primary hover:underline">contact form</Link>.
+            </p>
           </div>
-          
+
           <div className="max-w-4xl">
             <div className="grid md:grid-cols-3 gap-4">
               {/* WhatsApp Button */}
