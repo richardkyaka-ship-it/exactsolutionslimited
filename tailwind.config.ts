@@ -22,6 +22,9 @@ const config: Config = {
           lighter: '#1a1a1a',
         },
       },
+      fontFamily: {
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+      },
     },
   },
   plugins: [],
