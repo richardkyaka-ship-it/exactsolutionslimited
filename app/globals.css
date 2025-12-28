@@ -129,6 +129,26 @@ body {
   overflow-x: hidden;
 }
 
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  /* Better touch targets */
+  a, button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Prevent text size adjustment on iOS */
+  input, textarea, select {
+    font-size: 16px;
+  }
+}
+
+/* Touch manipulation for better mobile performance */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Optimize image rendering */
 img {
   content-visibility: auto;

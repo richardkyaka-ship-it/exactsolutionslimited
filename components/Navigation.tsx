@@ -200,14 +200,14 @@ export default function Navigation() {
       {/* Logo / Home Link */}
       <Link
         href="/"
-        className="fixed top-6 left-6 md:top-8 md:left-8 z-[70] flex items-center gap-2 group"
+        className="fixed top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 z-[70] flex items-center gap-2 group touch-manipulation"
         aria-label="Exact Solutions Home"
       >
         <div className="flex flex-col">
-          <span className="text-lg md:text-xl font-light tracking-tighter text-white group-hover:text-primary transition-colors duration-300">
+          <span className="text-base sm:text-lg md:text-xl font-light tracking-tighter text-white group-hover:text-primary transition-colors duration-300">
             EXACT<span className="font-normal text-primary group-hover:text-white transition-colors duration-300">SOLUTIONS</span>
           </span>
-          <span className="text-[8px] md:text-[10px] text-gray-500 uppercase tracking-[0.3em] font-light -mt-1 group-hover:text-gray-300 transition-colors duration-300">
+          <span className="text-[7px] sm:text-[8px] md:text-[10px] text-gray-500 uppercase tracking-[0.3em] font-light -mt-1 group-hover:text-gray-300 transition-colors duration-300">
             Limited
           </span>
         </div>
@@ -217,24 +217,24 @@ export default function Navigation() {
       <motion.button
         onClick={handleContactClick}
         aria-label="go to contact page"
-        className="fixed top-6 right-6 md:top-8 md:right-8 z-[70] h-10 bg-transparent border border-gray-800 flex items-center justify-center gap-2 px-4 py-2 hover:border-primary hover:bg-primary/10 transition-colors duration-300 group"
+        className="fixed top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-[70] h-9 sm:h-10 bg-transparent border border-gray-800 flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 hover:border-primary hover:bg-primary/10 transition-colors duration-300 group touch-manipulation"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: isScrolled ? 0.8 : 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        <span className="text-sm font-normal text-gray-400 group-hover:text-white transition-colors duration-300">
+        <span className="text-xs sm:text-sm font-normal text-gray-400 group-hover:text-white transition-colors duration-300 hidden xs:inline">
           Contact
         </span>
-        <MessageCircle className="w-4 h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-white transition-colors duration-300" />
+        <MessageCircle className="w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-white transition-colors duration-300 flex-shrink-0" />
       </motion.button>
 
       {/* Menu Toggle Button */}
       <motion.button
         onClick={() => setIsMenuOpen(true)}
         aria-label="open navigation menu"
-        className="fixed top-6 right-36 md:top-8 md:right-40 z-[70] w-9 h-9 md:w-10 md:h-10 flex items-center justify-center group"
+        className="fixed top-4 right-20 sm:top-6 sm:right-28 md:top-8 md:right-40 z-[70] w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex items-center justify-center group touch-manipulation"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: isScrolled ? 0.8 : 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.1 }}
