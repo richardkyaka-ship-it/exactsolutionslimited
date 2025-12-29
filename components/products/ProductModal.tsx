@@ -33,35 +33,35 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-6xl max-h-[95vh] bg-black border border-gray-800 overflow-y-auto"
+          className="relative w-full max-w-6xl max-h-[95vh] bg-black border border-gray-800 overflow-y-auto overflow-x-hidden"
         >
           <button
             onClick={onClose}
-            className="absolute top-6 right-6 text-gray-500 hover:text-white transition-colors z-10 p-2"
+            className="absolute top-4 right-4 md:top-6 md:right-6 text-gray-500 hover:text-white transition-colors z-10 p-2 bg-black/50 backdrop-blur-sm md:bg-transparent"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5 md:w-6 md:h-6" />
           </button>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
             {/* Left: Product Image & Quick Info (5 cols) */}
-            <div className="lg:col-span-5 p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-gray-800">
-              <div className="relative aspect-square mb-12 border border-gray-900 bg-dark-lighter grayscale hover:grayscale-0 transition-all duration-700 overflow-hidden">
+            <div className="lg:col-span-5 p-6 md:p-12 border-b lg:border-b-0 lg:border-r border-gray-800">
+              <div className="relative aspect-square mb-8 md:mb-12 border border-gray-900 bg-dark-lighter grayscale hover:grayscale-0 transition-all duration-700 overflow-hidden">
                 <img 
                   src={product.image} 
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute top-0 left-0 bg-primary px-3 py-1">
-                  <span className="text-[10px] text-white font-mono uppercase tracking-widest">{product.code}</span>
+                <div className="absolute top-0 left-0 bg-primary px-2 md:px-3 py-1">
+                  <span className="text-[8px] md:text-[10px] text-white font-mono uppercase tracking-widest">{product.code}</span>
                 </div>
               </div>
 
-              <div className="space-y-8">
+              <div className="space-y-6 md:space-y-8">
                 <div>
-                  <h2 className="text-3xl font-light text-white uppercase tracking-tight mb-2">
+                  <h2 className="text-2xl md:text-3xl font-light text-white uppercase tracking-tight mb-2 leading-tight">
                     {product.name}
                   </h2>
-                  <span className="text-[10px] text-primary uppercase tracking-[0.3em] font-mono">
+                  <span className="text-[9px] md:text-[10px] text-primary uppercase tracking-[0.3em] font-mono">
                     Category // {product.category}
                   </span>
                 </div>
@@ -70,24 +70,24 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                   <WhatsAppButton 
                     productName={product.name} 
                     productCode={product.code} 
-                    className="w-full sm:w-auto"
+                    className="w-full"
                   />
                 </div>
               </div>
             </div>
 
             {/* Right: Technical Details (7 cols) */}
-            <div className="lg:col-span-7 p-8 md:p-12 space-y-12">
+            <div className="lg:col-span-7 p-6 md:p-12 space-y-10 md:space-y-12">
               {/* Full Specs Grid */}
               <section>
-                <h3 className="text-[10px] text-gray-500 uppercase tracking-[0.4em] mb-8 font-mono">
+                <h3 className="text-[9px] md:text-[10px] text-gray-500 uppercase tracking-[0.4em] mb-6 md:mb-8 font-mono">
                   Technical Datasheet
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-3 md:gap-y-4">
                   {Object.entries(product.fullSpecs).map(([key, value]) => (
                     <div key={key} className="flex justify-between items-baseline border-b border-gray-900 pb-2">
-                      <span className="text-[10px] text-gray-400 uppercase tracking-widest">{key}</span>
-                      <span className="text-sm text-white font-mono">{value}</span>
+                      <span className="text-[9px] md:text-[10px] text-gray-400 uppercase tracking-widest">{key}</span>
+                      <span className="text-xs md:text-sm text-white font-mono">{value}</span>
                     </div>
                   ))}
                 </div>

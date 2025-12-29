@@ -225,7 +225,7 @@ export default function Navigation() {
         animate={{ opacity: isScrolled ? 0.8 : 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        <span className="text-xs sm:text-sm font-normal text-gray-400 group-hover:text-white transition-colors duration-300">
+        <span className="hidden sm:inline text-xs sm:text-sm font-normal text-gray-400 group-hover:text-white transition-colors duration-300">
           Contact
         </span>
         <MessageCircle className="w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-white transition-colors duration-300 flex-shrink-0" />
@@ -235,7 +235,7 @@ export default function Navigation() {
       <motion.button
         onClick={() => setIsMenuOpen(true)}
         aria-label="open navigation menu"
-        className="fixed top-4 right-27 sm:top-6 sm:right-32 md:top-8 md:right-40 z-[70] w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex items-center justify-center group touch-manipulation"
+        className="fixed top-4 right-16 sm:top-6 sm:right-32 md:top-8 md:right-40 z-[70] w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex items-center justify-center group touch-manipulation"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: isScrolled ? 0.8 : 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.1 }}
