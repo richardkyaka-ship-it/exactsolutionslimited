@@ -10,8 +10,9 @@ export function middleware(request: NextRequest) {
   
   // Block all other pages in PRODUCTION only
   if (process.env.NODE_ENV === 'production' && !allowedInProduction.includes(pathname)) {
-    // Redirect to splash screen
-    return NextResponse.redirect(new URL('/', request.url));
+    // REWRITE to home page (splash) while keeping the URL
+    // This allows the SplashScreen component to see the original pathname
+    return NextResponse.rewrite(new URL('/', request.url));
   }
   
   // Allow access in all other cases (development, allowed pages)
@@ -22,4 +23,3 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: ['/((?!_next/static|_next/image|favicon.ico|public/).*)'],
 };
-
