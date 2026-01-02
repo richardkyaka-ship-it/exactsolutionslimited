@@ -16,13 +16,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Exact Solutions Limited - Under Development',
   description: 'Exact Solutions Limited - Website Under Development',
-  icons: {
-    icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
-    ],
-    shortcut: '/icon.svg',
-    apple: '/icon.svg',
-  },
+  // Next.js 14 App Router automatically detects icon.svg in app/ directory
 }
 
 export default function RootLayout({
@@ -32,11 +26,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <head>
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="shortcut icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/icon.svg" />
-      </head>
       <body className={`${inter.variable} font-inter antialiased bg-black text-white min-h-screen overflow-x-hidden`} suppressHydrationWarning>
         <SWRProvider>
           <Preloader />
