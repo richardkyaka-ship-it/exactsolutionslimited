@@ -31,7 +31,7 @@ export async function GET() {
         if (!record || !record.fields) return false;
         // Must have at least a Name field to be a valid product
         const name = record.fields.Name || record.fields['Name'];
-        return name && typeof name === 'string' && name.trim() !== '';
+        return Boolean(name && typeof name === 'string' && name.trim() !== '');
       })
       .filter(record => {
         // Try to convert - if it throws, it's not a valid product
