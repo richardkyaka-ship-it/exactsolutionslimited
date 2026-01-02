@@ -619,7 +619,8 @@ export function productToAirtable(product: Partial<Product>): any {
         
         // Convert relative URLs to absolute URLs for Airtable
         // Airtable cannot access relative URLs like /products/image.jpg
-        if (imageUrl.startsWith('/')) {
+        // Cloudinary URLs are already absolute, so skip conversion
+        if (imageUrl.startsWith('/') && !imageUrl.startsWith('//')) {
           // Get the base URL from environment
           // On Vercel, VERCEL_URL is automatically available
           // For production, set NEXT_PUBLIC_SITE_URL in Vercel dashboard
@@ -641,6 +642,7 @@ export function productToAirtable(product: Partial<Product>): any {
           imageUrl = `${baseUrl}${imageUrl}`;
           console.log(`[productToAirtable] Converted relative URL to absolute: ${imageUrl}`);
         }
+        // Cloudinary URLs (https://res.cloudinary.com/...) are already absolute, no conversion needed
         
         return {
           url: imageUrl,

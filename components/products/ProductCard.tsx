@@ -30,7 +30,7 @@ export default function ProductCard({ product, onOpenSpecs }: ProductCardProps) 
         {product.images && product.images.length > 0 && product.images[0] ? (
           <Image
             src={getOptimizedAirtableImage(product.images[0])}
-            alt={product.name}
+          alt={product.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"

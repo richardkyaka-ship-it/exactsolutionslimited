@@ -1,11 +1,26 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
+import { v2 as cloudinary } from 'cloudinary';
 import { isAdminAuthenticated } from '@/lib/auth';
+
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(request: Request) {
   if (!isAdminAuthenticated()) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  // Check if Cloudinary is configured
+  if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+    console.error('[Upload API] Cloudinary not configured. Missing environment variables.');
+    return NextResponse.json({ 
+      error: 'Image upload service not configured. Please set Cloudinary environment variables.',
+      details: 'CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET are required'
+    }, { status: 500 });
   }
 
   try {
@@ -22,43 +37,49 @@ export async function POST(request: Request) {
       type: file.type,
     });
 
+    // Convert file to buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-
-    const filename = `${Date.now()}-${file.name.replace(/[^a-z0-9.]/gi, '_').toLowerCase()}`;
-    const uploadDir = path.join(process.cwd(), 'public', 'products');
     
-    try {
-      // Ensure directory exists
-      await fs.mkdir(uploadDir, { recursive: true });
-      
-      const filepath = path.join(uploadDir, filename);
-      await fs.writeFile(filepath, buffer);
+    // Convert buffer to base64 data URI
+    const base64 = buffer.toString('base64');
+    const dataUri = `data:${file.type};base64,${base64}`;
 
-      const imageUrl = `/products/${filename}`;
-      console.log('[Upload API] File saved successfully:', imageUrl);
+    // Upload to Cloudinary
+    console.log('[Upload API] Uploading to Cloudinary...');
+    const result = await new Promise((resolve, reject) => {
+      cloudinary.uploader.upload(
+        dataUri,
+        {
+          folder: 'exact-solutions/products',
+          resource_type: 'auto',
+          transformation: [
+            { quality: 'auto' },
+            { fetch_format: 'auto' }
+          ]
+        },
+        (error, result) => {
+          if (error) {
+            console.error('[Upload API] Cloudinary upload error:', error);
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        }
+      );
+    }) as any;
 
-      return NextResponse.json({ 
-        success: true, 
-        url: imageUrl 
-      });
-    } catch (fsError: any) {
-      // On Vercel, filesystem is read-only at runtime
-      // This will fail, but we'll provide a helpful error
-      console.error('[Upload API] Filesystem error (expected on Vercel):', fsError.message);
-      
-      // For now, return a placeholder URL - in production you'd use a CDN
-      // TODO: Integrate with Cloudinary, AWS S3, or Vercel Blob Storage
-      return NextResponse.json({ 
-        error: 'File upload not supported on this platform. Please use a CDN integration.',
-        details: process.env.VERCEL ? 'Vercel filesystem is read-only at runtime' : fsError.message
-      }, { status: 500 });
-    }
+    console.log('[Upload API] Cloudinary upload successful:', result.secure_url);
+
+    return NextResponse.json({ 
+      success: true, 
+      url: result.secure_url // Use secure_url for HTTPS
+    });
   } catch (error: any) {
     console.error('[Upload API] Upload error:', error);
     return NextResponse.json({ 
       error: 'Upload failed', 
-      details: error.message 
+      details: error.message || 'Unknown error'
     }, { status: 500 });
   }
 }
