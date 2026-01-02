@@ -101,41 +101,41 @@ export default function CategoriesPage() {
               </table>
             </div>
 
-            {/* Mobile View */}
-            <div className="md:hidden divide-y divide-gray-900/50">
-              {loading ? (
-                <div className="p-12 text-center text-gray-600 uppercase tracking-widest text-xs">Synchronizing...</div>
-              ) : (
-                categories.map((cat) => (
-                  <div key={cat.id} className="p-6 flex items-center justify-between group">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 border border-gray-800 flex items-center justify-center bg-black group-hover:border-primary/30 transition-all">
-                        <FolderTree className="w-4 h-4 text-primary/60" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-white uppercase tracking-wider">{cat.name}</p>
-                        <p className="text-[9px] font-mono text-gray-600 uppercase mt-1">ID: {cat.id}</p>
-                      </div>
-                    </div>
-                    <button
-                      disabled
-                      className="p-3 bg-black border border-gray-800 text-gray-800 cursor-not-allowed"
-                      title="Categories are fixed and cannot be deleted"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+        {/* Mobile View */}
+        <div className="md:hidden divide-y divide-gray-900/50">
+          {loading ? (
+            <div className="p-12 text-center text-gray-600 uppercase tracking-widest text-xs">Synchronizing...</div>
+          ) : (
+            categories.map((cat) => (
+              <div key={cat.id} className="p-6 flex items-center justify-between group">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 border border-gray-800 flex items-center justify-center bg-black group-hover:border-primary/30 transition-all">
+                    <FolderTree className="w-4 h-4 text-primary/60" />
                   </div>
-                ))
-              )}
-            </div>
-          </div>
-
-        <div className="mt-8 flex items-start gap-4 p-6 border border-gray-900 bg-black/30">
-          <Info className="w-5 h-5 text-gray-600 flex-shrink-0" />
-          <p className="text-xs text-gray-500 leading-relaxed uppercase tracking-wider">
-            Categories are fixed and managed in code. The three service categories (Generators & Power, Shipping Containers, Metal Fabrication) represent the core business divisions and cannot be modified through this interface.
-          </p>
+                  <div>
+                    <p className="text-sm font-medium text-white uppercase tracking-wider">{cat.name}</p>
+                    <p className="text-[9px] font-mono text-gray-600 uppercase mt-1">ID: {cat.id}</p>
+                  </div>
+                </div>
+                <button
+                  disabled
+                  className="p-3 bg-black border border-gray-800 text-gray-800 cursor-not-allowed"
+                  title="Categories are fixed and cannot be deleted"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+            ))
+          )}
         </div>
+      </div>
+
+      {/* Disclaimer */}
+      <div className="mt-8 flex items-start gap-4 p-6 border border-gray-900 bg-black/30">
+        <Info className="w-5 h-5 text-gray-600 flex-shrink-0" />
+        <p className="text-xs text-gray-500 leading-relaxed uppercase tracking-wider">
+          Categories are fixed and managed in code. The three service categories (Generators & Power, Shipping Containers, Metal Fabrication) represent the core business divisions and cannot be modified through this interface.
+        </p>
       </div>
 
       {/* Delete Modal */}
