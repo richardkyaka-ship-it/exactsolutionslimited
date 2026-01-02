@@ -261,6 +261,7 @@ export default function Navigation() {
                 backfaceVisibility: 'hidden',
                 willChange: 'opacity',
                 WebkitFontSmoothing: 'subpixel-antialiased',
+                pointerEvents: 'auto', // Allow clicks to pass through to nav content
               }}
             />
 
@@ -272,13 +273,19 @@ export default function Navigation() {
               animate={isClosing ? "closed" : "open"}
               exit="closed"
               className={`fixed inset-0 z-[60] flex items-center justify-center ${isClosing ? 'closing' : ''}`}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                // Only stop propagation if clicking on the nav container itself, not on links
+                if (e.target === e.currentTarget) {
+                  e.stopPropagation()
+                }
+              }}
               role="dialog"
               aria-modal="true"
               aria-label="Navigation menu"
               style={{
                 transform: 'translateZ(0)',
                 backfaceVisibility: 'hidden',
+                pointerEvents: 'auto', // Ensure clicks work
               }}
             >
               <div className="relative w-full max-w-5xl px-6 md:px-12">
@@ -336,10 +343,14 @@ export default function Navigation() {
 }
 
 function NavLink({ item, isActive, onClick }: { item: typeof NAV_ITEMS[number], isActive: boolean, onClick: () => void }) {
+  const router = useRouter()
+  
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // Close menu immediately (non-blocking)
+    e.preventDefault() // Prevent default Link behavior
+    // Close menu immediately
     onClick()
-    // Navigation happens automatically via Next.js Link - no delay
+    // Navigate immediately using router
+    router.push(item.path)
   }
   
   return (
