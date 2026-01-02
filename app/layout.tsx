@@ -5,7 +5,6 @@ import Navigation from '@/components/Navigation'
 import PageTransition from '@/components/PageTransition'
 import Preloader from '@/components/Preloader'
 import { SWRProvider } from '@/components/providers/SWRProvider'
-import Favicon from '@/components/Favicon'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -19,6 +18,8 @@ export const metadata: Metadata = {
   description: 'Exact Solutions Limited - Website Under Development',
   icons: {
     icon: '/icon.svg',
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
   },
 }
 
@@ -30,7 +31,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${inter.variable} font-inter antialiased bg-black text-white min-h-screen overflow-x-hidden`} suppressHydrationWarning>
-        <Favicon />
         <SWRProvider>
           <Preloader />
           <Navigation />
