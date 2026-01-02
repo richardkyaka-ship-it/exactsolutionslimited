@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState, useCallback } from 'react'
-import { Plus, Trash2, FolderTree, Info } from 'lucide-react'
+import { Trash2, FolderTree, Info } from 'lucide-react'
 import { Category } from '@/types/products'
 import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal'
 import { useAdmin } from '@/components/admin/AdminProvider'
@@ -9,7 +9,6 @@ import { useAdmin } from '@/components/admin/AdminProvider'
 export default function CategoriesPage() {
   const { setIsLoading, showToast } = useAdmin()
   const [categories, setCategories] = useState<Category[]>([])
-  const [newName, setNewName] = useState('')
   const [loading, setLoading] = useState(true)
 
   // Custom Delete Modal State
@@ -43,11 +42,6 @@ export default function CategoriesPage() {
     fetchCategories()
   }, [fetchCategories])
 
-  const handleAdd = async (e: React.FormEvent) => {
-    e.preventDefault()
-    showToast('Categories are fixed and cannot be created. Contact developer to add new categories.', 'error')
-  }
-
   const confirmDelete = async () => {
     showToast('Categories are fixed and cannot be deleted. Contact developer to modify categories.', 'error')
     setDeleteModal(prev => ({ ...prev, isOpen: false }))
@@ -62,45 +56,8 @@ export default function CategoriesPage() {
         <p className="text-sm text-gray-500 uppercase tracking-widest">Organize your industrial asset catalog</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-        {/* Left: Add New (4 cols) */}
-        <div className="lg:col-span-4">
-          <section className="p-8 bg-dark-light border border-gray-900 space-y-8">
-            <div className="flex items-center gap-3 border-b border-gray-800 pb-6">
-              <Plus className="w-5 h-5 text-primary" />
-              <h2 className="text-sm font-medium text-white uppercase tracking-widest">New Category</h2>
-            </div>
-
-            <div className="space-y-6">
-              <div className="p-6 bg-black/50 border border-gray-800">
-                <p className="text-xs text-gray-400 uppercase tracking-widest leading-relaxed">
-                  Categories are fixed and managed in code. The three service categories (Generators & Power, Shipping Containers, Metal Fabrication) cannot be modified through this interface.
-                </p>
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] text-gray-500 uppercase tracking-widest font-medium">Category Name</label>
-                <input
-                  type="text"
-                  value={newName}
-                  onChange={(e) => setNewName(e.target.value)}
-                  placeholder="e.g. Solar Solutions"
-                  disabled
-                  className="w-full bg-black/30 border border-gray-800 px-4 py-4 text-gray-600 text-sm focus:outline-none transition-all cursor-not-allowed"
-                />
-              </div>
-              <button
-                type="button"
-                disabled
-                className="w-full bg-gray-900 text-gray-600 py-4 px-6 text-xs uppercase tracking-[0.3em] font-medium cursor-not-allowed"
-              >
-                Create Category (Disabled)
-              </button>
-            </div>
-          </section>
-        </div>
-
-        {/* Right: List (8 cols) */}
-        <div className="lg:col-span-8">
+      {/* Categories List - Full Width */}
+      <div className="lg:col-span-12">
           <div className="bg-dark-light border border-gray-900 overflow-hidden">
             {/* Desktop View */}
             <div className="hidden md:block">
