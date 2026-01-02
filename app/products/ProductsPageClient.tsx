@@ -6,311 +6,26 @@ import { Product } from '@/types/products'
 import ProductFilter, { ProductFilterType } from '@/components/products/ProductFilter'
 import ProductCard from '@/components/products/ProductCard'
 import ProductModal from '@/components/products/ProductModal'
-
-const PRODUCTS_DATA: Product[] = [
-  // Generators & Power
-  {
-    id: 'P-001',
-    code: 'GEN-250kVA',
-    name: '250kVA Diesel Generator',
-    category: 'generators',
-    image: 'https://images.unsplash.com/photo-1581092162384-8987c1704ed9?auto=format&fit=crop&q=80&w=800',
-    keySpecs: [
-      'Output: 250kVA / 200kW',
-      'Engine: Cummins 6CTAA8.3-G2',
-      'Fuel Consumption: 45 L/hr @ 75% load'
-    ],
-    fullSpecs: {
-      'Prime Power': '250kVA / 200kW',
-      'Standby Power': '275kVA / 220kW',
-      'Frequency': '50Hz / 60Hz',
-      'Voltage': '400V / 230V',
-      'Engine Type': '6-Cylinder, Turbocharged',
-      'Cooling': 'Water Cooled',
-      'Alternator': 'Brushless, Self-excited',
-      'Governor': 'Electronic'
-    },
-    applications: ['Commercial Buildings', 'Small Industrial Units', 'Agricultural Sites'],
-    installationReqs: 'Level concrete pad required. Minimum 1.5m clearance for ventilation and maintenance access.'
-  },
-  {
-    id: 'P-002',
-    code: 'GEN-500kVA',
-    name: '500kVA Diesel Generator',
-    category: 'generators',
-    image: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ecb?auto=format&fit=crop&q=80&w=800',
-    keySpecs: [
-      'Output: 500kVA / 400kW',
-      'Fuel Type: Diesel',
-      'Dimensions: 3.2m x 1.5m x 2.1m'
-    ],
-    fullSpecs: {
-      'Prime Power': '500kVA / 400kW',
-      'Standby Power': '550kVA / 440kW',
-      'Fuel Tank': '800 Liters',
-      'Aspiration': 'Turbocharged & Aftercooled',
-      'Controller': 'DeepSea 7320 MKII',
-      'Enclosure': 'Soundproofed (75dB @ 7m)',
-      'Breaker': '3-Pole MCCB',
-      'Phase': '3-Phase'
-    },
-    applications: ['Manufacturing Plants', 'Data Centers', 'Hospitals'],
-    installationReqs: 'Structural base for 4500kg weight. External fuel integration capable.'
-  },
-  {
-    id: 'P-003',
-    code: 'GEN-1000kVA',
-    name: '1MW Industrial Generator',
-    category: 'generators',
-    image: 'https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?auto=format&fit=crop&q=80&w=800',
-    keySpecs: [
-      'Output: 1000kVA / 800kW',
-      'Engine: Perkins 4008TAG2A',
-      'Control: PLC Integrated'
-    ],
-    fullSpecs: {
-      'Prime Power': '1000kVA / 800kW',
-      'Alternator': 'Stamford S6L1D-E4',
-      'Bore/Stroke': '160mm x 190mm',
-      'Displacement': '30.5 Liters',
-      'Oil Capacity': '153 Liters',
-      'Voltage Reg': '±0.5% (AS440 AVR)',
-      'Battery': '24V DC Start',
-      'Exhaust': 'Industrial Grade Silencer'
-    },
-    applications: ['Industrial Estates', 'Mining Operations', 'Grid Support'],
-    installationReqs: 'Dedicated plant room or containerized setup recommended. High-voltage transformer integration usually required.'
-  },
-  {
-    id: 'P-004',
-    code: 'PWR-UPS',
-    name: 'Industrial UPS System',
-    category: 'generators',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc48?auto=format&fit=crop&q=80&w=800',
-    keySpecs: [
-      'Range: 10kVA - 500kVA',
-      'Technology: Online Double Conversion',
-      'Efficiency: > 96%'
-    ],
-    fullSpecs: {
-      'Input Voltage': '380V / 400V / 415V',
-      'Output Power Factor': '1.0',
-      'THDi': '< 3% @ Full Load',
-      'Overload': '125% for 10 min',
-      'Communication': 'SNMP / Modbus / Dry Contacts',
-      'Battery Type': 'VRLA / Lithium-Ion',
-      'Design Life': '15+ Years',
-      'Parallel Cap': 'Up to 8 Units'
-    },
-    applications: ['IT Infrastructure', 'Precision Labs', 'Process Control'],
-    installationReqs: 'Climate-controlled battery room. Dedicated electrical bypass circuit required.'
-  },
-
-  // Shipping Containers
-  {
-    id: 'P-005',
-    code: 'CONT-20FT',
-    name: '20ft Standard Container',
-    category: 'containers',
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800',
-    keySpecs: [
-      'Length: 6.06m (20ft)',
-      'Material: Corten Steel',
-      'Max Payload: 28,480 kg'
-    ],
-    fullSpecs: {
-      'Internal Length': '5.898m',
-      'Internal Width': '2.352m',
-      'Internal Height': '2.393m',
-      'Door Width': '2.340m',
-      'Door Height': '2.280m',
-      'Tare Weight': '2,300 kg',
-      'Cubic Capacity': '33.2 m³',
-      'Floor Type': 'Marine Grade Plywood'
-    },
-    applications: ['General Logistics', 'Secure Site Storage', 'Temporary Warehousing'],
-    installationReqs: 'Compact level ground or concrete pads at corners. Flat-bed delivery access required.'
-  },
-  {
-    id: 'P-006',
-    code: 'CONT-40FT',
-    name: '40ft High Cube Container',
-    category: 'containers',
-    image: 'https://images.unsplash.com/photo-1590674899484-13da0d1b58f5?auto=format&fit=crop&q=80&w=800',
-    keySpecs: [
-      'Length: 12.19m (40ft)',
-      'Extra Height: 30cm more than Std',
-      'Volume: 76.2 m³'
-    ],
-    fullSpecs: {
-      'Internal Length': '12.032m',
-      'Internal Width': '2.352m',
-      'Internal Height': '2.698m',
-      'Door Width': '2.340m',
-      'Door Height': '2.585m',
-      'Tare Weight': '3,900 kg',
-      'Max Gross Weight': '30,480 kg',
-      'Structure': 'High-tensile Steel Frame'
-    },
-    applications: ['High-volume Storage', 'Modular Office Base', 'Overseas Shipping'],
-    installationReqs: 'Requires long flat-bed access for positioning. Corner supports must be level.'
-  },
-  {
-    id: 'P-007',
-    code: 'CONT-REEFER',
-    name: '40ft Refrigerated Container',
-    category: 'containers',
-    image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=800',
-    keySpecs: [
-      'Temp Range: -30°C to +30°C',
-      'Insulation: Polyurethane Foam',
-      'Power: 380V / 460V 3-Phase'
-    ],
-    fullSpecs: {
-      'Cooling Unit': 'Carrier / Thermo King',
-      'Internal Height': '2.540m',
-      'Airflow': 'Bottom-air delivery',
-      'Floor': 'Aluminum T-bar',
-      'Defrost': 'Automatic / Manual',
-      'Control': 'Digital Thermostat',
-      'Alarm': 'Temp Deviation Sensor',
-      'Material': 'Stainless Steel / MG Liner'
-    },
-    applications: ['Perishable Food Storage', 'Pharmaceutical Distribution', 'Event Cold Storage'],
-    installationReqs: '3-Phase industrial power socket. Level foundation required for proper drainage.'
-  },
-  {
-    id: 'P-008',
-    code: 'CONT-OFFICE',
-    name: 'Container Office Conversion',
-    category: 'containers',
-    image: 'https://images.unsplash.com/photo-1523217582562-09d0def993a6?auto=format&fit=crop&q=80&w=800',
-    keySpecs: [
-      'Fully Insulated & Paneled',
-      'Electrical & LAN Points',
-      'AC System Pre-installed'
-    ],
-    fullSpecs: {
-      'Base Unit': '20ft or 40ft HQ',
-      'Wall Lining': 'Gypsum or PVC Boards',
-      'Windows': 'Aluminum Sliding w/ Security',
-      'Floor Finish': 'Vinyl or Laminate',
-      'Lighting': 'LED Integrated',
-      'Power Outlet': '13A British Standard',
-      'Distribution': 'Internal DB Box',
-      'Security': 'External Steel Door'
-    },
-    applications: ['Remote Site Offices', 'Security Posts', 'Project Clinics'],
-    installationReqs: 'External power connection point. Septic/drainage connection if fitted with plumbing.'
-  },
-
-  // Metal Materials
-  {
-    id: 'P-009',
-    code: 'ALUM-SHEET',
-    name: 'Aluminum Sheet (Various gauges)',
-    category: 'metal',
-    image: 'https://images.unsplash.com/photo-1533038590840-1cde6b66b7c6?auto=format&fit=crop&q=80&w=800',
-    keySpecs: [
-      'Grade: 5083 / 6061',
-      'Thickness: 0.5mm - 50mm',
-      'Finish: Mill / Brushed'
-    ],
-    fullSpecs: {
-      'Alloy Series': '1xxx, 3xxx, 5xxx, 6xxx',
-      'Temper': 'O, H112, T4, T6',
-      'Standard Size': '1220mm x 2440mm',
-      'Max Width': '2000mm',
-      'Max Length': '6000mm',
-      'Density': '2.7 g/cm³',
-      'Elongation': '> 12%',
-      'Standards': 'ASTM B209 / EN 485'
-    },
-    applications: ['Aviation Parts', 'Marine Structures', 'Architectural Facades'],
-    installationReqs: 'Sold as raw material or custom-cut. Dry storage recommended to prevent oxidation.'
-  },
-  {
-    id: 'P-010',
-    code: 'STEEL-BEAM',
-    name: 'Structural Steel Beams',
-    category: 'metal',
-    image: 'https://images.unsplash.com/photo-1516315720917-231ef9acce48?auto=format&fit=crop&q=80&w=800',
-    keySpecs: [
-      'Types: H-Beam / I-Beam',
-      'Grade: S275JR / S355JR',
-      'Coating: Primer / Galvanized'
-    ],
-    fullSpecs: {
-      'Web Thickness': '5mm - 20mm',
-      'Flange Width': '100mm - 400mm',
-      'Standard Length': '6m / 12m',
-      'Tensile Strength': '410 - 560 MPa',
-      'Yield Strength': '275 - 355 MPa',
-      'Certification': 'EN 10025-2',
-      'Welding Grade': 'Structural 7018 compatible',
-      'Dimensional': 'EN 10034'
-    },
-    applications: ['High-rise Construction', 'Industrial Sheds', 'Bridges'],
-    installationReqs: 'Heavy lifting equipment required for onsite handling. Requires certified structural welding.'
-  },
-  {
-    id: 'P-011',
-    code: 'SS-PIPE',
-    name: 'Stainless Steel Piping',
-    category: 'metal',
-    image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=800',
-    keySpecs: [
-      'Grade: 304 / 316L',
-      'Schedule: SCH 10/40/80',
-      'Finish: Satin / Mirror'
-    ],
-    fullSpecs: {
-      'Outer Diameter': '6mm - 600mm',
-      'Wall Thickness': '0.5mm - 12.7mm',
-      'Corrosion Resistance': 'Excellent (316L)',
-      'Tolerance': '±0.05mm',
-      'Standards': 'ASTM A312 / A269',
-      'Joint Types': 'Butt-weld / Threaded',
-      'Pressure Rating': 'Up to 3000 PSI',
-      'Surface Roughness': 'Ra < 0.8μm (Food Grade)'
-    },
-    applications: ['Food Processing', 'Chemical Plants', 'Decorative Handrails'],
-    installationReqs: 'TIG welding recommended for sanitary applications. Requires specialized stainless cutting tools.'
-  },
-  {
-    id: 'P-012',
-    code: 'FAB-CUSTOM',
-    name: 'Custom Fabrication Service',
-    category: 'metal',
-    image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=800',
-    keySpecs: [
-      'CNC Cutting & Folding',
-      'Certified TIG/MIG Welding',
-      'Surface Finishing / Coating'
-    ],
-    fullSpecs: {
-      'Max Sheet Size': '1500mm x 3000mm',
-      'Bending Force': '100 Tons',
-      'Cutting Precision': '±0.1mm (Laser)',
-      'Material Handling': 'Up to 5 Tons',
-      'Surface Treatment': 'Powder / Galvanized / Paint',
-      'Design Support': 'AutoCAD / SolidWorks',
-      'Assembly': 'In-house Integration',
-      'Quality Control': 'ISO 9001 Compliant'
-    },
-    applications: ['Machine Guards', 'Custom Brackets', 'Process Tanks'],
-    installationReqs: 'Submit technical drawings in DWG or DXF format for precision quoting.'
-  }
-]
+import FastLink from '@/components/ui/FastLink'
+import { useProducts } from '@/hooks/useProducts'
 
 export default function ProductsPageClient() {
   const [activeCategory, setActiveCategory] = useState<ProductFilterType>('all')
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  
+  // Use SWR hook for optimized, cached product fetching
+  // Don't block navigation - show page immediately, load data in background
+  const { products = [], isLoading } = useProducts({
+    status: 'Active',
+    category: activeCategory === 'all' ? undefined : activeCategory,
+  })
 
   const filteredProducts = useMemo(() => {
-    if (activeCategory === 'all') return PRODUCTS_DATA
-    return PRODUCTS_DATA.filter(p => p.category === activeCategory)
-  }, [activeCategory])
+    // Ensure products is always an array
+    if (!Array.isArray(products)) return []
+    if (activeCategory === 'all') return products
+    return products.filter(p => p.category === activeCategory)
+  }, [products, activeCategory])
 
   return (
     <main className="bg-black text-white selection:bg-primary selection:text-white min-h-screen">
@@ -318,7 +33,7 @@ export default function ProductsPageClient() {
       <section className="px-6 md:px-12 lg:px-20 pt-32 pb-16">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-baseline gap-4 mb-8">
-            <span className="text-[10px] text-primary font-mono tracking-[0.3em] uppercase">Section 01</span>
+            <span className="text-[10px] text-primary font-mono tracking-[0.3em] uppercase">01</span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-white tracking-tight uppercase">
               Industrial Catalog
             </h1>
@@ -334,31 +49,45 @@ export default function ProductsPageClient() {
       <section className="px-6 md:px-12 lg:px-20 pb-32">
         <div className="max-w-7xl mx-auto">
           {/* Filter System */}
-          <ProductFilter 
-            activeCategory={activeCategory} 
-            onCategoryChange={setActiveCategory} 
+          <ProductFilter
+            activeCategory={activeCategory}
+            onCategoryChange={setActiveCategory}
           />
 
           {/* Product Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            <AnimatePresence mode="popLayout">
-              {filteredProducts.map((product) => (
-                <ProductCard 
-                  key={product.id} 
-                  product={product} 
-                  onOpenSpecs={setSelectedProduct}
-                />
-              ))}
-            </AnimatePresence>
+            {isLoading ? (
+              <div className="col-span-full py-20 text-center">
+                <p className="text-xs text-gray-600 uppercase tracking-[0.2em]">Synchronizing Catalog Data...</p>
+              </div>
+            ) : filteredProducts.length === 0 ? (
+              <div className="col-span-full py-20 text-center">
+                <p className="text-xs text-gray-600 uppercase tracking-[0.2em]">No products found in this category.</p>
+              </div>
+            ) : (
+              <AnimatePresence mode="popLayout">
+                {filteredProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onOpenSpecs={setSelectedProduct}
+                  />
+                ))}
+              </AnimatePresence>
+            )}
           </div>
         </div>
       </section>
 
       {/* Product Detail Modal */}
-      <ProductModal 
-        product={selectedProduct} 
-        onClose={() => setSelectedProduct(null)} 
-      />
+      <AnimatePresence>
+        {selectedProduct && (
+          <ProductModal
+            product={selectedProduct}
+            onClose={() => setSelectedProduct(null)}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Footer CTA */}
       <section className="px-6 md:px-12 lg:px-20 py-24 md:py-32 bg-dark-light border-t border-gray-900 text-center">
@@ -370,15 +99,14 @@ export default function ProductsPageClient() {
           <p className="text-gray-400 mb-12 uppercase tracking-widest text-xs">
             Our engineering team sources and fabricates specialized industrial equipment.
           </p>
-          <a 
+          <FastLink
             href="/contact"
             className="inline-block px-12 py-5 border border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300 text-sm uppercase tracking-[0.2em] font-medium"
           >
             Custom Sourcing Request
-          </a>
+          </FastLink>
         </div>
       </section>
     </main>
   )
 }
-

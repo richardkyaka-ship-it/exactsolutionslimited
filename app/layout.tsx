@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Navigation from '@/components/Navigation'
-import { ViewTransitions } from 'next-view-transitions'
 import PageTransition from '@/components/PageTransition'
 import Preloader from '@/components/Preloader'
+import { SWRProvider } from '@/components/providers/SWRProvider'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -16,6 +16,18 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Exact Solutions Limited - Under Development',
   description: 'Exact Solutions Limited - Website Under Development',
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml', sizes: '32x32' },
+      { url: '/icon.svg', type: 'image/svg+xml', sizes: '16x16' },
+    ],
+    apple: [
+      { url: '/icon.svg', type: 'image/svg+xml', sizes: '180x180' },
+    ],
+    shortcut: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+  },
 }
 
 export default function RootLayout({
@@ -24,9 +36,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ViewTransitions>
-      <html lang="en" className="dark">
-        <body className={`${inter.variable} font-inter antialiased bg-black text-white min-h-screen overflow-x-hidden`} suppressHydrationWarning>
+    <html lang="en" className="dark">
+      <body className={`${inter.variable} font-inter antialiased bg-black text-white min-h-screen overflow-x-hidden`} suppressHydrationWarning>
+        <SWRProvider>
           <Preloader />
           <Navigation />
           <main className="relative">
@@ -34,8 +46,8 @@ export default function RootLayout({
               {children}
             </PageTransition>
           </main>
-        </body>
-      </html>
-    </ViewTransitions>
+        </SWRProvider>
+      </body>
+    </html>
   )
 }

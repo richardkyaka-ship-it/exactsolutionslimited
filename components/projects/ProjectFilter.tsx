@@ -13,7 +13,7 @@ const CATEGORIES: { label: string; value: Category }[] = [
   { label: 'All Projects', value: 'all' },
   { label: 'Energy & Generators', value: 'energy' },
   { label: 'Shipping Containers', value: 'containers' },
-  { label: 'Metal Fabrication', value: 'metal' },
+  { label: 'Building & Construction', value: 'metal' },
 ]
 
 export default function ProjectFilter({ activeCategory, onCategoryChange }: ProjectFilterProps) {

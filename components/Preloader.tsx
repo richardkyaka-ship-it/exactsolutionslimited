@@ -1,33 +1,33 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 
 export default function Preloader() {
   const pathname = usePathname()
+  const initialized = useRef(false)
 
+  // Only run once on mount - don't block navigation
   useEffect(() => {
-    // Preload likely next pages
-    const links = [
-      { href: '/contact', as: 'document' },
-      { href: '/', as: 'document' },
-    ]
+    if (initialized.current) return
+    initialized.current = true
 
-    links.forEach(link => {
-      const preloadLink = document.createElement('link')
-      preloadLink.rel = 'prefetch'
-      preloadLink.href = link.href
-      preloadLink.as = link.as as any
-      document.head.appendChild(preloadLink)
-    })
+    // Defer prefetching to not block navigation
+    setTimeout(() => {
+      const links = [
+        { href: '/contact', as: 'document' },
+        { href: '/', as: 'document' },
+      ]
 
-    // Preload fonts if not loaded
-    if (typeof document !== 'undefined' && document.fonts) {
-      document.fonts.ready.then(() => {
-        // Fonts are loaded
+      links.forEach(link => {
+        const preloadLink = document.createElement('link')
+        preloadLink.rel = 'prefetch'
+        preloadLink.href = link.href
+        preloadLink.as = link.as as any
+        document.head.appendChild(preloadLink)
       })
-    }
-  }, [pathname])
+    }, 100) // Small delay to not block navigation
+  }, [])
 
   return null
 }

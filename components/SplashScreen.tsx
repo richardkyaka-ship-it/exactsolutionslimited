@@ -1,7 +1,7 @@
 'use client'
 
-import { Zap, Container, Building2, Mail, MessageCircle, Phone } from 'lucide-react'
-import { Link } from 'next-view-transitions'
+import { Zap, Container, Factory, Mail, MessageCircle, Phone } from 'lucide-react'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const PHONE_NUMBERS = [
@@ -96,9 +96,9 @@ export default function SplashScreen() {
 
                 <div className="group p-6 md:p-8 border border-gray-900 hover:border-primary/20 transition-all duration-500 flex flex-col items-center">
                   <div className="w-12 h-12 md:w-16 md:h-16 border border-gray-800 flex items-center justify-center mb-6 md:mb-8 group-hover:border-primary/40 transition-colors">
-                    <Building2 className="w-6 h-6 md:w-8 md:h-8 text-primary" />
+                    <Factory className="w-6 h-6 md:w-8 md:h-8 text-primary" />
                   </div>
-                  <h3 className="text-base md:text-lg font-medium mb-3 md:mb-4">Metal Fabrication</h3>
+                  <h3 className="text-base md:text-lg font-medium mb-3 md:mb-4">Building & Construction</h3>
                   <p className="text-gray-500 text-xs md:text-sm leading-relaxed">Precision glass, aluminum, and stainless steel fabrication.</p>
                 </div>
               </div>

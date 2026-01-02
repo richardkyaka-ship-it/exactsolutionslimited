@@ -1,37 +1,20 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useRef } from 'react'
 
 export default function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
+  const prevPathname = useRef(pathname)
 
-  // Simple scroll to top on route change
+  // Instant scroll to top on route change - NO DELAYS
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'auto' })
+    if (prevPathname.current !== pathname) {
+      // Scroll immediately without any frame delays
+      window.scrollTo(0, 0)
+      prevPathname.current = pathname
+    }
   }, [pathname])
 
-  return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={pathname}
-        initial={{ opacity: 0, y: 10, scale: 0.99 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: -10, scale: 1.01 }}
-        transition={{
-          duration: 0.4,
-          ease: [0.22, 1, 0.36, 1] // Custom cubic-bezier for smoother deceleration
-        }}
-        style={{
-          transform: 'translateZ(0)',
-          backfaceVisibility: 'hidden',
-          willChange: 'opacity, transform',
-          WebkitFontSmoothing: 'subpixel-antialiased'
-        }}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
-  )
+  return <>{children}</>
 }

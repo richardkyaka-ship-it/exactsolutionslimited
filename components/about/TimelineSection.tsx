@@ -12,7 +12,7 @@ interface Milestone {
 const MILESTONES: Milestone[] = [
   { year: "2015", title: "Founded by industrial engineers", metric: "3 founding engineers" },
   { year: "2018", title: "Energy solutions division launch", metric: "50+ generators installed" },
-  { year: "2021", title: "Metal fabrication expansion", metric: "1000+ projects completed" },
+  { year: "2021", title: "Building & Construction expansion", metric: "1000+ projects completed" },
   { year: "2024", title: "Regional operations expansion", metric: "Serving 3 East African countries" }
 ]
 

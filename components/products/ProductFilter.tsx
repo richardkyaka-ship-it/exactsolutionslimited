@@ -1,8 +1,9 @@
 'use client'
 
 import React from 'react'
+import { CATEGORIES as CATEGORY_CONSTANTS, CategoryId } from '@/constants/categories'
 
-export type ProductFilterType = 'all' | 'generators' | 'containers' | 'metal'
+export type ProductFilterType = 'all' | CategoryId
 
 interface ProductFilterProps {
   activeCategory: ProductFilterType
@@ -11,9 +12,10 @@ interface ProductFilterProps {
 
 const CATEGORIES: { label: string; value: ProductFilterType }[] = [
   { label: 'All Equipment', value: 'all' },
-  { label: 'Generators & Power', value: 'generators' },
-  { label: 'Shipping Containers', value: 'containers' },
-  { label: 'Metal Materials', value: 'metal' },
+  ...CATEGORY_CONSTANTS.map(cat => ({
+    label: cat.name,
+    value: cat.id as ProductFilterType,
+  })),
 ]
 
 export default function ProductFilter({ activeCategory, onCategoryChange }: ProductFilterProps) {

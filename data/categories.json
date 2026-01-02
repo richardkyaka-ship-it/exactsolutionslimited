@@ -1,0 +1,18 @@
+[
+  {
+    "id": "generators",
+    "name": "Generators & Power",
+    "value": "generators"
+  },
+  {
+    "id": "containers",
+    "name": "Shipping Containers",
+    "value": "containers"
+  },
+  {
+    "id": "metal",
+    "name": "Metal Materials",
+    "value": "metal"
+  }
+]
+

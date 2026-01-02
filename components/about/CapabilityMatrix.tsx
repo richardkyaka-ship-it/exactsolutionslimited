@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Zap, Container, Building2, Scale } from 'lucide-react'
+import { Zap, Container, Factory, Scale } from 'lucide-react'
 
 interface Capability {
   icon: React.ElementType
@@ -12,7 +12,7 @@ interface Capability {
 const CAPABILITIES: Capability[] = [
   { icon: Zap, title: "Power Solutions", spec: "50kVA - 2MW power range" },
   { icon: Container, title: "Container Systems", spec: "10ft - 40ft modular units" },
-  { icon: Building2, title: "Fabrication Precision", spec: "±1mm engineering tolerance" },
+  { icon: Factory, title: "Fabrication Precision", spec: "±1mm engineering tolerance" },
   { icon: Scale, title: "Project Scale", spec: "Single unit to industrial park" }
 ]
 

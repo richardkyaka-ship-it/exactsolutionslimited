@@ -1,9 +1,11 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Product } from '@/types/products'
 import WhatsAppButton from './WhatsAppButton'
+import { getOptimizedAirtableImage, generateBlurDataURL } from '@/utils/image-optimizer'
 
 interface ProductCardProps {
   product: Product
@@ -21,15 +23,27 @@ export default function ProductCard({ product, onOpenSpecs }: ProductCardProps) 
       className="group bg-dark-light border border-gray-900 hover:border-primary/50 transition-all duration-500 flex flex-col h-full"
     >
       {/* Image Container */}
-      <div 
+      <div
         className="relative aspect-square overflow-hidden bg-dark-lighter cursor-pointer"
         onClick={() => onOpenSpecs(product)}
       >
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
-        />
+        {product.images && product.images.length > 0 && product.images[0] ? (
+          <Image
+            src={getOptimizedAirtableImage(product.images[0])}
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
+            loading="lazy"
+            quality={85}
+            placeholder="blur"
+            blurDataURL={generateBlurDataURL()}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-dark-lighter">
+            <span className="text-[10px] text-gray-700 uppercase tracking-widest font-mono">No Image</span>
+          </div>
+        )}
         {/* Product Code Overlay */}
         <div className="absolute top-0 left-0 bg-primary/90 px-3 py-1 z-10">
           <span className="text-[9px] text-white font-mono uppercase tracking-widest">{product.code}</span>
@@ -47,7 +61,7 @@ export default function ProductCard({ product, onOpenSpecs }: ProductCardProps) 
           <div className="h-px flex-grow bg-gray-900" />
         </div>
 
-        <h3 
+        <h3
           className="text-base md:text-lg font-light text-white uppercase tracking-tight mb-6 group-hover:text-primary transition-colors cursor-pointer line-clamp-2 min-h-[3rem] md:min-h-[3.5rem]"
           onClick={() => onOpenSpecs(product)}
         >
@@ -66,8 +80,8 @@ export default function ProductCard({ product, onOpenSpecs }: ProductCardProps) 
 
         {/* Buttons */}
         <div className="mt-auto grid grid-cols-2 gap-2 md:gap-3">
-          <WhatsAppButton 
-            productName={product.name} 
+          <WhatsAppButton
+            productName={product.name}
             productCode={product.code}
           />
           <button

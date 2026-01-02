@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo } from 'react'
-import { usePathname } from 'next/navigation'
-import { useTransitionRouter, Link } from 'next-view-transitions'
+import { usePathname, useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { MessageCircle, Menu, X } from 'lucide-react'
 import { motion, AnimatePresence, Variants } from 'framer-motion'
 
@@ -19,14 +19,14 @@ const overlayVariants: Variants = {
   open: {
     opacity: 1,
     transition: {
-      duration: 0.3,
+      duration: 0.15,
       ease: [0.4, 0, 0.2, 1],
     },
   },
   closed: {
     opacity: 0,
     transition: {
-      duration: 0.2,
+      duration: 0.1,
       ease: [0.4, 0, 1, 1],
     },
   },
@@ -36,8 +36,8 @@ const containerVariants: Variants = {
   open: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.1,
+      staggerChildren: 0.05,
+      delayChildren: 0, // No delay - instant
       when: 'beforeChildren',
     },
   },
@@ -47,6 +47,7 @@ const containerVariants: Variants = {
       staggerChildren: 0,
       staggerDirection: -1,
       when: 'afterChildren',
+      duration: 0.1, // Faster close
     },
   },
 }
@@ -56,26 +57,32 @@ const itemVariants: Variants = {
     y: 0,
     opacity: 1,
     transition: {
-      duration: 0.3,
-      ease: [0.34, 1.56, 0.64, 1], // Bouncy but controlled
+      duration: 0.25,
+      ease: [0.34, 1.56, 0.64, 1],
     },
   },
   closed: {
-    y: 20,
+    y: 10,
     opacity: 0,
     transition: {
-      duration: 0.15, // Faster close
-      ease: [0.4, 0, 1, 1], // Snappier easing
+      duration: 0.1,
+      ease: [0.4, 0, 1, 1],
     },
   },
 }
 
 export default function Navigation() {
+  const pathname = usePathname()
+
+  // Hide global navigation on admin routes
+  if (pathname.startsWith('/admin')) {
+    return null
+  }
+
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const pathname = usePathname()
-  const router = useTransitionRouter()
+  const router = useRouter()
   const navRef = useRef<HTMLDivElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
 
@@ -87,17 +94,15 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Lock body scroll when menu is open - useLayoutEffect for synchronous updates
+  // Lock body scroll when menu is open - instant updates
   useLayoutEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden'
       document.body.style.paddingRight = '0px' // Prevent layout shift
     } else {
-      // Schedule cleanup to avoid blocking main thread
-      requestAnimationFrame(() => {
-        document.body.style.overflow = ''
-        document.body.style.paddingRight = ''
-      })
+      // Instant cleanup - no frame delay
+      document.body.style.overflow = ''
+      document.body.style.paddingRight = ''
     }
   }, [isMenuOpen])
 
@@ -153,37 +158,23 @@ export default function Navigation() {
     }
   }, [isMenuOpen])
 
-  // Optimized handlers with useCallback - cinematic smoothness
+  // Optimized handlers with useCallback - instant navigation
   const handleClose = useCallback(() => {
-    setIsClosing(true)
-
-    // Set state in the next animation frame for perfect sync
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        setIsMenuOpen(false)
-        setIsClosing(false)
-
-        // Focus management in next frame
-        requestAnimationFrame(() => {
-          const menuToggle = document.querySelector('[aria-label="open navigation menu"]') as HTMLElement
-          menuToggle?.focus()
-        })
-      }, 10) // Tiny delay to ensure CSS class is applied
-    })
+    setIsMenuOpen(false)
+    setIsClosing(false)
+    // Focus management - non-blocking
+    setTimeout(() => {
+      const menuToggle = document.querySelector('[aria-label="open navigation menu"]') as HTMLElement
+      menuToggle?.focus()
+    }, 0)
   }, [])
 
   const handleContactClick = useCallback(() => {
+    // Navigate immediately - zero delay
     if (isMenuOpen) {
-      // Close nav FIRST
       handleClose()
-      // Navigate after brief delay for nav close
-      setTimeout(() => {
-        router.push('/contact')
-      }, 200)
-    } else {
-      // Navigate immediately - no delay
-      router.push('/contact')
     }
+    router.push('/contact')
   }, [router, isMenuOpen, handleClose])
 
 
@@ -238,7 +229,7 @@ export default function Navigation() {
         className="fixed top-4 right-16 sm:top-6 sm:right-32 md:top-8 md:right-40 z-[70] w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex items-center justify-center group touch-manipulation"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: isScrolled ? 0.8 : 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.1 }}
+        transition={{ duration: 0.2, delay: 0 }}
       >
         <div className="relative w-5 h-5 md:w-6 md:h-6">
           {/* Blueprint-style dimension lines */}
@@ -319,34 +310,15 @@ export default function Navigation() {
                           willChange: 'transform, opacity',
                         }}
                       >
-                        <Link
-                          href={item.path}
-                          onClick={() => setIsMenuOpen(false)}
-                          className="group flex items-baseline gap-4 text-left w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                        >
-                          <span className="text-xs text-primary font-medium tracking-[0.3em] uppercase">
-                            {item.number}
-                          </span>
-                          <div className="flex items-center gap-3">
-                            {isActive && (
-                              <motion.div
-                                layoutId="activeIndicator"
-                                className="w-2 h-2 bg-primary"
-                                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                              />
-                            )}
-                            <motion.span
-                              className="text-5xl md:text-7xl lg:text-8xl font-light text-white group-hover:text-primary transition-colors duration-300"
-                              whileHover={{ scale: 1.02 }}
-                              transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                              style={{
-                                willChange: 'transform',
-                              }}
-                            >
-                              {item.label}
-                            </motion.span>
-                          </div>
-                        </Link>
+                        <NavLink
+                          item={item}
+                          isActive={isActive}
+                          onClick={() => {
+                            // Close menu instantly - don't wait for animation
+                            setIsMenuOpen(false)
+                            setIsClosing(false)
+                          }}
+                        />
                       </motion.li>
                     )
                   })}
@@ -360,5 +332,40 @@ export default function Navigation() {
         )}
       </AnimatePresence>
     </>
+  )
+}
+
+function NavLink({ item, isActive, onClick }: { item: typeof NAV_ITEMS[number], isActive: boolean, onClick: () => void }) {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Close menu immediately (non-blocking)
+    onClick()
+    // Navigation happens automatically via Next.js Link - no delay
+  }
+  
+  return (
+    <Link
+      href={item.path}
+      onClick={handleClick}
+      prefetch={true}
+      className="group flex items-baseline gap-4 text-left w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black touch-manipulation"
+    >
+      <span className="text-xs text-primary font-medium tracking-[0.3em] uppercase">
+        {item.number}
+      </span>
+      <div className="flex items-center gap-3">
+        {isActive && (
+          <motion.div
+            layoutId="activeIndicator"
+            className="w-2 h-2 bg-primary"
+            transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+          />
+        )}
+        <span
+          className="text-5xl md:text-7xl lg:text-8xl font-light text-white group-hover:text-primary transition-colors duration-300"
+        >
+          {item.label}
+        </span>
+      </div>
+    </Link>
   )
 }
