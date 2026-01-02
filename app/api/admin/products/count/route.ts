@@ -17,16 +17,23 @@ export async function GET() {
       limit: 1000, // Get all products for accurate count
     });
     
-    // Count valid records
+    // Count valid records that are actually Active
     const records = Array.isArray(result?.records) ? result.records : [];
-    const validRecords = records.filter(record => record != null && record.fields != null);
+    const validRecords = records.filter(record => {
+      // Must have record and fields
+      if (!record || !record.fields) return false;
+      // Must have Status field and it must be exactly 'Active'
+      const status = record.fields.Status || record.fields['Status'];
+      return status === 'Active';
+    });
+    
     const count = validRecords.length;
     
     // Debug logging
-    console.log('Product count debug:', {
+    console.log('[Product Count] Debug:', {
       totalRecords: records.length,
-      validRecords: validRecords.length,
-      recordStatuses: validRecords.map(r => r.fields?.Status).filter(Boolean),
+      validActiveRecords: count,
+      allStatuses: records.map(r => r?.fields?.Status || r?.fields?.['Status'] || 'missing').filter(Boolean),
     });
     
     return NextResponse.json({ count });
