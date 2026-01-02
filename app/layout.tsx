@@ -16,8 +16,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Exact Solutions Limited - Under Development',
   description: 'Exact Solutions Limited - Website Under Development',
-  // Next.js 14 automatically detects icon.svg in app directory
-  // No need to manually configure if file is named icon.svg and in app/
+  icons: {
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
+  },
 }
 
 export default function RootLayout({
