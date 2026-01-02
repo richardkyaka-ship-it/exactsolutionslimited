@@ -407,10 +407,28 @@ export class AirtableClient {
   }
 
   /**
-   * Delete product (soft delete by setting status to Archived)
+   * Delete product (hard delete - permanently removes from Airtable)
    */
   async deleteProduct(id: string): Promise<void> {
-    await this.updateProduct(id, { Status: 'Archived' });
+    const url = `${this.baseUrl}/${this.tableName}/${id}`;
+    
+    return retryWithBackoff(async () => {
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: this.headers,
+      });
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ error: 'Unknown error' }));
+        throw new Error(`Airtable API error: ${response.status} - ${JSON.stringify(error)}`);
+      }
+
+      // Clear cache
+      clearCache('products_');
+      cache.delete(`product_${id}`);
+      
+      console.log(`[deleteProduct] Successfully deleted product ${id}`);
+    });
   }
 
   /**
@@ -591,12 +609,10 @@ export function productToAirtable(product: Partial<Product>): any {
     notesData.installationReqs = product.installationReqs.trim();
   }
   
-  // Notes field is DISABLED - Airtable doesn't have this field
-  // Full Specs, Applications, Installation Requirements are not stored for now
-  // If you want to store these, add a "Notes" field to your Airtable table first
-  // if (Object.keys(notesData).length > 0) {
-  //   fields[FIELD_NAMES.NOTES] = JSON.stringify(notesData);
-  // }
+  // Send Notes field if there's data to store
+  if (Object.keys(notesData).length > 0) {
+    fields[FIELD_NAMES.NOTES] = JSON.stringify(notesData);
+  }
   
   // Optional fields
   if (product.whatsappMessage !== undefined && product.whatsappMessage.trim() !== '') {
