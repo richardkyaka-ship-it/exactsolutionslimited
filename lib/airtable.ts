@@ -591,10 +591,12 @@ export function productToAirtable(product: Partial<Product>): any {
     notesData.installationReqs = product.installationReqs.trim();
   }
   
-  // Send Notes field if there's data to store
-  if (Object.keys(notesData).length > 0) {
-    fields[FIELD_NAMES.NOTES] = JSON.stringify(notesData);
-  }
+  // Notes field is DISABLED - Airtable doesn't have this field
+  // Full Specs, Applications, Installation Requirements are not stored for now
+  // If you want to store these, add a "Notes" field to your Airtable table first
+  // if (Object.keys(notesData).length > 0) {
+  //   fields[FIELD_NAMES.NOTES] = JSON.stringify(notesData);
+  // }
   
   // Optional fields
   if (product.whatsappMessage !== undefined && product.whatsappMessage.trim() !== '') {
