@@ -16,18 +16,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Exact Solutions Limited - Under Development',
   description: 'Exact Solutions Limited - Website Under Development',
-  icons: {
-    icon: [
-      { url: '/icon.svg', type: 'image/svg+xml', sizes: '32x32' },
-      { url: '/icon.svg', type: 'image/svg+xml', sizes: '16x16' },
-    ],
-    apple: [
-      { url: '/icon.svg', type: 'image/svg+xml', sizes: '180x180' },
-    ],
-    shortcut: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
-    ],
-  },
+  // Next.js 14 automatically detects icon.svg in app directory
+  // No need to manually configure if file is named icon.svg and in app/
 }
 
 export default function RootLayout({
