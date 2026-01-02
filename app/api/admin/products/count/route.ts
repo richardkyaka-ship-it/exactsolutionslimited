@@ -50,9 +50,18 @@ export async function GET() {
       totalRecords: records.length,
       validProducts: count,
       statusBreakdown: {
-        Active: validProducts.filter(r => (r?.fields?.Status || r?.fields?.['Status']) === 'Active').length,
-        Draft: validProducts.filter(r => (r?.fields?.Status || r?.fields?.['Status']) === 'Draft').length,
-        Archived: validProducts.filter(r => (r?.fields?.Status || r?.fields?.['Status']) === 'Archived').length,
+        Active: validProducts.filter(r => {
+          const status = r?.fields?.Status || r?.fields?.['Status'];
+          return status === 'Active';
+        }).length,
+        Draft: validProducts.filter(r => {
+          const status = r?.fields?.Status || r?.fields?.['Status'];
+          return status === 'Draft';
+        }).length,
+        Archived: validProducts.filter(r => {
+          const status = r?.fields?.Status || r?.fields?.['Status'];
+          return status === 'Archived';
+        }).length,
       },
     });
     
