@@ -52,7 +52,6 @@ export function middleware(request: NextRequest) {
   // 2. Production Access Control
   // Pages allowed in PRODUCTION (everything else shows splash screen)
   const allowedInProduction = [
-    '/',           // Home page (normal home page)
     '/splash',     // Splash screen route (for restricted pages)
     '/contact',    // Contact page only
     '/api/contact', // Contact API endpoint
