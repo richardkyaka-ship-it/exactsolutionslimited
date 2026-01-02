@@ -11,20 +11,18 @@ export async function GET() {
       return NextResponse.json({ count: 0 });
     }
     
-    // Get only Active products to match what the products list page shows
+    // Get ALL products (Active, Draft, Archived) for total count
+    // The dashboard should show total products, not just active ones
     const result = await client.getProducts({
-      status: 'Active', // Only count Active products (matches products list page)
+      status: 'all', // Get all products regardless of status
       limit: 1000, // Get all products for accurate count
     });
     
-    // Count valid records that are actually Active
+    // Count all valid records (any status)
     const records = Array.isArray(result?.records) ? result.records : [];
     const validRecords = records.filter(record => {
       // Must have record and fields
-      if (!record || !record.fields) return false;
-      // Must have Status field and it must be exactly 'Active'
-      const status = record.fields.Status || record.fields['Status'];
-      return status === 'Active';
+      return record != null && record.fields != null;
     });
     
     const count = validRecords.length;
@@ -32,8 +30,16 @@ export async function GET() {
     // Debug logging
     console.log('[Product Count] Debug:', {
       totalRecords: records.length,
-      validActiveRecords: count,
-      allStatuses: records.map(r => r?.fields?.Status || r?.fields?.['Status'] || 'missing').filter(Boolean),
+      validRecords: count,
+      statusBreakdown: {
+        Active: records.filter(r => (r?.fields?.Status || r?.fields?.['Status']) === 'Active').length,
+        Draft: records.filter(r => (r?.fields?.Status || r?.fields?.['Status']) === 'Draft').length,
+        Archived: records.filter(r => (r?.fields?.Status || r?.fields?.['Status']) === 'Archived').length,
+        Other: records.filter(r => {
+          const status = r?.fields?.Status || r?.fields?.['Status'];
+          return status && !['Active', 'Draft', 'Archived'].includes(status);
+        }).length,
+      },
     });
     
     return NextResponse.json({ count });
