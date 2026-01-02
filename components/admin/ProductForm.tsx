@@ -146,11 +146,27 @@ export default function ProductForm({ initialData }: ProductFormProps) {
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
-    if (!files || files.length === 0) return
+    if (!files || files.length === 0) {
+      console.log('[handleImageUpload] No files selected')
+      return
+    }
 
     const file = files[0]
+    console.log('[handleImageUpload] File selected:', {
+      name: file.name,
+      size: file.size,
+      type: file.type,
+    })
+    
     if (file.size > 5 * 1024 * 1024) {
       showToast('Payload Exceeds 5MB Limit', 'error')
+      return
+    }
+
+    // Check if we already have 3 images
+    const currentImages = formData.images || []
+    if (currentImages.length >= 3) {
+      showToast('Maximum 3 images allowed', 'error')
       return
     }
 
@@ -159,23 +175,43 @@ export default function ProductForm({ initialData }: ProductFormProps) {
     setIsLoading(true)
 
     try {
+      console.log('[handleImageUpload] Uploading file to /api/admin/upload')
       const res = await fetch('/api/admin/upload', {
         method: 'POST',
         body: formDataUpload,
       })
+      
+      console.log('[handleImageUpload] Upload response status:', res.status)
+      
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ error: 'Unknown error' }))
+        console.error('[handleImageUpload] Upload failed:', errorData)
+        showToast(`Upload Failed: ${errorData.error || res.statusText}`, 'error')
+        return
+      }
+      
       const data = await res.json()
-      if (data.success) {
+      console.log('[handleImageUpload] Upload response data:', data)
+      
+      if (data.success && data.url) {
+        const newImages = [...currentImages, data.url]
+        console.log('[handleImageUpload] Adding image to formData. New images:', newImages)
         setFormData(prev => ({
           ...prev,
-          images: [...(prev.images || []), data.url]
+          images: newImages
         }))
         showToast('Optical Data Ingested', 'success')
+      } else {
+        console.error('[handleImageUpload] Upload response missing success or url:', data)
+        showToast('Upload Failed: Invalid response', 'error')
       }
-    } catch (error) {
-      showToast('Ingestion Failed', 'error')
-      console.error('Upload error:', error)
+    } catch (error: any) {
+      console.error('[handleImageUpload] Upload error:', error)
+      showToast(`Ingestion Failed: ${error.message || 'Unknown error'}`, 'error')
     } finally {
       setIsLoading(false)
+      // Reset the input so the same file can be selected again
+      e.target.value = ''
     }
   }
 
@@ -356,31 +392,58 @@ export default function ProductForm({ initialData }: ProductFormProps) {
             </div>
 
             <div className="space-y-6">
+              {/* Debug info - remove in production */}
+              {process.env.NODE_ENV === 'development' && (
+                <div className="p-2 bg-gray-900 text-xs text-gray-500 font-mono">
+                  Images count: {formData.images?.length || 0} | Images: {JSON.stringify(formData.images || [])}
+                </div>
+              )}
+              
               <div className="grid grid-cols-2 gap-4">
-                {formData.images?.map((img, i) => (
-                  <div key={i} className="relative aspect-square border border-gray-800 grayscale hover:grayscale-0 transition-all">
-                    <img src={img} alt="" className="w-full h-full object-cover" />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const newImgs = formData.images?.filter((_, index) => index !== i)
-                        setFormData({ ...formData, images: newImgs })
-                      }}
-                      className="absolute top-2 right-2 p-1.5 bg-black/80 text-red-500 hover:text-white transition-colors"
-                    >
-                      <Trash2 className="w-3 h-3" />
-                    </button>
+                {formData.images && formData.images.length > 0 && formData.images.map((img, i) => (
+                  <div key={i} className="relative aspect-square border border-gray-800 grayscale hover:grayscale-0 transition-all bg-dark-lighter overflow-hidden">
+                    {img && img.trim() !== '' ? (
+                      <>
+                        <img src={img} alt={`Product image ${i + 1}`} className="w-full h-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newImgs = (formData.images || []).filter((_, index) => index !== i)
+                            console.log('[ProductForm] Removing image at index', i, 'New images:', newImgs)
+                            setFormData(prev => ({ ...prev, images: newImgs }))
+                          }}
+                          className="absolute top-2 right-2 p-1.5 bg-black/80 text-red-500 hover:text-white transition-colors z-10"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </button>
+                      </>
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span className="text-[8px] text-gray-700">Invalid image URL</span>
+                      </div>
+                    )}
                   </div>
                 ))}
                 {(!formData.images || formData.images.length < 3) && (
                   <label className="aspect-square border-2 border-dashed border-gray-800 flex flex-col items-center justify-center cursor-pointer hover:border-primary/30 hover:bg-primary/5 transition-all group">
                     <Upload className="w-6 h-6 text-gray-600 group-hover:text-primary transition-colors" />
                     <span className="text-[8px] text-gray-600 uppercase tracking-widest mt-2">Upload Image</span>
-                    <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
+                    <input 
+                      type="file" 
+                      className="hidden" 
+                      accept="image/*" 
+                      onChange={handleImageUpload}
+                      disabled={loading}
+                    />
+                    {loading && (
+                      <span className="text-[8px] text-primary mt-1">Uploading...</span>
+                    )}
                   </label>
                 )}
               </div>
-              <p className="text-[9px] text-gray-600 uppercase tracking-widest text-center">Max 3 images (JPG/PNG). Recommended square ratio.</p>
+              <p className="text-[9px] text-gray-600 uppercase tracking-widest text-center">
+                Max 3 images (JPG/PNG). Recommended square ratio. Current: {formData.images?.length || 0}/3
+              </p>
             </div>
           </section>
 
