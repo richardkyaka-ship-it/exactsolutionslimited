@@ -16,7 +16,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Exact Solutions Limited - Under Development',
   description: 'Exact Solutions Limited - Website Under Development',
-  // Next.js 14 App Router automatically detects icon.svg in app/ directory
+  icons: {
+    icon: '/icon.svg',
+  },
 }
 
 export default function RootLayout({
