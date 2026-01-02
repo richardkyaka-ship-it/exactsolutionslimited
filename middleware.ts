@@ -50,17 +50,13 @@ export function middleware(request: NextRequest) {
   }
 
   // 2. Production Access Control
-  // Pages allowed in PRODUCTION
+  // Pages allowed in PRODUCTION (everything else shows splash screen)
   const allowedInProduction = [
-    '/', 
-    '/contact', 
-    '/api/contact', 
-    '/admin', 
-    '/api/admin', 
-    '/products',
-    '/services',
-    '/projects',
-    '/about'
+    '/',           // Home page (splash screen)
+    '/contact',    // Contact page only
+    '/api/contact', // Contact API endpoint
+    '/admin',      // Admin routes
+    '/api/admin',  // Admin API routes
   ];
 
   // Check if current path starts with any allowed path
