@@ -46,7 +46,17 @@ export function middleware(request: NextRequest) {
 
   // 2. Production Access Control
   // Pages allowed in PRODUCTION
-  const allowedInProduction = ['/', '/contact', '/api/contact', '/admin', '/api/admin', '/products'];
+  const allowedInProduction = [
+    '/', 
+    '/contact', 
+    '/api/contact', 
+    '/admin', 
+    '/api/admin', 
+    '/products',
+    '/services',
+    '/projects',
+    '/about'
+  ];
 
   // Check if current path starts with any allowed path
   const isAllowed = allowedInProduction.some(path =>
