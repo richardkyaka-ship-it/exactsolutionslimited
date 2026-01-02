@@ -74,8 +74,8 @@ const itemVariants: Variants = {
 export default function Navigation() {
   const pathname = usePathname()
 
-  // Hide global navigation on admin routes
-  if (pathname.startsWith('/admin')) {
+  // Hide global navigation on admin routes and splash screen
+  if (pathname.startsWith('/admin') || pathname === '/splash') {
     return null
   }
 

@@ -52,7 +52,8 @@ export function middleware(request: NextRequest) {
   // 2. Production Access Control
   // Pages allowed in PRODUCTION (everything else shows splash screen)
   const allowedInProduction = [
-    '/',           // Home page (splash screen)
+    '/',           // Home page (normal home page)
+    '/splash',     // Splash screen route (for restricted pages)
     '/contact',    // Contact page only
     '/api/contact', // Contact API endpoint
     '/admin',      // Admin routes
@@ -65,9 +66,8 @@ export function middleware(request: NextRequest) {
   );
 
   if (process.env.NODE_ENV === 'production' && !isAllowed) {
-    // REWRITE to home page (splash) while keeping the URL
-    // This allows the SplashScreen component to see the original pathname
-    return NextResponse.rewrite(new URL('/', request.url));
+    // REWRITE to splash page while keeping the original URL
+    return NextResponse.rewrite(new URL('/splash', request.url));
   }
 
   // Allow access in all other cases (development, allowed pages)
