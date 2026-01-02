@@ -5,6 +5,9 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Lock, ShieldCheck, AlertCircle, Clock } from 'lucide-react'
 
+// Force dynamic rendering to avoid prerendering errors with useSearchParams
+export const dynamic = 'force-dynamic'
+
 export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(false)
