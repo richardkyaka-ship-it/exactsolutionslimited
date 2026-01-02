@@ -29,6 +29,7 @@ export default function ProductForm({ initialData }: ProductFormProps) {
       applications: [''],
       installationReqs: '',
       images: [] as string[],
+      availabilityStatus: 'Certified & Available',
       active: true,
       featured: false,
     };

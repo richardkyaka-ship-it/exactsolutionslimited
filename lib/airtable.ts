@@ -497,14 +497,16 @@ export function airtableToProduct(record: AirtableProduct | null | undefined): P
   let fullSpecs: Record<string, string> = {};
   let applications: string[] = [];
   let installationReqs = '';
+  let availabilityStatus = 'Certified & Available'; // Default status
   
   if (fields[FIELD_NAMES.NOTES]) {
     try {
-      // Try to parse Notes as JSON containing fullSpecs, applications, installationReqs
+      // Try to parse Notes as JSON containing fullSpecs, applications, installationReqs, availabilityStatus
       const notesData = JSON.parse(fields[FIELD_NAMES.NOTES]);
       if (notesData.fullSpecs) fullSpecs = notesData.fullSpecs;
       if (notesData.applications) applications = Array.isArray(notesData.applications) ? notesData.applications : [];
       if (notesData.installationReqs) installationReqs = notesData.installationReqs;
+      if (notesData.availabilityStatus) availabilityStatus = notesData.availabilityStatus;
     } catch {
       // If not JSON, treat Notes as plain text (could be installation requirements)
       installationReqs = fields[FIELD_NAMES.NOTES];
@@ -548,6 +550,7 @@ export function airtableToProduct(record: AirtableProduct | null | undefined): P
     installationReqs,
     images,
     whatsappMessage: fields[FIELD_NAMES.WHATSAPP_MESSAGE] || fields['WhatsApp Message'] || '',
+    availabilityStatus,
     active: (fields[FIELD_NAMES.STATUS] || fields.Status) === 'Active',
     featured: fields[FIELD_NAMES.FEATURED] ?? fields.Featured ?? false,
     createdAt: record.createdTime,
@@ -593,7 +596,7 @@ export function productToAirtable(product: Partial<Product>): any {
     }
   }
   
-  // Store Full Specs, Applications, Installation Requirements in Notes field as JSON
+  // Store Full Specs, Applications, Installation Requirements, Availability Status in Notes field as JSON
   // Only include Notes field if there's actual data to store (don't send empty Notes)
   const notesData: any = {};
   if (product.fullSpecs !== undefined && Object.keys(product.fullSpecs).length > 0) {
@@ -607,6 +610,9 @@ export function productToAirtable(product: Partial<Product>): any {
   }
   if (product.installationReqs !== undefined && product.installationReqs.trim() !== '') {
     notesData.installationReqs = product.installationReqs.trim();
+  }
+  if (product.availabilityStatus !== undefined && product.availabilityStatus.trim() !== '') {
+    notesData.availabilityStatus = product.availabilityStatus.trim();
   }
   
   // Send Notes field if there's data to store

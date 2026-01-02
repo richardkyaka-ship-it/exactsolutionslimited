@@ -18,6 +18,7 @@ export interface Product {
   installationReqs: string;
   images: string[];
   whatsappMessage?: string;
+  availabilityStatus?: string; // e.g., "Certified & Available", "In Stock", "Out of Stock", etc.
   active: boolean;
   featured: boolean;
   createdAt: string;

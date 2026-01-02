@@ -46,7 +46,7 @@ export default function SingleProductClient({ product }: { product: Product }) {
 
                         <div className="flex flex-col items-start md:items-end gap-4">
                             <div className="px-4 py-2 border border-gray-900 bg-dark-light text-[10px] text-gray-400 font-mono tracking-widest uppercase">
-                                Status: <span className="text-primary">Certified & Available</span>
+                                Status: <span className="text-primary">{product.availabilityStatus || 'Certified & Available'}</span>
                             </div>
                         </div>
                     </div>
