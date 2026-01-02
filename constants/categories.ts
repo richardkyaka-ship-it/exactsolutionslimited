@@ -19,10 +19,10 @@ export const CATEGORIES = [
   },
   {
     id: 'metal',
-    name: 'Metal Fabrication',
+    name: 'Building & Construction',
     icon: Building2,
-    slug: 'metal-fabrication',
-    description: 'Custom metal and fabrication work',
+    slug: 'building-construction',
+    description: 'Building and construction materials and solutions',
     color: 'gray',
   },
 ] as const;

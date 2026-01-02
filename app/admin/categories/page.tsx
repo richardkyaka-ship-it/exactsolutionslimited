@@ -134,7 +134,7 @@ export default function CategoriesPage() {
       <div className="mt-8 flex items-start gap-4 p-6 border border-gray-900 bg-black/30">
         <Info className="w-5 h-5 text-gray-600 flex-shrink-0" />
         <p className="text-xs text-gray-500 leading-relaxed uppercase tracking-wider">
-          Categories are fixed and managed in code. The three service categories (Generators & Power, Shipping Containers, Metal Fabrication) represent the core business divisions and cannot be modified through this interface.
+          Categories are fixed and managed in code. The three service categories (Generators & Power, Shipping Containers, Building & Construction) represent the core business divisions and cannot be modified through this interface.
         </p>
       </div>
 
