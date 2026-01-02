@@ -5,8 +5,6 @@ import { motion } from 'framer-motion'
 import PhilosophySection from '@/components/about/PhilosophySection'
 import TimelineSection from '@/components/about/TimelineSection'
 import CapabilityMatrix from '@/components/about/CapabilityMatrix'
-import TeamSection from '@/components/about/TeamSection'
-import FootprintSection from '@/components/about/FootprintSection'
 import Link from 'next/link'
 
 export default function AboutPageClient() {
@@ -64,8 +62,6 @@ export default function AboutPageClient() {
       <PhilosophySection />
       <TimelineSection />
       <CapabilityMatrix />
-      <TeamSection />
-      <FootprintSection />
 
       {/* Final Dossier Footer / CTA */}
       <section className="px-6 md:px-12 lg:px-20 py-32 md:py-48 bg-dark-lighter">

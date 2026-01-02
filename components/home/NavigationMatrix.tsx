@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Zap, Container, Factory } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter, usePathname } from 'next/navigation'
 
 const PANELS = [
   {
@@ -35,6 +36,42 @@ const PANELS = [
 ]
 
 export default function NavigationMatrix() {
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const handlePanelClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // Only handle special scrolling for containers section
+    if (href === '/services#containers-reefers') {
+      e.preventDefault()
+      
+      if (pathname === '/services') {
+        // Already on services page, just scroll to section
+        const element = document.getElementById('containers-reefers')
+        if (element) {
+          // Add a small offset for better visibility
+          const yOffset = -80
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
+          window.scrollTo({ top: y, behavior: 'smooth' })
+        }
+      } else {
+        // Navigate to services page with hash, then scroll after page loads
+        router.push('/services#containers-reefers')
+        // Use requestAnimationFrame to wait for DOM update
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            const element = document.getElementById('containers-reefers')
+            if (element) {
+              const yOffset = -80
+              const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
+              window.scrollTo({ top: y, behavior: 'smooth' })
+            }
+          }, 300)
+        })
+      }
+    }
+    // For other links, let default behavior handle it
+  }
+
   return (
     <section className="bg-black border-y border-gray-900">
       <div className="grid grid-cols-1 lg:grid-cols-3">
@@ -44,6 +81,7 @@ export default function NavigationMatrix() {
             <Link 
               key={panel.id} 
               href={panel.href}
+              onClick={(e) => handlePanelClick(e, panel.href)}
               className={`relative group h-[320px] sm:h-[400px] md:h-[600px] border-gray-900 transition-all duration-500 overflow-hidden flex flex-col justify-end p-6 sm:p-8 md:p-12 ${
                 index !== PANELS.length - 1 ? 'border-b lg:border-b-0 lg:border-r' : ''
               }`}

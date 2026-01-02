@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import ServiceSection from '@/components/services/ServiceSection'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -102,6 +102,27 @@ const SERVICES_DATA = [
 ]
 
 export default function ServicesPageClient() {
+  // Handle hash scrolling when page loads or hash changes
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '')
+    if (hash) {
+      // Wait for DOM to be ready, then scroll
+      const scrollToSection = () => {
+        const element = document.getElementById(hash)
+        if (element) {
+          const yOffset = -80 // Offset for better visibility
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
+          window.scrollTo({ top: y, behavior: 'smooth' })
+        }
+      }
+      
+      // Try immediately, then retry after a short delay to ensure DOM is ready
+      scrollToSection()
+      setTimeout(scrollToSection, 100)
+      setTimeout(scrollToSection, 500)
+    }
+  }, [])
+
   return (
     <main className="bg-black text-white selection:bg-primary selection:text-white">
       {/* Editorial Hero Section */}
