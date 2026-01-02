@@ -15,6 +15,11 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const userAgent = request.headers.get('user-agent') || undefined;
 
+  // Skip middleware for static assets (favicons, icons, etc.)
+  if (pathname === '/icon.svg' || pathname === '/favicon.ico' || pathname.startsWith('/_next/static') || pathname.startsWith('/_next/image')) {
+    return NextResponse.next();
+  }
+
   // 1. Admin Protection with PROPER SESSION VALIDATION
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
     const sessionToken = request.cookies.get('exact_admin_session')?.value;
@@ -75,5 +80,5 @@ export function middleware(request: NextRequest) {
 
 // Apply to all routes except static files
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|public/).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|icon.svg|icon.ico|apple-icon.png|public/).*)'],
 };

@@ -17,7 +17,9 @@ export const metadata: Metadata = {
   title: 'Exact Solutions Limited - Under Development',
   description: 'Exact Solutions Limited - Website Under Development',
   icons: {
-    icon: '/icon.svg',
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
     shortcut: '/icon.svg',
     apple: '/icon.svg',
   },
