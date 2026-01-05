@@ -55,6 +55,7 @@ export function middleware(request: NextRequest) {
     '/splash',     // Splash screen route (for restricted pages)
     '/contact',    // Contact page only
     '/api/contact', // Contact API endpoint
+    '/zohoverify', // Zoho domain verification
     '/admin',      // Admin routes
     '/api/admin',  // Admin API routes
   ];
