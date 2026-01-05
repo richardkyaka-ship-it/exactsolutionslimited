@@ -15,8 +15,8 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const userAgent = request.headers.get('user-agent') || undefined;
 
-  // Skip middleware for static assets and verification files (favicons, icons, zoho verification, etc.)
-  if (pathname === '/icon.svg' || pathname === '/favicon.ico' || pathname.startsWith('/_next/static') || pathname.startsWith('/_next/image') || pathname.startsWith('/zohoverify')) {
+  // Skip middleware for static assets (favicons, icons, etc.)
+  if (pathname === '/icon.svg' || pathname === '/favicon.ico' || pathname.startsWith('/_next/static') || pathname.startsWith('/_next/image')) {
     return NextResponse.next();
   }
 
@@ -55,7 +55,6 @@ export function middleware(request: NextRequest) {
     '/splash',     // Splash screen route (for restricted pages)
     '/contact',    // Contact page only
     '/api/contact', // Contact API endpoint
-    '/zohoverify', // Zoho domain verification
     '/admin',      // Admin routes
     '/api/admin',  // Admin API routes
   ];
@@ -74,7 +73,7 @@ export function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-// Apply to all routes except static files and verification files
+// Apply to all routes except static files
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|icon.svg|icon.ico|apple-icon.png|zohoverify|public/).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|icon.svg|icon.ico|apple-icon.png|public/).*)'],
 };
