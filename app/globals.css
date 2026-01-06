@@ -116,6 +116,13 @@ input[type="radio"]:checked::after {
   will-change: transform, opacity;
 }
 
+/* Premium Page Transition Overlay */
+.page-transition-overlay {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: opacity;
+}
+
 /* Add INSTANT visual feedback on click */
 button,
 a {
