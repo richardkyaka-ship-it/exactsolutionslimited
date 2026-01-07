@@ -69,7 +69,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <AdminProvider>
       <SessionManager />
-      <div className="min-h-screen bg-black text-white flex flex-col md:flex-row">
+      <div className="min-h-screen bg-dark text-dark-text-primary flex flex-col md:flex-row">
         {/* Sidebar (Desktop) */}
         <aside className="admin-sidebar w-64 border-r border-gray-900 bg-dark-light hidden md:flex flex-col h-screen sticky top-0">
           <div className="p-8 border-b border-gray-900">

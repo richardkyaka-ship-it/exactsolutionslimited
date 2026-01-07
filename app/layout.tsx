@@ -32,7 +32,33 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var path = window.location.pathname;
+                  var isAdmin = path.startsWith('/admin');
+                  if (isAdmin) {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.style.backgroundColor = '#1a1a1a';
+                  } else {
+                    var theme = localStorage.getItem('theme');
+                    var shouldBeDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches) || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                    if (shouldBeDark) {
+                      document.documentElement.classList.add('dark');
+                    } else {
+                      document.documentElement.classList.remove('dark');
+                    }
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={`${inter.variable} font-inter antialiased bg-light dark:bg-dark text-light-text dark:text-dark-text-primary min-h-screen overflow-x-hidden`} suppressHydrationWarning>
         <ThemeProvider>
           <SWRProvider>
