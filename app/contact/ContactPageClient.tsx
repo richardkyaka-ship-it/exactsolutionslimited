@@ -1,6 +1,7 @@
 'use client'
 
 import { motion, Variants } from 'framer-motion'
+import { MapPin, ExternalLink } from 'lucide-react'
 import ContactForm from '@/components/contact/ContactForm'
 import ContactInfo from '@/components/contact/ContactInfo'
 
@@ -40,95 +41,177 @@ const fadeInVariants: Variants = {
 
 export default function ContactPageClient() {
   return (
-    <main className="min-h-screen bg-black text-white">
-      <div className="max-w-[1800px] mx-auto">
-        {/* Section 01: Hero */}
-        <section className="px-6 md:px-12 lg:px-20 pt-24 md:pt-32 pb-24 md:pb-32">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="mb-16 md:mb-24"
-          >
-            <motion.div variants={itemVariants} className="flex items-baseline gap-4 mb-3">
-              <span className="text-[10px] text-primary font-medium tracking-[0.3em] uppercase">01</span>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-white tracking-tight">
-                Contact Us
-              </h1>
-            </motion.div>
+    <main className="min-h-screen bg-black text-white relative overflow-hidden">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
+        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <pattern id="contact-grid" width="10" height="10" patternUnits="userSpaceOnUse">
+              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.1" />
+            </pattern>
+          </defs>
+          <rect width="100" height="100" fill="url(#contact-grid)" />
+        </svg>
+      </div>
+
+      <div className="max-w-[1800px] mx-auto relative z-10">
+        {/* Section 01: Hero & Contact */}
+        <section className="px-6 md:px-12 lg:px-20 pt-24 md:pt-32 pb-24 md:pb-32 lg:pb-48">
+          <div className="max-w-[1400px] mx-auto">
             <motion.div
-              variants={fadeInVariants}
+              variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="h-px w-16 bg-primary/40 mt-6"
-            />
-            <motion.div variants={itemVariants} className="mt-6">
-              <p className="text-sm text-gray-500">
-                Get in touch with our industrial solutions team
-              </p>
-              <p className="text-sm text-gray-500 mt-4 max-w-2xl">
-                Have a project in mind? Describe your requirements and we'll provide exact solutions tailored to your needs.
-              </p>
+              className="mb-16 md:mb-24 lg:mb-32"
+            >
+              <motion.div variants={itemVariants} className="flex items-baseline gap-3 md:gap-4 mb-3 md:mb-4">
+                <span className="text-[11.5px] text-primary font-mono tracking-[0.4em] uppercase">01</span>
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[0.95] tracking-tight uppercase">
+                  Contact Us
+                </h1>
+              </motion.div>
+              <motion.div
+                variants={fadeInVariants}
+                initial="hidden"
+                animate="visible"
+                className="h-px w-16 md:w-20 bg-gradient-to-r from-primary/60 to-transparent mt-4 md:mt-6 mb-4 md:mb-6"
+              />
+              <motion.div variants={itemVariants} className="max-w-3xl">
+                <p className="text-sm sm:text-base md:text-lg text-gray-400 font-light leading-relaxed">
+                  Get in touch with our industrial solutions team. Have a project in mind? Describe your requirements and we'll provide exact solutions tailored to your needs.
+                </p>
+              </motion.div>
             </motion.div>
-          </motion.div>
 
-          {/* Two-Column Layout */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="max-w-7xl mx-auto"
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 md:gap-16 lg:gap-20">
-              {/* Left Column: Contact Form (2/3) */}
-              <motion.div variants={itemVariants} className="lg:col-span-2">
-                <ContactForm />
+            {/* Enhanced Two-Column Layout with Premium Styling */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 lg:gap-16">
+              {/* Left Column: Contact Form (8 cols) - First on Mobile */}
+              <motion.div variants={itemVariants} className="lg:col-span-8 order-1">
+                <div className="relative">
+                  {/* Subtle accent border */}
+                  <div className="absolute -left-4 top-0 bottom-0 w-px bg-gradient-to-b from-primary/20 via-primary/40 to-transparent hidden lg:block"></div>
+                  <ContactForm />
+                </div>
               </motion.div>
 
-              {/* Right Column: Contact Info (1/3) */}
-              <motion.div variants={itemVariants} className="lg:col-span-1">
-                <ContactInfo />
+              {/* Right Column: Contact Info (4 cols) - Hidden on Mobile, Visible on Desktop */}
+              <motion.div variants={itemVariants} className="hidden lg:block lg:col-span-4">
+                <div className="lg:sticky lg:top-32">
+                  <ContactInfo />
+                </div>
               </motion.div>
             </div>
           </motion.div>
+          </div>
         </section>
 
-        {/* Section 02: Location (Optional) */}
-        <div className="h-px bg-gray-900"></div>
+        {/* Section 02: Location - Premium Redesign */}
+        <div className="h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent"></div>
         <motion.section
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="px-6 md:px-12 lg:px-20 py-24 md:py-32"
+          className="px-6 md:px-12 lg:px-20 py-24 md:py-32 lg:py-48 relative overflow-hidden"
         >
-          <motion.div variants={itemVariants} className="mb-16">
-            <div className="flex items-baseline gap-4 mb-3">
-              <span className="text-[10px] text-primary font-medium tracking-[0.3em] uppercase">02</span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white tracking-tight">
-                Our Location
-              </h2>
-            </div>
-            <motion.div
-              variants={fadeInVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="h-px w-16 bg-primary/40 mt-6"
-            />
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="max-w-4xl">
-            <div className="bg-dark-lighter border border-gray-800 h-64 md:h-96 flex items-center justify-center mb-6">
-              <p className="text-sm text-gray-500">Google Maps placeholder</p>
-            </div>
-            <div>
-              <p className="text-sm text-white mb-2">Nairobi, Kenya</p>
-              <p className="text-xs text-gray-500">
-                Serving clients across Kenya and East Africa
+          {/* Subtle background accent */}
+          <div className="absolute right-0 top-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none"></div>
+          
+          <div className="max-w-[1400px] mx-auto relative z-10">
+            <motion.div variants={itemVariants} className="mb-12 md:mb-16 lg:mb-24">
+              <div className="flex items-baseline gap-3 md:gap-4 mb-3 md:mb-4">
+                <span className="text-[11.5px] text-primary font-mono tracking-[0.4em] uppercase">02</span>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[0.95] tracking-tight uppercase">
+                  Our Location
+                </h2>
+              </div>
+              <motion.div
+                variants={fadeInVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="h-px w-16 md:w-20 bg-gradient-to-r from-primary/60 to-transparent mt-4 md:mt-6 mb-4 md:mb-6"
+              />
+              <p className="text-sm sm:text-base md:text-lg text-gray-400 font-light max-w-2xl">
+                Visit our headquarters in Nairobi, Kenya. We serve clients across Kenya and East Africa.
               </p>
-            </div>
-          </motion.div>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="w-full">
+              {/* Location Details - Premium Expanded Card */}
+              <div className="relative p-8 sm:p-10 md:p-12 lg:p-14 border-2 border-gray-800 bg-dark-lighter/50 hover:bg-dark-lighter hover:border-primary/30 transition-all duration-500 group overflow-hidden">
+                {/* Subtle grid pattern */}
+                <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
+                  <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <defs>
+                      <pattern id="location-grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.1" />
+                      </pattern>
+                    </defs>
+                    <rect width="100" height="100" fill="url(#location-grid)" />
+                  </svg>
+                </div>
+                
+                <div className="relative z-10">
+                  {/* Header */}
+                  <div className="flex items-center gap-4 mb-8 md:mb-10">
+                    <div className="w-12 h-12 md:w-14 md:h-14 border-2 border-gray-800 flex items-center justify-center group-hover:border-primary transition-colors duration-300">
+                      <MapPin className="w-6 h-6 md:w-7 md:h-7 text-primary" />
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="h-px w-12 md:w-16 bg-primary/40"></div>
+                      <span className="text-[11.5px] md:text-sm text-primary font-mono tracking-[0.4em] uppercase">Address</span>
+                    </div>
+                  </div>
+                  
+                  {/* Location Content */}
+                  <div className="space-y-6 md:space-y-8">
+                    {/* Main Location */}
+                    <div>
+                      <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white mb-5 md:mb-6 group-hover:text-primary transition-colors duration-300 leading-tight">
+                        Nairobi, Kenya
+                      </h3>
+                      
+                      {/* Detailed Address */}
+                      <div className="space-y-3 md:space-y-4 pl-0 md:pl-6 border-l-0 md:border-l border-gray-800 md:border-primary/20">
+                        <p className="text-base sm:text-lg md:text-xl text-gray-300 font-light leading-relaxed">
+                          Behind Astrol Petrol Station, Utawala.
+                        </p>
+                        <p className="text-base sm:text-lg md:text-xl text-gray-300 font-light leading-relaxed">
+                          Along the Eastern Bypass
+                        </p>
+                      </div>
+                    </div>
+                    
+                    {/* Description */}
+                    <div className="pt-5 md:pt-6 border-t border-gray-800">
+                      <p className="text-sm sm:text-base md:text-lg text-gray-400 leading-relaxed">
+                        Our headquarters is located in Nairobi, serving clients across Kenya and East Africa.
+                      </p>
+                    </div>
+                    
+                    {/* Get Directions CTA */}
+                    <div className="pt-6 md:pt-8 border-t border-gray-800">
+                      <a
+                        href="https://maps.app.goo.gl/DAktGxDSZVFnMbrL7"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-3 px-6 py-3 md:px-8 md:py-4 border-2 border-primary/30 hover:border-primary bg-primary/5 hover:bg-primary/10 transition-all duration-500 group/link"
+                      >
+                        <span className="text-sm md:text-base text-primary font-light">Get Directions</span>
+                        <ExternalLink className="w-4 h-4 md:w-5 md:h-5 text-primary group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform duration-300" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </motion.section>
       </div>
     </main>

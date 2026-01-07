@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
+import { motion } from 'framer-motion'
 import { Send } from 'lucide-react'
 
 const SERVICE_CATEGORIES = [
@@ -144,19 +145,23 @@ export default function ContactForm() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h3 className="text-2xl md:text-3xl font-medium text-white mb-2">
+      <div className="mb-6 sm:mb-8 md:mb-12">
+        <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <div className="h-px w-8 sm:w-12 bg-primary/40"></div>
+          <span className="text-[11.5px] text-primary font-mono tracking-[0.4em] uppercase">Contact Form</span>
+        </div>
+        <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white mb-2 sm:mb-3 leading-[0.95] tracking-tight uppercase">
           Send a Message
         </h3>
-        <p className="text-sm text-gray-500">
+        <p className="text-xs sm:text-sm md:text-base text-gray-400 font-light">
           We'll respond within 24 hours
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6 md:space-y-8">
         {/* Full Name */}
-        <div>
-          <label htmlFor="fullName" className="block text-sm text-gray-400 mb-2">
+        <div className="group">
+          <label htmlFor="fullName" className="block text-xs sm:text-sm text-gray-400 mb-2 font-light">
             Full Name <span className="text-primary">*</span>
           </label>
           <input
@@ -165,19 +170,19 @@ export default function ContactForm() {
             value={formData.fullName}
             onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
             onBlur={() => handleBlur('fullName')}
-            className={`w-full px-4 py-3 bg-dark-lighter border ${
+            className={`w-full px-4 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 bg-dark-lighter border ${
               errors.fullName ? 'border-red-500' : 'border-gray-800'
-            } text-white focus:outline-none focus:border-primary transition-colors`}
+            } text-white text-sm sm:text-base font-light focus:outline-none focus:border-primary transition-all duration-300 group-hover:border-gray-700`}
             required
           />
           {errors.fullName && (
-            <p className="mt-1 text-xs text-red-500">{errors.fullName}</p>
+            <p className="mt-2 text-xs text-red-500">{errors.fullName}</p>
           )}
         </div>
 
         {/* Company */}
-        <div>
-          <label htmlFor="company" className="block text-sm text-gray-400 mb-2">
+        <div className="group">
+          <label htmlFor="company" className="block text-xs sm:text-sm text-gray-400 mb-2 font-light">
             Company
           </label>
           <input
@@ -185,13 +190,13 @@ export default function ContactForm() {
             id="company"
             value={formData.company}
             onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-            className="w-full px-4 py-3 bg-dark-lighter border border-gray-800 text-white focus:outline-none focus:border-primary transition-colors"
+            className="w-full px-4 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 bg-dark-lighter border border-gray-800 text-white text-sm sm:text-base font-light focus:outline-none focus:border-primary transition-all duration-300 group-hover:border-gray-700"
           />
         </div>
 
         {/* Email */}
-        <div>
-          <label htmlFor="email" className="block text-sm text-gray-400 mb-2">
+        <div className="group">
+          <label htmlFor="email" className="block text-xs sm:text-sm text-gray-400 mb-2 font-light">
             Email <span className="text-primary">*</span>
           </label>
           <input
@@ -200,19 +205,19 @@ export default function ContactForm() {
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             onBlur={() => handleBlur('email')}
-            className={`w-full px-4 py-3 bg-dark-lighter border ${
+            className={`w-full px-4 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 bg-dark-lighter border ${
               errors.email ? 'border-red-500' : 'border-gray-800'
-            } text-white focus:outline-none focus:border-primary transition-colors`}
+            } text-white text-sm sm:text-base font-light focus:outline-none focus:border-primary transition-all duration-300 group-hover:border-gray-700`}
             required
           />
           {errors.email && (
-            <p className="mt-1 text-xs text-red-500">{errors.email}</p>
+            <p className="mt-2 text-xs text-red-500">{errors.email}</p>
           )}
         </div>
 
         {/* Phone */}
-        <div>
-          <label htmlFor="phone" className="block text-sm text-gray-400 mb-2">
+        <div className="group">
+          <label htmlFor="phone" className="block text-xs sm:text-sm text-gray-400 mb-2 font-light">
             Phone
           </label>
           <input
@@ -222,25 +227,25 @@ export default function ContactForm() {
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             onBlur={() => handleBlur('phone')}
             placeholder="+254 720 000 000"
-            className={`w-full px-4 py-3 bg-dark-lighter border ${
+            className={`w-full px-4 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 bg-dark-lighter border ${
               errors.phone ? 'border-red-500' : 'border-gray-800'
-            } text-white focus:outline-none focus:border-primary transition-colors`}
+            } text-white text-sm sm:text-base font-light placeholder:text-gray-600 focus:outline-none focus:border-primary transition-all duration-300 group-hover:border-gray-700`}
           />
           {errors.phone && (
-            <p className="mt-1 text-xs text-red-500">{errors.phone}</p>
+            <p className="mt-2 text-xs text-red-500">{errors.phone}</p>
           )}
         </div>
 
         {/* Service Category - Radio Buttons */}
         <div>
-          <label className="block text-sm text-gray-400 mb-3">
+          <label className="block text-xs sm:text-sm text-gray-400 mb-3 sm:mb-4 font-light">
             Service Category <span className="text-primary">*</span>
           </label>
-          <div className="space-y-3">
+          <div className="space-y-2">
             {SERVICE_CATEGORIES.map((category) => (
               <label
                 key={category}
-                className="flex items-center gap-3 cursor-pointer group"
+                className="flex items-center gap-3 sm:gap-4 cursor-pointer group p-3 sm:p-3 border border-gray-800 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
               >
                 <input
                   type="radio"
@@ -249,23 +254,23 @@ export default function ContactForm() {
                   checked={formData.serviceCategory === category}
                   onChange={(e) => setFormData({ ...formData, serviceCategory: e.target.value })}
                   onBlur={() => handleBlur('serviceCategory')}
-                  className="w-4 h-4 border border-gray-800 bg-dark-lighter focus:outline-none focus:border-primary cursor-pointer radio-custom"
+                  className="w-4 h-4 border border-gray-800 bg-dark-lighter focus:outline-none focus:border-primary cursor-pointer radio-custom group-hover:border-primary/50 transition-colors flex-shrink-0"
                   required
                 />
-                <span className="text-sm text-gray-300 group-hover:text-white transition-colors">
+                <span className="text-xs sm:text-sm text-gray-300 group-hover:text-white font-light transition-colors">
                   {category}
                 </span>
               </label>
             ))}
           </div>
           {errors.serviceCategory && (
-            <p className="mt-2 text-xs text-red-500">{errors.serviceCategory}</p>
+            <p className="mt-3 text-xs text-red-500">{errors.serviceCategory}</p>
           )}
         </div>
 
         {/* Message */}
-        <div>
-          <label htmlFor="message" className="block text-sm text-gray-400 mb-2">
+        <div className="group">
+          <label htmlFor="message" className="block text-xs sm:text-sm text-gray-400 mb-2 font-light">
             Message <span className="text-primary">*</span>
           </label>
           <textarea
@@ -273,15 +278,15 @@ export default function ContactForm() {
             value={formData.message}
             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
             onBlur={() => handleBlur('message')}
-            rows={6}
+            rows={5}
             minLength={10}
-            className={`w-full px-4 py-3 bg-dark-lighter border ${
+            className={`w-full px-4 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 bg-dark-lighter border ${
               errors.message ? 'border-red-500' : 'border-gray-800'
-            } text-white focus:outline-none focus:border-primary transition-colors resize-none`}
+            } text-white text-sm sm:text-base font-light focus:outline-none focus:border-primary transition-all duration-300 resize-none group-hover:border-gray-700`}
             required
           />
           {errors.message && (
-            <p className="mt-1 text-xs text-red-500">{errors.message}</p>
+            <p className="mt-2 text-xs text-red-500">{errors.message}</p>
           )}
         </div>
 
@@ -289,35 +294,46 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full px-6 py-4 bg-primary text-white border border-primary hover:bg-primary-dark transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="group w-full px-5 py-4 sm:px-6 sm:py-4 md:py-5 bg-primary text-white border-2 border-primary hover:bg-primary/90 hover:border-primary/80 transition-all duration-500 flex items-center justify-center gap-2 sm:gap-3 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden"
         >
-          {isSubmitting ? (
-            <>
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              <span>Sending...</span>
-            </>
-          ) : (
-            <>
-              <span>Send Message</span>
-              <Send className="w-4 h-4" />
-            </>
-          )}
+          <span className="relative z-10 font-light text-sm sm:text-base md:text-lg">
+            {isSubmitting ? (
+              <>
+                <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin inline-block mr-2 sm:mr-3" />
+                Sending...
+              </>
+            ) : (
+              <>
+                Send Message
+                <Send className="w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+              </>
+            )}
+          </span>
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-white/0 to-primary/0 group-hover:from-primary/20 group-hover:via-white/10 group-hover:to-primary/20 transition-all duration-500"></div>
         </button>
 
         {/* Status Messages */}
         {submitStatus === 'success' && (
-          <div className="p-4 bg-green-500/10 border border-green-500/30">
-            <p className="text-sm text-green-400">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="p-4 md:p-5 bg-green-500/10 border border-green-500/30"
+          >
+            <p className="text-sm md:text-base text-green-400 font-light">
               Message sent successfully! We'll get back to you within 24 hours.
             </p>
-          </div>
+          </motion.div>
         )}
         {submitStatus === 'error' && (
-          <div className="p-4 bg-red-500/10 border border-red-500/30">
-            <p className="text-sm text-red-400">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="p-4 md:p-5 bg-red-500/10 border border-red-500/30"
+          >
+            <p className="text-sm md:text-base text-red-400 font-light">
               Something went wrong. Please try again or contact us directly.
             </p>
-          </div>
+          </motion.div>
         )}
       </form>
     </div>
