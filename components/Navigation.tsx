@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { MessageCircle, Menu, X } from 'lucide-react'
 import { motion, AnimatePresence, Variants } from 'framer-motion'
+import ThemeSwitcher from '@/components/ui/ThemeSwitcher'
 
 const NAV_ITEMS = [
   { label: 'Home', path: '/', number: '01' },
@@ -189,58 +190,70 @@ export default function Navigation() {
 
   return (
     <>
-      {/* Logo / Home Link */}
+      {/* Logo / Home Link - Premium Styling */}
       <Link
         href="/"
         className="fixed top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 z-[70] flex items-center gap-2 group touch-manipulation"
         aria-label="Exact Solutions Home"
       >
-        <div className="flex flex-col">
-          <span className="text-base sm:text-lg md:text-xl font-light tracking-tighter text-white group-hover:text-primary transition-colors duration-300">
-            EXACT<span className="font-normal text-primary group-hover:text-white transition-colors duration-300">SOLUTIONS</span>
+        <div className="flex flex-col relative">
+          {/* Subtle hover accent */}
+          <div className="absolute -left-1 top-0 bottom-0 w-px bg-primary/0 group-hover:bg-primary/40 transition-all duration-300" />
+          <span className="text-base sm:text-lg md:text-xl font-light tracking-tighter text-light-text dark:text-dark-text-primary group-hover:text-primary transition-colors duration-300">
+            EXACT<span className="font-normal text-primary group-hover:text-primary dark:group-hover:text-primary transition-colors duration-300">SOLUTIONS</span>
           </span>
-          <span className="text-[7px] sm:text-[8px] md:text-[10px] text-gray-500 uppercase tracking-[0.3em] font-light -mt-1 group-hover:text-gray-300 transition-colors duration-300">
+          <span className="text-[7px] sm:text-[8px] md:text-[10px] text-light-text-muted dark:text-dark-text-muted uppercase tracking-[0.3em] font-light -mt-1 group-hover:text-primary dark:group-hover:text-primary transition-colors duration-300">
             Limited
           </span>
         </div>
       </Link>
 
-      {/* Contact Button */}
-      <motion.button
-        onClick={handleContactClick}
-        aria-label="go to contact page"
-        className="fixed top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-[70] h-9 sm:h-10 bg-transparent border border-gray-800 flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 hover:border-primary hover:bg-primary/10 transition-colors duration-300 group touch-manipulation"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: isScrolled ? 0.8 : 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        <span className="hidden sm:inline text-xs sm:text-sm font-normal text-gray-400 group-hover:text-white transition-colors duration-300">
-          Contact
-        </span>
-        <MessageCircle className="w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-white transition-colors duration-300 flex-shrink-0" />
-      </motion.button>
-
-      {/* Menu Toggle Button */}
-      <motion.button
-        onClick={() => setIsMenuOpen(true)}
-        aria-label="open navigation menu"
-        className="fixed top-4 right-16 sm:top-6 sm:right-32 md:top-8 md:right-40 z-[70] w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex items-center justify-center group touch-manipulation"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: isScrolled ? 0.8 : 1, y: 0 }}
-        transition={{ duration: 0.2, delay: 0 }}
-      >
-        <div className="relative w-5 h-5 md:w-6 md:h-6">
-          {/* Blueprint-style dimension lines */}
-          <div className="absolute inset-0 flex flex-col justify-center">
-            <div className="h-px bg-gray-400 group-hover:bg-primary transition-colors duration-300"></div>
+      {/* Right Side Navigation Controls - Premium Grouped Layout */}
+      <div className="fixed top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-[70] flex items-center gap-2 sm:gap-3">
+          {/* Menu Toggle Button - Navigation */}
+        <motion.button
+          onClick={() => setIsMenuOpen(true)}
+          aria-label="open navigation menu"
+          className="w-9 sm:w-10 h-9 sm:h-10 bg-transparent border border-light-border dark:border-dark-border flex items-center justify-center group hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/5 transition-all duration-300 touch-manipulation rounded-sm"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: isScrolled ? 0.85 : 1, y: 0 }}
+          transition={{ duration: 0.2, delay: 0 }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <div className="relative w-5 h-5 md:w-6 md:h-6">
+            {/* Blueprint-style dimension lines */}
+            <div className="absolute inset-0 flex flex-col justify-center">
+              <div className="h-px bg-light-text-subtle dark:bg-dark-text-muted group-hover:bg-primary transition-colors duration-300"></div>
+            </div>
+            {/* Perpendicular ticks */}
+            <div className="absolute left-0 top-0 bottom-0 w-px bg-light-text-subtle dark:bg-dark-text-muted group-hover:bg-primary transition-colors duration-300"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-px bg-light-text-subtle dark:bg-dark-text-muted group-hover:bg-primary transition-colors duration-300"></div>
           </div>
-          {/* Perpendicular ticks */}
-          <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-400 group-hover:bg-primary transition-colors duration-300"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-px bg-gray-400 group-hover:bg-primary transition-colors duration-300"></div>
+        </motion.button>
+
+        {/* Contact Button */}
+        <motion.button
+          onClick={handleContactClick}
+          aria-label="go to contact page"
+          className="h-9 sm:h-10 bg-transparent border border-light-border dark:border-dark-border flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/5 transition-all duration-300 group touch-manipulation rounded-sm"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: isScrolled ? 0.85 : 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <span className="hidden sm:inline text-xs sm:text-sm font-light tracking-wide text-light-text-muted dark:text-dark-text-muted group-hover:text-primary dark:group-hover:text-primary transition-colors duration-300 uppercase">
+            Contact
+          </span>
+          <MessageCircle className="w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 text-light-text-muted dark:text-dark-text-muted group-hover:text-primary dark:group-hover:text-primary transition-colors duration-300 flex-shrink-0" />
+        </motion.button>
+
+        {/* Theme Switcher */}
+        <div className="relative">
+          <ThemeSwitcher />
         </div>
-      </motion.button>
+      </div>
 
       {/* Navigation Overlay */}
       <AnimatePresence>
@@ -253,7 +266,7 @@ export default function Navigation() {
               initial="closed"
               animate={isClosing ? "closed" : "open"}
               exit="closed"
-              className={`fixed inset-0 bg-black z-[50] ${isClosing ? 'closing' : ''}`}
+              className={`fixed inset-0 bg-light dark:bg-dark z-[50] ${isClosing ? 'closing' : ''}`}
               onClick={handleOverlayClick}
               aria-hidden="true"
               style={{
@@ -292,7 +305,7 @@ export default function Navigation() {
                 {/* Enhanced Close Button - instant feedback */}
                 <motion.button
                   onClick={handleClose}
-                  className="absolute top-8 right-8 md:top-12 md:right-12 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center z-10 text-gray-400 hover:text-white active:scale-95 active:text-primary transition-all duration-150 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                  className="absolute top-8 right-8 md:top-12 md:right-12 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center z-10 text-light-text-muted dark:text-dark-text-muted hover:text-light-text dark:hover:text-dark-text-primary active:scale-95 active:text-primary transition-all duration-150 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-light dark:focus-visible:ring-offset-black"
                   aria-label="close navigation menu"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
@@ -343,14 +356,9 @@ export default function Navigation() {
 }
 
 function NavLink({ item, isActive, onClick }: { item: typeof NAV_ITEMS[number], isActive: boolean, onClick: () => void }) {
-  const router = useRouter()
-  
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault() // Prevent default Link behavior
-    // Close menu immediately
+  const handleClick = () => {
+    // Close menu immediately - let Next.js Link handle navigation with prefetching
     onClick()
-    // Navigate immediately using router
-    router.push(item.path)
   }
   
   return (
@@ -358,7 +366,7 @@ function NavLink({ item, isActive, onClick }: { item: typeof NAV_ITEMS[number], 
       href={item.path}
       onClick={handleClick}
       prefetch={true}
-      className="group flex items-baseline gap-4 text-left w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black touch-manipulation"
+      className="group flex items-baseline gap-4 text-left w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-light dark:focus-visible:ring-offset-black touch-manipulation"
     >
       <span className="text-xs text-primary font-medium tracking-[0.3em] uppercase">
         {item.number}
@@ -372,7 +380,7 @@ function NavLink({ item, isActive, onClick }: { item: typeof NAV_ITEMS[number], 
           />
         )}
         <span
-          className="text-5xl md:text-7xl lg:text-8xl font-light text-white group-hover:text-primary transition-colors duration-300"
+          className="text-5xl md:text-7xl lg:text-8xl font-light text-light-text dark:text-dark-text-primary group-hover:text-primary dark:group-hover:text-primary transition-colors duration-300"
         >
           {item.label}
         </span>

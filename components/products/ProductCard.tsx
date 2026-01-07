@@ -20,11 +20,11 @@ export default function ProductCard({ product, onOpenSpecs }: ProductCardProps) 
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       whileHover={{ y: -5 }}
-      className="group bg-dark-light border border-gray-900 hover:border-primary/50 transition-all duration-500 flex flex-col h-full"
+      className="group bg-light-surface dark:bg-dark-light border border-light-border dark:border-dark-border hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-500 flex flex-col h-full"
     >
       {/* Image Container */}
       <div
-        className="relative aspect-square overflow-hidden bg-dark-lighter cursor-pointer"
+        className="relative aspect-square overflow-hidden bg-light-lighter dark:bg-dark-lighter cursor-pointer"
         onClick={() => onOpenSpecs(product)}
       >
         {product.images && product.images.length > 0 && product.images[0] ? (
@@ -40,8 +40,8 @@ export default function ProductCard({ product, onOpenSpecs }: ProductCardProps) 
             blurDataURL={generateBlurDataURL()}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-dark-lighter">
-            <span className="text-[10px] text-gray-700 uppercase tracking-widest font-mono">No Image</span>
+          <div className="w-full h-full flex items-center justify-center bg-light-lighter dark:bg-dark-lighter">
+            <span className="text-[10px] text-light-text-subtle dark:text-dark-text-subtle uppercase tracking-widest font-mono">No Image</span>
           </div>
         )}
         {/* Product Code Overlay */}
@@ -55,14 +55,14 @@ export default function ProductCard({ product, onOpenSpecs }: ProductCardProps) 
       {/* Content Section */}
       <div className="p-5 md:p-6 flex flex-col flex-grow">
         <div className="flex items-center gap-2 mb-4">
-          <span className="text-[8px] text-gray-500 uppercase tracking-[0.2em] font-medium bg-gray-900 px-2 py-0.5">
+          <span className="text-[8px] text-light-text-muted dark:text-dark-text-muted uppercase tracking-[0.2em] font-medium bg-light-lighter dark:bg-dark-lighter px-2 py-0.5">
             {product.category}
           </span>
-          <div className="h-px flex-grow bg-gray-900" />
+          <div className="h-px flex-grow bg-light-border dark:bg-dark-border" />
         </div>
 
         <h3
-          className="text-base md:text-lg font-light text-white uppercase tracking-tight mb-6 group-hover:text-primary transition-colors cursor-pointer line-clamp-2 min-h-[3rem] md:min-h-[3.5rem]"
+          className="text-base md:text-lg font-light text-light-text dark:text-dark-text-primary uppercase tracking-tight mb-6 group-hover:text-primary transition-colors cursor-pointer line-clamp-2 min-h-[3rem] md:min-h-[3.5rem]"
           onClick={() => onOpenSpecs(product)}
         >
           {product.name}
@@ -71,7 +71,7 @@ export default function ProductCard({ product, onOpenSpecs }: ProductCardProps) 
         {/* Key Specs */}
         <ul className="space-y-2 mb-8">
           {product.keySpecs.map((spec, i) => (
-            <li key={i} className="flex items-center gap-2 text-[10px] md:text-[11px] text-gray-400 font-mono">
+            <li key={i} className="flex items-center gap-2 text-[10px] md:text-[11px] text-light-text-muted dark:text-dark-text-muted font-mono">
               <span className="w-1 h-1 bg-primary/40 rounded-full" />
               {spec}
             </li>
@@ -86,7 +86,7 @@ export default function ProductCard({ product, onOpenSpecs }: ProductCardProps) 
           />
           <button
             onClick={() => onOpenSpecs(product)}
-            className="px-2 md:px-4 py-2 border border-gray-800 text-gray-400 text-[9px] md:text-[10px] uppercase tracking-[0.1em] md:tracking-[0.2em] font-medium hover:border-white hover:text-white transition-all duration-300"
+            className="px-2 md:px-4 py-2 border border-light-border dark:border-dark-border text-light-text-muted dark:text-dark-text-muted text-[9px] md:text-[10px] uppercase tracking-[0.1em] md:tracking-[0.2em] font-medium hover:border-primary dark:hover:border-primary hover:text-primary dark:hover:text-primary transition-all duration-300"
           >
             Specs
           </button>

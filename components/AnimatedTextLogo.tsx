@@ -36,10 +36,10 @@ export default function AnimatedTextLogo({
       aria-label="Exact Solutions Home"
     >
       <div className="flex flex-col">
-        <span className={`${sizeClasses[size]} font-light tracking-tighter text-white group-hover:text-primary transition-colors duration-300`}>
-          EXACT<span className="font-normal text-primary group-hover:text-white transition-colors duration-300">SOLUTIONS</span>
+        <span className={`${sizeClasses[size]} font-light tracking-tighter text-light-text dark:text-white group-hover:text-primary transition-colors duration-300`}>
+          EXACT<span className="font-normal text-primary group-hover:text-primary dark:group-hover:text-white transition-colors duration-300">SOLUTIONS</span>
         </span>
-        <span className={`${subtextSizeClasses[size]} text-gray-500 uppercase tracking-[0.3em] font-light -mt-1 group-hover:text-gray-300 transition-colors duration-300`}>
+        <span className={`${subtextSizeClasses[size]} text-light-text-muted dark:text-gray-500 uppercase tracking-[0.3em] font-light -mt-1 group-hover:text-light-text dark:group-hover:text-gray-300 transition-colors duration-300`}>
           Limited
         </span>
       </div>

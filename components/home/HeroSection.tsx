@@ -6,12 +6,12 @@ export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden">
       {/* Subtle technical overlay */}
-      <div className="absolute inset-0 opacity-[0.05] pointer-events-none">
-        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <div className="absolute inset-0 opacity-[0.05] dark:opacity-[0.05] pointer-events-none">
+        <svg className="w-full h-full text-light-text-subtle dark:text-white" viewBox="0 0 100 100" preserveAspectRatio="none">
           <defs>
             <pattern id="circuit-grid" width="10" height="10" patternUnits="userSpaceOnUse">
-              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.1" />
-              <circle cx="0" cy="0" r="0.2" fill="white" />
+              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" strokeWidth="0.1" />
+              <circle cx="0" cy="0" r="0.2" fill="currentColor" />
             </pattern>
           </defs>
           <rect width="100" height="100" fill="url(#circuit-grid)" />
@@ -25,17 +25,17 @@ export default function HeroSection() {
         className="relative z-10 space-y-6 md:space-y-12 w-full max-w-6xl"
       >
         <div className="flex flex-col items-center">
-          <div className="text-[10px] md:text-sm text-gray-500 uppercase tracking-[0.3em] md:tracking-[0.4em] mb-4 md:mb-8 font-light">
+          <div className="text-[10px] md:text-sm text-light-text-muted dark:text-gray-500 uppercase tracking-[0.3em] md:tracking-[0.4em] mb-4 md:mb-8 font-light">
             Exact Solutions Limited
           </div>
-          <h1 className="text-5xl sm:text-7xl md:text-9xl lg:text-[140px] font-light text-white leading-[1.1] md:leading-[0.9] tracking-[-0.04em] md:tracking-[-0.05em] mb-6 md:mb-12 uppercase">
+          <h1 className="text-5xl sm:text-7xl md:text-9xl lg:text-[140px] font-light text-light-text dark:text-white leading-[1.1] md:leading-[0.9] tracking-[-0.04em] md:tracking-[-0.05em] mb-6 md:mb-12 uppercase">
             EXACT
             <br />
             <span className="font-normal text-primary">SOLUTIONS</span>
           </h1>
           <div className="flex items-center justify-center gap-3 md:gap-6">
             <div className="h-px w-6 md:w-24 bg-primary/40"></div>
-            <span className="text-[10px] md:text-xl text-gray-400 uppercase tracking-[0.2em] md:tracking-[0.5em] font-light">
+            <span className="text-[10px] md:text-xl text-light-text-muted dark:text-gray-400 uppercase tracking-[0.2em] md:tracking-[0.5em] font-light">
               Industrial Solutions Engineering
             </span>
             <div className="h-px w-6 md:w-24 bg-primary/40"></div>

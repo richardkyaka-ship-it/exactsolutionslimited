@@ -9,7 +9,7 @@ import HomeFooter from '@/components/home/HomeFooter'
 
 export default function HomePageClient() {
   return (
-    <main className="bg-black text-white selection:bg-primary selection:text-white overflow-x-hidden">
+    <main className="bg-light dark:bg-dark text-light-text dark:text-dark-text-primary selection:bg-primary selection:text-light-text dark:selection:text-dark-text-primary overflow-x-hidden">
       <HeroSection />
       <NavigationMatrix />
       <ProjectCarousel />

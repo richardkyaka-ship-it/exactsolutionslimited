@@ -12,14 +12,14 @@ export default function PageTransition({ children }: { children: React.ReactNode
   useEffect(() => {
     if (prevPathname.current !== pathname) {
       setIsTransitioning(true)
-      // Smooth scroll to top on route change
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      // Instant scroll to top - no smooth animation delay
+      window.scrollTo({ top: 0, behavior: 'instant' })
       
-      // Reset transition state after a brief moment
+      // Minimal transition state - just for visual feedback
       const timer = setTimeout(() => {
         setIsTransitioning(false)
         prevPathname.current = pathname
-      }, 400)
+      }, 100) // Reduced from 400ms to 100ms
 
       return () => clearTimeout(timer)
     }
@@ -34,8 +34,8 @@ export default function PageTransition({ children }: { children: React.ReactNode
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed inset-0 bg-black z-[99] pointer-events-none"
+            transition={{ duration: 0.1, ease: [0.4, 0, 0.2, 1] }}
+            className="fixed inset-0 bg-light dark:bg-dark z-[99] pointer-events-none"
             style={{ 
               transform: 'translateZ(0)',
               backfaceVisibility: 'hidden',

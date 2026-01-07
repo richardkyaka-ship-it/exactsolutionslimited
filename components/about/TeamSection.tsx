@@ -17,11 +17,11 @@ const PROFILES: Profile[] = [
 
 export default function TeamSection() {
   return (
-    <section className="px-6 md:px-12 lg:px-20 py-24 md:py-32 bg-dark-light border-b border-gray-900">
+    <section className="px-6 md:px-12 lg:px-20 py-24 md:py-32 bg-light-lighter dark:bg-dark-light border-b border-light-border dark:border-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-baseline gap-4 mb-16 md:mb-24">
           <span className="text-[10px] text-primary font-mono tracking-[0.3em] uppercase">Section 04</span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white tracking-tight uppercase">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-light-text dark:text-white tracking-tight uppercase">
             Engineering Team
           </h2>
         </div>
@@ -29,7 +29,7 @@ export default function TeamSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Abstract Image Side */}
           <div className="lg:col-span-5">
-            <div className="relative aspect-[4/5] bg-dark-lighter border border-gray-800 overflow-hidden group">
+            <div className="relative aspect-[4/5] bg-light-lighter dark:bg-dark-lighter border border-light-border dark:border-gray-800 overflow-hidden group">
               {/* Abstract Industrial Texture Placeholder */}
               <div className="absolute inset-0 grayscale opacity-40 group-hover:scale-110 transition-transform duration-1000">
                 <img 
@@ -41,7 +41,7 @@ export default function TeamSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
               <div className="absolute bottom-8 left-8">
                 <p className="text-[10px] text-primary uppercase tracking-[0.3em] mb-2 font-mono">Dossier Access</p>
-                <p className="text-xl font-light text-white">Personnel Data: Level 01</p>
+                <p className="text-xl font-light text-light-text dark:text-white">Personnel Data: Level 01</p>
               </div>
             </div>
           </div>
@@ -55,24 +55,24 @@ export default function TeamSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group border-l border-gray-800 pl-8 hover:border-primary transition-colors duration-500"
+                className="group border-l border-light-border dark:border-gray-800 pl-8 hover:border-primary transition-colors duration-500"
               >
                 <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-4">
-                  <h3 className="text-xl font-light text-white group-hover:text-primary transition-colors duration-300">
+                  <h3 className="text-xl font-light text-light-text dark:text-white group-hover:text-primary transition-colors duration-300">
                     {profile.role}
                   </h3>
                   <span className="text-sm font-mono text-primary">{profile.metric}</span>
                 </div>
-                <p className="text-sm text-gray-500 max-w-md">
+                <p className="text-sm text-light-text-muted dark:text-gray-500 max-w-md">
                   {profile.detail}
                 </p>
               </motion.div>
             ))}
 
-            <div className="pt-8 border-t border-gray-900 grid grid-cols-3 gap-4">
+            <div className="pt-8 border-t border-light-border dark:border-gray-900 grid grid-cols-3 gap-4">
               {['ISO 9001', 'ISO 45001', 'ERB CERT'].map((cert, i) => (
-                <div key={i} className="text-center p-4 border border-gray-800 bg-black">
-                  <span className="text-[8px] text-gray-600 font-mono tracking-widest">{cert}</span>
+                <div key={i} className="text-center p-4 border border-light-border dark:border-gray-800 bg-light dark:bg-black">
+                  <span className="text-[8px] text-light-text-subtle dark:text-gray-600 font-mono tracking-widest">{cert}</span>
                 </div>
               ))}
             </div>

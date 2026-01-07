@@ -33,11 +33,11 @@ const PRINCIPLES: Principle[] = [
 
 export default function PhilosophySection() {
   return (
-    <section className="px-4 md:px-12 lg:px-20 py-20 md:py-32 border-b border-gray-900">
+    <section className="px-4 md:px-12 lg:px-20 py-20 md:py-32 border-b border-light-border dark:border-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-baseline gap-3 md:gap-4 mb-12 md:mb-24">
           <span className="text-[10px] text-primary font-mono tracking-[0.3em] uppercase">Section 01</span>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-light text-white tracking-tight uppercase">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-light text-light-text dark:text-white tracking-tight uppercase">
             Technical Principles
           </h2>
         </div>
@@ -50,17 +50,17 @@ export default function PhilosophySection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="flex flex-col group border-l border-gray-900 md:border-none pl-6 md:pl-0"
+              className="flex flex-col group border-l border-light-border dark:border-gray-900 md:border-none pl-6 md:pl-0"
             >
-              <span className="text-[10px] text-gray-500 font-mono mb-4 md:mb-6 tracking-widest">{item.title}</span>
-              <h3 className="text-lg md:text-2xl font-light text-white mb-3 md:mb-4 group-hover:text-primary transition-colors duration-300">
+              <span className="text-[10px] text-light-text-muted dark:text-gray-500 font-mono mb-4 md:mb-6 tracking-widest">{item.title}</span>
+              <h3 className="text-lg md:text-2xl font-light text-light-text dark:text-white mb-3 md:mb-4 group-hover:text-primary transition-colors duration-300">
                 {item.statement}
               </h3>
               <div className="flex items-center gap-3 mb-4 md:mb-6">
                 <div className="h-px w-6 md:w-8 bg-primary" />
                 <span className="text-xs md:text-sm font-mono text-primary uppercase tracking-wider">{item.metric}</span>
               </div>
-              <p className="text-sm text-gray-500 leading-relaxed max-w-sm">
+              <p className="text-sm text-light-text-muted dark:text-gray-500 leading-relaxed max-w-sm">
                 {item.explanation}
               </p>
             </motion.div>

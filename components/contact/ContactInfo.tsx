@@ -45,7 +45,7 @@ export default function ContactInfo() {
           {/* Phone Numbers - Compact Mobile Layout */}
           <div className="group">
             <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3 lg:mb-4">
-              <div className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 border border-gray-800 flex items-center justify-center group-hover:border-primary transition-colors duration-300 flex-shrink-0">
+              <div className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 border border-light-border dark:border-dark-border flex items-center justify-center group-hover:border-primary transition-colors duration-300 flex-shrink-0">
                 <Phone className="w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 text-primary" />
               </div>
               <span className="text-[10px] md:text-[11.5px] text-primary font-mono tracking-[0.3em] md:tracking-[0.4em] uppercase">Phone</span>
@@ -55,13 +55,13 @@ export default function ContactInfo() {
                 <a
                   key={phone}
                   href={`tel:${phone}`}
-                  className="block text-xs md:text-sm lg:text-base font-light text-white hover:text-primary transition-colors duration-300"
+                  className="block text-xs md:text-sm lg:text-base font-light text-light-text dark:text-dark-text-primary hover:text-primary transition-colors duration-300"
                 >
                   {formatPhoneNumber(phone)}
                 </a>
               ))}
             </div>
-            <p className="text-[10px] md:text-xs text-gray-500 mt-2 md:mt-3 lg:mt-4 pl-8 md:pl-10 lg:pl-14 uppercase tracking-[0.15em] md:tracking-[0.2em]">
+            <p className="text-[10px] md:text-xs text-light-text-muted dark:text-dark-text-muted mt-2 md:mt-3 lg:mt-4 pl-8 md:pl-10 lg:pl-14 uppercase tracking-[0.15em] md:tracking-[0.2em]">
               Mon-Fri, 8AM-5PM EAT
             </p>
           </div>
@@ -69,7 +69,7 @@ export default function ContactInfo() {
           {/* Email - Compact Mobile Layout */}
           <div className="group">
             <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3 lg:mb-4">
-              <div className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 border border-gray-800 flex items-center justify-center group-hover:border-primary transition-colors duration-300 flex-shrink-0">
+              <div className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 border border-light-border dark:border-dark-border flex items-center justify-center group-hover:border-primary transition-colors duration-300 flex-shrink-0">
                 <Mail className="w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 text-primary" />
               </div>
               <span className="text-[10px] md:text-[11.5px] text-primary font-mono tracking-[0.3em] md:tracking-[0.4em] uppercase">Email</span>
@@ -77,11 +77,11 @@ export default function ContactInfo() {
             <div className="pl-8 md:pl-10 lg:pl-14">
               <a
                 href="mailto:expert@exactsolutions.co.ke"
-                className="block text-xs md:text-sm lg:text-base font-light text-white hover:text-primary transition-colors duration-300 break-all mb-1 md:mb-2"
+                className="block text-xs md:text-sm lg:text-base font-light text-light-text dark:text-dark-text-primary hover:text-primary transition-colors duration-300 break-all mb-1 md:mb-2"
               >
                 expert@exactsolutions.co.ke
               </a>
-              <p className="text-[10px] md:text-xs text-gray-500 uppercase tracking-[0.15em] md:tracking-[0.2em]">
+              <p className="text-[10px] md:text-xs text-light-text-muted dark:text-gray-500 uppercase tracking-[0.15em] md:tracking-[0.2em]">
                 Response within 24 hours
               </p>
             </div>
@@ -93,7 +93,7 @@ export default function ContactInfo() {
               href="https://wa.me/254720876787?text=Hi,%20I'm%20reaching%20out%20about%20your%20services"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-between w-full p-2 md:p-3 lg:p-4 border border-gray-800 hover:border-primary/50 hover:bg-primary/5 transition-all duration-500"
+              className="group flex items-center justify-between w-full p-2 md:p-3 lg:p-4 border border-light-border dark:border-dark-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-500"
             >
               <div className="flex items-center gap-2 md:gap-2 lg:gap-3">
                 <div className="w-4 h-4 md:w-5 md:h-5 text-primary group-hover:scale-110 transition-transform duration-300">
@@ -101,7 +101,7 @@ export default function ContactInfo() {
                 </div>
                 <span className="text-[10px] md:text-[11.5px] text-primary font-mono tracking-[0.3em] md:tracking-[0.4em] uppercase">WhatsApp</span>
               </div>
-              <ArrowRight className="w-3 h-3 md:w-3 md:h-3 lg:w-4 lg:h-4 text-gray-600 group-hover:text-primary group-hover:translate-x-2 transition-all duration-300" />
+              <ArrowRight className="w-3 h-3 md:w-3 md:h-3 lg:w-4 lg:h-4 text-light-text-subtle dark:text-dark-text-subtle group-hover:text-primary group-hover:translate-x-2 transition-all duration-300" />
             </a>
           </div>
         </div>
@@ -114,43 +114,43 @@ export default function ContactInfo() {
           <span className="text-[10px] md:text-[11.5px] text-primary font-mono tracking-[0.3em] md:tracking-[0.4em] uppercase">Our Services</span>
         </div>
         <div className="space-y-2 md:space-y-3 lg:space-y-4">
-          <div className="group flex items-start gap-2 md:gap-3 lg:gap-4 p-2 md:p-3 lg:p-4 border border-gray-800 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300">
-            <div className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 border border-gray-800 flex items-center justify-center flex-shrink-0 group-hover:border-primary transition-colors duration-300">
+          <div className="group flex items-start gap-2 md:gap-3 lg:gap-4 p-2 md:p-3 lg:p-4 border border-light-border dark:border-dark-border hover:border-primary/30 hover:bg-primary/5 transition-all duration-300">
+            <div className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 border border-light-border dark:border-dark-border flex items-center justify-center flex-shrink-0 group-hover:border-primary transition-colors duration-300">
               <Zap className="w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 text-primary" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-[10px] md:text-xs lg:text-sm font-light text-white mb-0.5 md:mb-1 group-hover:text-primary transition-colors duration-300 leading-tight">
+              <div className="text-[10px] md:text-xs lg:text-sm font-light text-light-text dark:text-dark-text-primary mb-0.5 md:mb-1 group-hover:text-primary transition-colors duration-300 leading-tight">
                 Equipment, Generators & Energy
               </div>
-              <p className="text-[10px] md:text-xs text-gray-500 leading-tight">
+              <p className="text-[10px] md:text-xs text-light-text-muted dark:text-dark-text-muted leading-tight">
                 Power solutions that keep you running
               </p>
             </div>
           </div>
 
-          <div className="group flex items-start gap-2 md:gap-3 lg:gap-4 p-2 md:p-3 lg:p-4 border border-gray-800 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300">
-            <div className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 border border-gray-800 flex items-center justify-center flex-shrink-0 group-hover:border-primary transition-colors duration-300">
+          <div className="group flex items-start gap-2 md:gap-3 lg:gap-4 p-2 md:p-3 lg:p-4 border border-light-border dark:border-dark-border hover:border-primary/30 hover:bg-primary/5 transition-all duration-300">
+            <div className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 border border-light-border dark:border-dark-border flex items-center justify-center flex-shrink-0 group-hover:border-primary transition-colors duration-300">
               <Container className="w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 text-primary" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-[10px] md:text-xs lg:text-sm font-light text-white mb-0.5 md:mb-1 group-hover:text-primary transition-colors duration-300 leading-tight">
+              <div className="text-[10px] md:text-xs lg:text-sm font-light text-light-text dark:text-dark-text-primary mb-0.5 md:mb-1 group-hover:text-primary transition-colors duration-300 leading-tight">
                 Shipping Containers & Reefers
               </div>
-              <p className="text-[10px] md:text-xs text-gray-500 leading-tight">
+              <p className="text-[10px] md:text-xs text-light-text-muted dark:text-dark-text-muted leading-tight">
                 Storage & transport solutions
               </p>
             </div>
           </div>
 
-          <div className="group flex items-start gap-2 md:gap-3 lg:gap-4 p-2 md:p-3 lg:p-4 border border-gray-800 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300">
-            <div className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 border border-gray-800 flex items-center justify-center flex-shrink-0 group-hover:border-primary transition-colors duration-300">
+          <div className="group flex items-start gap-2 md:gap-3 lg:gap-4 p-2 md:p-3 lg:p-4 border border-light-border dark:border-dark-border hover:border-primary/30 hover:bg-primary/5 transition-all duration-300">
+            <div className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 border border-light-border dark:border-dark-border flex items-center justify-center flex-shrink-0 group-hover:border-primary transition-colors duration-300">
               <Building2 className="w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 text-primary" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-[10px] md:text-xs lg:text-sm font-light text-white mb-0.5 md:mb-1 group-hover:text-primary transition-colors duration-300 leading-tight">
+              <div className="text-[10px] md:text-xs lg:text-sm font-light text-light-text dark:text-dark-text-primary mb-0.5 md:mb-1 group-hover:text-primary transition-colors duration-300 leading-tight">
                 Glass, Aluminum & Steel
               </div>
-              <p className="text-[10px] md:text-xs text-gray-500 leading-tight">
+              <p className="text-[10px] md:text-xs text-light-text-muted dark:text-dark-text-muted leading-tight">
                 Custom industrial solutions
               </p>
             </div>

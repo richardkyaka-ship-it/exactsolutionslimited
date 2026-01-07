@@ -150,10 +150,10 @@ export default function ContactForm() {
           <div className="h-px w-8 sm:w-12 bg-primary/40"></div>
           <span className="text-[11.5px] text-primary font-mono tracking-[0.4em] uppercase">Contact Form</span>
         </div>
-        <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white mb-2 sm:mb-3 leading-[0.95] tracking-tight uppercase">
+        <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-light-text dark:text-white mb-2 sm:mb-3 leading-[0.95] tracking-tight uppercase">
           Send a Message
         </h3>
-        <p className="text-xs sm:text-sm md:text-base text-gray-400 font-light">
+        <p className="text-xs sm:text-sm md:text-base text-light-text-muted dark:text-dark-text-muted font-light">
           We'll respond within 24 hours
         </p>
       </div>
@@ -161,7 +161,7 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6 md:space-y-8">
         {/* Full Name */}
         <div className="group">
-          <label htmlFor="fullName" className="block text-xs sm:text-sm text-gray-400 mb-2 font-light">
+          <label htmlFor="fullName" className="block text-xs sm:text-sm text-light-text-muted dark:text-dark-text-muted mb-2 font-light">
             Full Name <span className="text-primary">*</span>
           </label>
           <input
@@ -170,9 +170,9 @@ export default function ContactForm() {
             value={formData.fullName}
             onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
             onBlur={() => handleBlur('fullName')}
-            className={`w-full px-4 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 bg-dark-lighter border ${
-              errors.fullName ? 'border-red-500' : 'border-gray-800'
-            } text-white text-sm sm:text-base font-light focus:outline-none focus:border-primary transition-all duration-300 group-hover:border-gray-700`}
+            className={`w-full px-4 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 bg-light-lighter dark:bg-dark-lighter border ${
+              errors.fullName ? 'border-red-500' : 'border-light-border dark:border-dark-border'
+            } text-light-text dark:text-dark-text-primary text-sm sm:text-base font-light focus:outline-none focus:border-primary transition-all duration-300 group-hover:border-primary/30 dark:group-hover:border-primary/30`}
             required
           />
           {errors.fullName && (
@@ -182,7 +182,7 @@ export default function ContactForm() {
 
         {/* Company */}
         <div className="group">
-          <label htmlFor="company" className="block text-xs sm:text-sm text-gray-400 mb-2 font-light">
+          <label htmlFor="company" className="block text-xs sm:text-sm text-light-text-muted dark:text-dark-text-muted mb-2 font-light">
             Company
           </label>
           <input
@@ -190,13 +190,13 @@ export default function ContactForm() {
             id="company"
             value={formData.company}
             onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-            className="w-full px-4 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 bg-dark-lighter border border-gray-800 text-white text-sm sm:text-base font-light focus:outline-none focus:border-primary transition-all duration-300 group-hover:border-gray-700"
+            className="w-full px-4 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 bg-light-lighter dark:bg-dark-lighter border border-light-border dark:border-dark-border text-light-text dark:text-dark-text-primary text-sm sm:text-base font-light focus:outline-none focus:border-primary transition-all duration-300 group-hover:border-primary/30 dark:group-hover:border-primary/30"
           />
         </div>
 
         {/* Email */}
         <div className="group">
-          <label htmlFor="email" className="block text-xs sm:text-sm text-gray-400 mb-2 font-light">
+          <label htmlFor="email" className="block text-xs sm:text-sm text-light-text-muted dark:text-dark-text-muted mb-2 font-light">
             Email <span className="text-primary">*</span>
           </label>
           <input
@@ -205,9 +205,9 @@ export default function ContactForm() {
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             onBlur={() => handleBlur('email')}
-            className={`w-full px-4 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 bg-dark-lighter border ${
-              errors.email ? 'border-red-500' : 'border-gray-800'
-            } text-white text-sm sm:text-base font-light focus:outline-none focus:border-primary transition-all duration-300 group-hover:border-gray-700`}
+            className={`w-full px-4 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 bg-light-lighter dark:bg-dark-lighter border ${
+              errors.email ? 'border-red-500' : 'border-light-border dark:border-dark-border'
+            } text-light-text dark:text-dark-text-primary text-sm sm:text-base font-light focus:outline-none focus:border-primary transition-all duration-300 group-hover:border-primary/30 dark:group-hover:border-primary/30`}
             required
           />
           {errors.email && (
@@ -217,7 +217,7 @@ export default function ContactForm() {
 
         {/* Phone */}
         <div className="group">
-          <label htmlFor="phone" className="block text-xs sm:text-sm text-gray-400 mb-2 font-light">
+          <label htmlFor="phone" className="block text-xs sm:text-sm text-light-text-muted dark:text-dark-text-muted mb-2 font-light">
             Phone
           </label>
           <input
@@ -227,9 +227,9 @@ export default function ContactForm() {
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             onBlur={() => handleBlur('phone')}
             placeholder="+254 720 000 000"
-            className={`w-full px-4 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 bg-dark-lighter border ${
-              errors.phone ? 'border-red-500' : 'border-gray-800'
-            } text-white text-sm sm:text-base font-light placeholder:text-gray-600 focus:outline-none focus:border-primary transition-all duration-300 group-hover:border-gray-700`}
+            className={`w-full px-4 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 bg-light-lighter dark:bg-dark-lighter border ${
+              errors.phone ? 'border-red-500' : 'border-light-border dark:border-dark-border'
+            } text-light-text dark:text-dark-text-primary text-sm sm:text-base font-light placeholder:text-light-text-subtle dark:placeholder:text-dark-text-subtle focus:outline-none focus:border-primary transition-all duration-300 group-hover:border-primary/30 dark:group-hover:border-primary/30`}
           />
           {errors.phone && (
             <p className="mt-2 text-xs text-red-500">{errors.phone}</p>
@@ -238,14 +238,14 @@ export default function ContactForm() {
 
         {/* Service Category - Radio Buttons */}
         <div>
-          <label className="block text-xs sm:text-sm text-gray-400 mb-3 sm:mb-4 font-light">
+          <label className="block text-xs sm:text-sm text-light-text-muted dark:text-dark-text-muted mb-3 sm:mb-4 font-light">
             Service Category <span className="text-primary">*</span>
           </label>
           <div className="space-y-2">
             {SERVICE_CATEGORIES.map((category) => (
               <label
                 key={category}
-                className="flex items-center gap-3 sm:gap-4 cursor-pointer group p-3 sm:p-3 border border-gray-800 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
+                className="flex items-center gap-3 sm:gap-4 cursor-pointer group p-3 sm:p-3 border border-light-border dark:border-dark-border hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
               >
                 <input
                   type="radio"
@@ -254,10 +254,10 @@ export default function ContactForm() {
                   checked={formData.serviceCategory === category}
                   onChange={(e) => setFormData({ ...formData, serviceCategory: e.target.value })}
                   onBlur={() => handleBlur('serviceCategory')}
-                  className="w-4 h-4 border border-gray-800 bg-dark-lighter focus:outline-none focus:border-primary cursor-pointer radio-custom group-hover:border-primary/50 transition-colors flex-shrink-0"
+                  className="w-4 h-4 border border-light-border dark:border-dark-border bg-light-lighter dark:bg-dark-lighter focus:outline-none focus:border-primary cursor-pointer radio-custom group-hover:border-primary/50 transition-colors flex-shrink-0"
                   required
                 />
-                <span className="text-xs sm:text-sm text-gray-300 group-hover:text-white font-light transition-colors">
+                <span className="text-xs sm:text-sm text-light-text-muted dark:text-dark-text-secondary group-hover:text-light-text dark:group-hover:text-dark-text-primary font-light transition-colors">
                   {category}
                 </span>
               </label>
@@ -270,7 +270,7 @@ export default function ContactForm() {
 
         {/* Message */}
         <div className="group">
-          <label htmlFor="message" className="block text-xs sm:text-sm text-gray-400 mb-2 font-light">
+          <label htmlFor="message" className="block text-xs sm:text-sm text-light-text-muted dark:text-dark-text-muted mb-2 font-light">
             Message <span className="text-primary">*</span>
           </label>
           <textarea
@@ -280,9 +280,9 @@ export default function ContactForm() {
             onBlur={() => handleBlur('message')}
             rows={5}
             minLength={10}
-            className={`w-full px-4 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 bg-dark-lighter border ${
-              errors.message ? 'border-red-500' : 'border-gray-800'
-            } text-white text-sm sm:text-base font-light focus:outline-none focus:border-primary transition-all duration-300 resize-none group-hover:border-gray-700`}
+            className={`w-full px-4 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 bg-light-lighter dark:bg-dark-lighter border ${
+              errors.message ? 'border-red-500' : 'border-light-border dark:border-dark-border'
+            } text-light-text dark:text-dark-text-primary text-sm sm:text-base font-light focus:outline-none focus:border-primary transition-all duration-300 resize-none group-hover:border-primary/30 dark:group-hover:border-primary/30`}
             required
           />
           {errors.message && (

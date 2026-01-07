@@ -9,15 +9,15 @@ import Link from 'next/link'
 
 export default function AboutPageClient() {
   return (
-    <main className="bg-black text-white selection:bg-primary selection:text-white overflow-hidden">
+    <main className="bg-light dark:bg-dark text-light-text dark:text-dark-text-primary selection:bg-primary selection:text-light-text dark:selection:text-dark-text-primary overflow-hidden">
       {/* Dossier Hero Section */}
       <section className="min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-20 relative pt-20">
         {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none overflow-hidden">
-          <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.03] pointer-events-none overflow-hidden">
+          <svg className="w-full h-full text-light-text-subtle dark:text-white" viewBox="0 0 100 100" preserveAspectRatio="none">
             <defs>
               <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.1" />
+                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" strokeWidth="0.1" />
               </pattern>
             </defs>
             <rect width="100" height="100" fill="url(#grid)" />

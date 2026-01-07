@@ -20,7 +20,7 @@ export default function FootprintSection() {
       <div className="max-w-7xl mx-auto">
         <div className="flex items-baseline gap-4 mb-16 md:mb-24">
           <span className="text-[10px] text-primary font-mono tracking-[0.3em] uppercase">Section 05</span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white tracking-tight uppercase">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-light-text dark:text-white tracking-tight uppercase">
             Regional Footprint
           </h2>
         </div>
@@ -28,26 +28,26 @@ export default function FootprintSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           <div className="lg:col-span-4 space-y-12">
             {METRICS.map((metric, index) => (
-              <div key={index} className="flex flex-col border-b border-gray-900 pb-8">
-                <span className="text-5xl font-light text-white mb-2">{metric.value}</span>
+              <div key={index} className="flex flex-col border-b border-light-border dark:border-gray-900 pb-8">
+                <span className="text-5xl font-light text-light-text dark:text-white mb-2">{metric.value}</span>
                 <span className="text-[10px] text-primary uppercase tracking-[0.3em] font-mono">{metric.label}</span>
               </div>
             ))}
-            <div className="p-6 bg-dark-light border border-gray-800">
-              <p className="text-xs text-gray-500 leading-relaxed italic">
+            <div className="p-6 bg-light-lighter dark:bg-dark-light border border-light-border dark:border-gray-800">
+              <p className="text-xs text-light-text-muted dark:text-gray-500 leading-relaxed italic">
                 "Exact Solutions provided critical power infrastructure for our logistics hub in record time."
               </p>
-              <p className="text-[10px] text-white mt-4 uppercase tracking-widest">— Logistics Director, Mombasa Port</p>
+              <p className="text-[10px] text-light-text dark:text-white mt-4 uppercase tracking-widest">— Logistics Director, Mombasa Port</p>
             </div>
           </div>
 
           <div className="lg:col-span-8">
-            <div className="relative aspect-[4/3] md:aspect-[16/9] bg-dark-lighter border border-gray-800 overflow-hidden group">
+            <div className="relative aspect-[4/3] md:aspect-[16/9] bg-light-lighter dark:bg-dark-lighter border border-light-border dark:border-gray-800 overflow-hidden group">
               {/* Technical Blueprint Grid Background */}
-              <div className="absolute inset-0 opacity-10">
-                <svg width="100%" height="100%">
+              <div className="absolute inset-0 opacity-10 dark:opacity-10">
+                <svg width="100%" height="100%" className="text-light-text-subtle dark:text-white">
                   <pattern id="map-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="0.5" />
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" />
                   </pattern>
                   <rect width="100%" height="100%" fill="url(#map-grid)" />
                 </svg>
@@ -122,38 +122,38 @@ export default function FootprintSection() {
               <div className="absolute inset-0 pointer-events-none">
                 {/* Nairobi Label */}
                 <div className="absolute top-[55%] left-[55%] translate-x-[-50%] translate-y-[-50%]">
-                  <div className="flex flex-col items-start bg-black/60 backdrop-blur-md border border-primary/20 p-2">
-                    <span className="text-[9px] text-white font-mono uppercase tracking-widest">HQ // NAIROBI</span>
+                  <div className="flex flex-col items-start bg-light-surface/80 dark:bg-black/60 backdrop-blur-md border border-primary/20 p-2">
+                    <span className="text-[9px] text-light-text dark:text-white font-mono uppercase tracking-widest">HQ // NAIROBI</span>
                     <span className="text-[7px] text-primary uppercase font-mono tracking-tighter">Central Ops & Fabrication</span>
                   </div>
                 </div>
 
                 {/* Mombasa Label */}
                 <div className="absolute top-[68%] left-[72%]">
-                  <div className="flex flex-col items-start bg-black/60 backdrop-blur-md border border-gray-800 p-2">
-                    <span className="text-[9px] text-gray-300 font-mono uppercase tracking-widest">PORT // MOMBASA</span>
-                    <span className="text-[7px] text-gray-500 uppercase font-mono tracking-tighter">Logistics & Marine</span>
+                  <div className="flex flex-col items-start bg-light-surface/80 dark:bg-black/60 backdrop-blur-md border border-light-border dark:border-gray-800 p-2">
+                    <span className="text-[9px] text-light-text-muted dark:text-gray-300 font-mono uppercase tracking-widest">PORT // MOMBASA</span>
+                    <span className="text-[7px] text-light-text-subtle dark:text-gray-500 uppercase font-mono tracking-tighter">Logistics & Marine</span>
                   </div>
                 </div>
 
                 {/* Regional Label */}
                 <div className="absolute top-[52%] left-[15%]">
-                  <div className="flex flex-col items-end bg-black/60 backdrop-blur-md border border-gray-800 p-2">
-                    <span className="text-[9px] text-gray-300 font-mono uppercase tracking-widest">REGIONAL // KAMPALA</span>
-                    <span className="text-[7px] text-gray-500 uppercase font-mono tracking-tighter">Technical Support Hub</span>
+                  <div className="flex flex-col items-end bg-light-surface/80 dark:bg-black/60 backdrop-blur-md border border-light-border dark:border-gray-800 p-2">
+                    <span className="text-[9px] text-light-text-muted dark:text-gray-300 font-mono uppercase tracking-widest">REGIONAL // KAMPALA</span>
+                    <span className="text-[7px] text-light-text-subtle dark:text-gray-500 uppercase font-mono tracking-tighter">Technical Support Hub</span>
                   </div>
                 </div>
               </div>
 
               <div className="absolute bottom-2 right-2 p-4 bg-primary/5 border border-primary/20 backdrop-blur-sm max-w-[200px]">
                 <p className="text-[8px] text-primary uppercase tracking-[0.2em] mb-1 font-mono">Territory Status</p>
-                <p className="text-[10px] text-gray-400 leading-tight">
+                <p className="text-[10px] text-light-text-muted dark:text-gray-400 leading-tight">
                   Active deployment capability across Kenya, Uganda, and Tanzania.
                 </p>
               </div>
               
               <div className="absolute top-4 left-4">
-                <span className="text-[8px] text-gray-600 font-mono uppercase tracking-[0.3em]">Map ID: EA-ENG-001</span>
+                <span className="text-[8px] text-light-text-subtle dark:text-gray-600 font-mono uppercase tracking-[0.3em]">Map ID: EA-ENG-001</span>
               </div>
             </div>
           </div>

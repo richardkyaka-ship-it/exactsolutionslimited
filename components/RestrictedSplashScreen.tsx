@@ -50,14 +50,14 @@ const formatPhoneNumber = (phone: string) => {
 
 export default function RestrictedSplashScreen() {
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-light dark:bg-black text-light-text dark:text-white flex flex-col relative overflow-hidden">
       {/* Subtle technical overlay */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.03] pointer-events-none">
+        <svg className="w-full h-full text-light-text-subtle dark:text-white" viewBox="0 0 100 100" preserveAspectRatio="none">
           <defs>
             <pattern id="splash-circuit-grid" width="10" height="10" patternUnits="userSpaceOnUse">
-              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.1" />
-              <circle cx="0" cy="0" r="0.2" fill="white" />
+              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" strokeWidth="0.1" />
+              <circle cx="0" cy="0" r="0.2" fill="currentColor" />
             </pattern>
           </defs>
           <rect width="100" height="100" fill="url(#splash-circuit-grid)" />
@@ -90,7 +90,7 @@ export default function RestrictedSplashScreen() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.8 }}
-                  className="text-5xl md:text-6xl lg:text-7xl font-light text-white leading-[0.95] tracking-tight uppercase"
+                  className="text-5xl md:text-6xl lg:text-7xl font-light text-light-text dark:text-white leading-[0.95] tracking-tight uppercase"
                 >
                   EXACT
                   <br />
@@ -104,7 +104,7 @@ export default function RestrictedSplashScreen() {
                   className="flex items-center gap-3 pt-2"
                 >
                   <div className="h-px w-12 bg-primary/40"></div>
-                  <span className="text-xs md:text-sm text-gray-400 uppercase tracking-[0.3em] font-light">
+                  <span className="text-xs md:text-sm text-light-text-muted dark:text-gray-400 uppercase tracking-[0.3em] font-light">
                     Industrial Solutions Engineering
                   </span>
                 </motion.div>
@@ -139,11 +139,11 @@ export default function RestrictedSplashScreen() {
                     <div className="w-px md:w-px h-12 md:h-20 md:bg-gradient-to-b bg-gradient-to-r from-primary/60 to-transparent md:from-primary/60"></div>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light text-white leading-[0.95] tracking-tight uppercase mb-4 md:mb-6">
+                    <h3 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light text-light-text dark:text-white leading-[0.95] tracking-tight uppercase mb-4 md:mb-6">
                       Equipment, Generators<br />
                       <span className="text-primary">& Energy</span>
                     </h3>
-                    <p className="text-sm md:text-base lg:text-lg font-light text-gray-400 leading-relaxed max-w-xl">
+                    <p className="text-sm md:text-base lg:text-lg font-light text-light-text-muted dark:text-gray-400 leading-relaxed max-w-xl">
                       {SERVICES[0].description}
                     </p>
                   </div>
@@ -174,12 +174,12 @@ export default function RestrictedSplashScreen() {
                 
                 {/* Content */}
                 <div className="flex-1 md:col-span-8">
-                  <h3 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-white leading-[0.95] tracking-tight uppercase mb-4 md:mb-6">
+                  <h3 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-light-text dark:text-white leading-[0.95] tracking-tight uppercase mb-4 md:mb-6">
                     Shipping Containers<br />
                     <span className="text-primary">& Reefers</span>
                   </h3>
                   <div className="max-w-2xl">
-                    <p className="text-base md:text-lg lg:text-xl font-light text-gray-400 leading-relaxed">
+                    <p className="text-base md:text-lg lg:text-xl font-light text-light-text-muted dark:text-gray-400 leading-relaxed">
                       {SERVICES[1].description}
                     </p>
                   </div>
@@ -204,12 +204,12 @@ export default function RestrictedSplashScreen() {
                 
                 {/* Content */}
                 <div className="flex-1 md:col-span-10">
-                  <h3 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-white leading-[0.95] tracking-tight uppercase mb-4 md:mb-6">
+                  <h3 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-light-text dark:text-white leading-[0.95] tracking-tight uppercase mb-4 md:mb-6">
                     Glass, Aluminum<br />
                     <span className="text-primary">& Steel</span>
                   </h3>
                   <div className="max-w-2xl">
-                    <p className="text-base md:text-lg lg:text-xl font-light text-gray-400 leading-relaxed">
+                    <p className="text-base md:text-lg lg:text-xl font-light text-light-text-muted dark:text-gray-400 leading-relaxed">
                       {SERVICES[2].description}
                     </p>
                   </div>
@@ -240,7 +240,7 @@ export default function RestrictedSplashScreen() {
               <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light leading-[0.95] tracking-tight uppercase mb-3 md:mb-4">
                 Get In Touch
               </h2>
-              <p className="text-sm md:text-base lg:text-lg text-gray-500 font-light">
+              <p className="text-sm md:text-base lg:text-lg text-light-text-muted dark:text-gray-500 font-light">
                 Connect with our engineering team. We're ready to discuss your industrial solutions requirements.
               </p>
             </motion.div>
@@ -266,12 +266,12 @@ export default function RestrictedSplashScreen() {
                     <a
                       key={idx}
                       href={`tel:${phone}`}
-                      className="block text-lg font-light text-white hover:text-primary transition-colors duration-300"
+                      className="block text-lg font-light text-light-text dark:text-white hover:text-primary transition-colors duration-300"
                     >
                       {formatPhoneNumber(phone)}
                     </a>
                   ))}
-                  <p className="text-xs text-gray-500 uppercase tracking-[0.2em] mt-4">
+                  <p className="text-xs text-light-text-muted dark:text-gray-500 uppercase tracking-[0.2em] mt-4">
                     Mon-Fri, 8AM-5PM EAT
                   </p>
                 </div>
@@ -294,11 +294,11 @@ export default function RestrictedSplashScreen() {
                 <div className="pl-14">
                   <a
                     href="mailto:expert@exactsolutions.co.ke"
-                    className="block text-lg font-light text-white hover:text-primary transition-colors duration-300 break-all mb-3"
+                    className="block text-lg font-light text-light-text dark:text-white hover:text-primary transition-colors duration-300 break-all mb-3"
                   >
                     expert@exactsolutions.co.ke
                   </a>
-                  <p className="text-xs text-gray-500 uppercase tracking-[0.2em]">
+                  <p className="text-xs text-light-text-muted dark:text-gray-500 uppercase tracking-[0.2em]">
                     Response within 24 hours
                   </p>
                 </div>
@@ -322,10 +322,10 @@ export default function RestrictedSplashScreen() {
                       <span className="text-[11.5px] text-primary font-mono tracking-[0.4em] uppercase">Contact Form</span>
                       <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-2 transition-transform duration-300" />
                     </div>
-                    <h3 className="text-xl md:text-2xl lg:text-3xl font-light text-white mb-2 group-hover:text-primary transition-colors duration-300">
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-light text-light-text dark:text-white mb-2 group-hover:text-primary transition-colors duration-300">
                       Send a Message
                     </h3>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-light-text-muted dark:text-gray-400">
                       Describe your project requirements
                     </p>
                   </div>
@@ -345,9 +345,9 @@ export default function RestrictedSplashScreen() {
                       </div>
                       <span className="text-[11.5px] text-primary font-mono tracking-[0.4em] uppercase">WhatsApp</span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-gray-600 group-hover:text-primary group-hover:translate-x-2 transition-all duration-300" />
+                    <ArrowRight className="w-4 h-4 text-light-text-subtle dark:text-gray-600 group-hover:text-primary group-hover:translate-x-2 transition-all duration-300" />
                   </div>
-                  <p className="text-sm font-light text-white group-hover:text-primary transition-colors duration-300">
+                  <p className="text-sm font-light text-light-text dark:text-white group-hover:text-primary transition-colors duration-300">
                     Instant Messaging
                   </p>
                 </a>
@@ -357,7 +357,7 @@ export default function RestrictedSplashScreen() {
         </section>
 
         {/* Footer - Minimalist Premium */}
-        <footer className="px-6 md:px-20 py-16 md:py-24 border-t border-gray-900 bg-dark-light mt-auto relative">
+        <footer className="px-6 md:px-20 py-16 md:py-24 border-t border-light-border dark:border-dark-border bg-light-lighter dark:bg-dark-light mt-auto relative">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
               {/* Brand */}
@@ -367,13 +367,13 @@ export default function RestrictedSplashScreen() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="text-[10px] md:text-sm text-gray-500 uppercase tracking-[0.3em] md:tracking-[0.4em] mb-4 font-light">
+                <div className="text-[10px] md:text-sm text-light-text-muted dark:text-dark-text-muted uppercase tracking-[0.3em] md:tracking-[0.4em] mb-4 font-light">
                   Exact Solutions Limited
                 </div>
-                <div className="text-2xl md:text-3xl font-light text-white leading-tight tracking-tighter uppercase mb-2">
+                <div className="text-2xl md:text-3xl font-light text-light-text dark:text-dark-text-primary leading-tight tracking-tighter uppercase mb-2">
                   EXACT<span className="text-primary">SOLUTIONS</span>
                 </div>
-                <div className="text-xs md:text-sm text-gray-400 uppercase tracking-[0.2em] md:tracking-[0.3em] font-light">
+                <div className="text-xs md:text-sm text-light-text-muted dark:text-dark-text-muted uppercase tracking-[0.2em] md:tracking-[0.3em] font-light">
                   Industrial Solutions Engineering
                 </div>
               </motion.div>
@@ -390,7 +390,7 @@ export default function RestrictedSplashScreen() {
                   <div className="text-[11.5px] text-primary uppercase tracking-[0.3em] font-mono mb-2">Email</div>
                   <a 
                     href="mailto:expert@exactsolutions.co.ke"
-                    className="text-base font-light text-white hover:text-primary transition-colors block break-all"
+                    className="text-base font-light text-light-text dark:text-dark-text-primary hover:text-primary transition-colors block break-all"
                   >
                     expert@exactsolutions.co.ke
                   </a>
@@ -399,7 +399,7 @@ export default function RestrictedSplashScreen() {
                   <div className="text-[11.5px] text-primary uppercase tracking-[0.3em] font-mono mb-2">Phone</div>
                   <a 
                     href="tel:+254720876787"
-                    className="text-base font-light text-white hover:text-primary transition-colors block"
+                    className="text-base font-light text-light-text dark:text-dark-text-primary hover:text-primary transition-colors block"
                   >
                     +254 720 876 787
                   </a>
@@ -418,7 +418,7 @@ export default function RestrictedSplashScreen() {
                 <div className="space-y-2">
                   <Link 
                     href="/contact"
-                    className="block text-base font-light text-gray-400 hover:text-white transition-colors"
+                    className="block text-base font-light text-light-text-muted dark:text-dark-text-muted hover:text-primary dark:hover:text-primary transition-colors"
                   >
                     Contact Form
                   </Link>
@@ -426,7 +426,7 @@ export default function RestrictedSplashScreen() {
                     href="https://wa.me/254720876787"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block text-base font-light text-gray-400 hover:text-white transition-colors"
+                    className="block text-base font-light text-light-text-muted dark:text-dark-text-muted hover:text-primary dark:hover:text-primary transition-colors"
                   >
                     WhatsApp
                   </a>
@@ -440,9 +440,9 @@ export default function RestrictedSplashScreen() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="mt-12 pt-8 border-t border-gray-900 text-center"
+              className="mt-12 pt-8 border-t border-light-border dark:border-dark-border text-center"
             >
-              <p className="text-xs text-gray-600 uppercase tracking-[0.2em]">
+              <p className="text-xs text-light-text-subtle dark:text-dark-text-subtle uppercase tracking-[0.2em]">
                 © {new Date().getFullYear()} Exact Solutions Limited. All rights reserved.
               </p>
             </motion.div>

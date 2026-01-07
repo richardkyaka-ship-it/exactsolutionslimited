@@ -26,7 +26,7 @@ export default function ProjectFilter({ activeCategory, onCategoryChange }: Proj
           className={`px-4 py-2 text-[10px] uppercase tracking-[0.2em] transition-all duration-300 border ${
             activeCategory === cat.value
               ? 'border-primary text-primary'
-              : 'border-gray-900 text-gray-500 hover:text-white hover:border-gray-700'
+              : 'border-light-border dark:border-gray-900 text-light-text-muted dark:text-gray-500 hover:text-light-text dark:hover:text-white hover:border-light-text-subtle dark:hover:border-gray-700'
           }`}
         >
           {cat.label}

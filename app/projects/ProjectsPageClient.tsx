@@ -178,13 +178,13 @@ export default function ProjectsPageClient() {
   }, [activeCategory])
 
   return (
-    <main className="bg-black text-white selection:bg-primary selection:text-white min-h-screen">
+    <main className="bg-light dark:bg-black text-light-text dark:text-white selection:bg-primary selection:text-light-text dark:selection:text-white min-h-screen">
       {/* Hero Section */}
       <section className="px-6 md:px-12 lg:px-20 pt-32 pb-16">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-baseline gap-4 mb-8">
             <span className="text-[10px] text-primary font-mono tracking-[0.3em] uppercase">Section 01</span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-white tracking-tight uppercase">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-light-text dark:text-white tracking-tight uppercase">
               Engineering Projects
             </h1>
           </div>

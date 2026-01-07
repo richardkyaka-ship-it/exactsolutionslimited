@@ -5,6 +5,7 @@ import Navigation from '@/components/Navigation'
 import PageTransition from '@/components/PageTransition'
 import Preloader from '@/components/Preloader'
 import { SWRProvider } from '@/components/providers/SWRProvider'
+import { ThemeProvider } from '@/components/providers/ThemeProvider'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -31,17 +32,19 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.variable} font-inter antialiased bg-black text-white min-h-screen overflow-x-hidden`} suppressHydrationWarning>
-        <SWRProvider>
-          <Preloader />
-          <Navigation />
-          <main className="relative">
-            <PageTransition>
-              {children}
-            </PageTransition>
-          </main>
-        </SWRProvider>
+    <html lang="en">
+      <body className={`${inter.variable} font-inter antialiased bg-light dark:bg-dark text-light-text dark:text-dark-text-primary min-h-screen overflow-x-hidden`} suppressHydrationWarning>
+        <ThemeProvider>
+          <SWRProvider>
+            <Preloader />
+            <Navigation />
+            <main className="relative">
+              <PageTransition>
+                {children}
+              </PageTransition>
+            </main>
+          </SWRProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

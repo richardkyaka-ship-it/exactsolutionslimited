@@ -18,7 +18,7 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       whileHover={{ y: -5 }}
-      className="group bg-dark-light border border-gray-900 hover:border-primary transition-all duration-500 flex flex-col h-full"
+      className="group bg-light-surface dark:bg-dark-light border border-light-border dark:border-gray-900 hover:border-primary transition-all duration-500 flex flex-col h-full"
     >
       {/* Image Container */}
       <div 
@@ -55,11 +55,11 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
           <span className="px-2 py-0.5 bg-primary/10 text-primary text-[8px] font-mono tracking-widest uppercase border border-primary/20">
             {project.category}
           </span>
-          <div className="h-px flex-grow bg-gray-900" />
+          <div className="h-px flex-grow bg-light-border dark:bg-gray-900" />
         </div>
 
         <h3 
-          className="text-xl font-light text-white uppercase tracking-tight mb-4 group-hover:text-primary transition-colors cursor-pointer"
+          className="text-xl font-light text-light-text dark:text-white uppercase tracking-tight mb-4 group-hover:text-primary transition-colors cursor-pointer"
           onClick={() => onClick(project)}
         >
           {project.title}
@@ -67,16 +67,16 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
 
         <div className="space-y-4 mb-8">
           <div>
-            <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Client</p>
-            <p className="text-xs text-white font-medium">{project.client}</p>
+            <p className="text-[10px] text-light-text-muted dark:text-gray-500 uppercase tracking-widest mb-1">Client</p>
+            <p className="text-xs text-light-text dark:text-white font-medium">{project.client}</p>
           </div>
           <div>
-            <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Challenge</p>
-            <p className="text-xs text-gray-400 line-clamp-1 italic">"{project.challenge}"</p>
+            <p className="text-[10px] text-light-text-muted dark:text-gray-500 uppercase tracking-widest mb-1">Challenge</p>
+            <p className="text-xs text-light-text-muted dark:text-gray-400 line-clamp-1 italic">"{project.challenge}"</p>
           </div>
           <div>
-            <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Solution</p>
-            <p className="text-xs text-gray-400 line-clamp-1">{project.solution}</p>
+            <p className="text-[10px] text-light-text-muted dark:text-gray-500 uppercase tracking-widest mb-1">Solution</p>
+            <p className="text-xs text-light-text-muted dark:text-gray-400 line-clamp-1">{project.solution}</p>
           </div>
         </div>
 

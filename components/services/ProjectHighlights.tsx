@@ -26,12 +26,12 @@ export default function ProjectHighlights({ highlights }: ProjectHighlightsProps
             viewport={{ once: true }}
             className="flex gap-4 group"
           >
-            <div className="flex-shrink-0 w-px h-12 bg-gray-800 group-hover:bg-primary transition-colors duration-500" />
+            <div className="flex-shrink-0 w-px h-12 bg-light-border dark:bg-gray-800 group-hover:bg-primary transition-colors duration-500" />
             <div>
-              <h4 className="text-sm font-medium text-white mb-2 group-hover:translate-x-1 transition-transform duration-300">
+              <h4 className="text-sm font-medium text-light-text dark:text-white mb-2 group-hover:translate-x-1 transition-transform duration-300">
                 {item.title}
               </h4>
-              <p className="text-xs text-gray-500 leading-relaxed max-w-sm">
+              <p className="text-xs text-light-text-muted dark:text-gray-500 leading-relaxed max-w-sm">
                 {item.description}
               </p>
             </div>

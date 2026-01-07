@@ -19,7 +19,7 @@ interface BlueprintImageProps {
 
 export default function BlueprintImage({ src, alt, annotations = [] }: BlueprintImageProps) {
   return (
-    <div className="relative aspect-[16/9] w-full overflow-hidden border border-gray-900 bg-dark-lighter group">
+    <div className="relative aspect-[16/9] w-full overflow-hidden border border-light-border dark:border-gray-900 bg-light-lighter dark:bg-dark-lighter group">
       {/* desaturated Industrial Image */}
       <div className="absolute inset-0 grayscale contrast-[1.1] opacity-40 group-hover:opacity-60 transition-opacity duration-700">
         <img
@@ -74,8 +74,8 @@ export default function BlueprintImage({ src, alt, annotations = [] }: Blueprint
           viewport={{ once: true }}
         >
           <div className="relative -translate-x-1/2 -translate-y-full mb-2">
-            <div className="bg-black/80 backdrop-blur-sm border border-primary/30 px-2 py-1 flex flex-col items-center">
-              <span className="text-[8px] uppercase tracking-[0.2em] text-gray-500 font-medium">{anno.label}</span>
+            <div className="bg-light-surface/80 dark:bg-black/80 backdrop-blur-sm border border-primary/30 px-2 py-1 flex flex-col items-center">
+              <span className="text-[8px] uppercase tracking-[0.2em] text-light-text-muted dark:text-gray-500 font-medium">{anno.label}</span>
               <span className="text-[10px] font-mono text-primary whitespace-nowrap">{anno.value}</span>
             </div>
             {/* Connector Dot */}

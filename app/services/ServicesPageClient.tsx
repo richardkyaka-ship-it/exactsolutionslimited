@@ -124,7 +124,7 @@ export default function ServicesPageClient() {
   }, [])
 
   return (
-    <main className="bg-black text-white selection:bg-primary selection:text-white">
+    <main className="bg-light dark:bg-black text-light-text dark:text-white selection:bg-primary selection:text-light-text dark:selection:text-white min-h-screen">
       {/* Editorial Hero Section */}
       <section className="min-h-[80vh] flex flex-col justify-center px-6 md:px-12 lg:px-20 pt-32">
         <div className="max-w-[1400px] mx-auto w-full">
@@ -137,12 +137,12 @@ export default function ServicesPageClient() {
               <span className="text-xs text-primary font-mono tracking-[0.4em] uppercase">Blueprint // 2025</span>
               <div className="h-px w-12 bg-primary/40" />
             </div>
-            <h1 className="text-5xl md:text-8xl lg:text-[120px] font-light leading-[0.9] tracking-tighter uppercase mb-12">
+            <h1 className="text-5xl md:text-8xl lg:text-[120px] font-light leading-[0.9] tracking-tighter uppercase mb-12 text-light-text dark:text-white">
               Exact <span className="text-primary">Capabilities</span>
             </h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 items-end">
               <div className="lg:col-span-1">
-                <p className="text-gray-500 text-sm md:text-base leading-relaxed uppercase tracking-wider">
+                <p className="text-light-text-muted dark:text-gray-500 text-sm md:text-base leading-relaxed uppercase tracking-wider">
                   Technical solutions for <br />
                   heavy industry, logistics <br />
                   & architectural fabrication.
@@ -150,7 +150,7 @@ export default function ServicesPageClient() {
               </div>
               <div className="lg:col-span-2 flex flex-col items-start md:items-end">
                 <div className="space-y-2 text-right">
-                  <p className="text-[10px] text-gray-600 font-mono uppercase tracking-[0.2em]">Scroll to Explore Specs</p>
+                  <p className="text-[10px] text-light-text-subtle dark:text-gray-600 font-mono uppercase tracking-[0.2em]">Scroll to Explore Specs</p>
                   <div className="h-24 w-px bg-gradient-to-b from-primary to-transparent mx-auto md:mr-4" />
                 </div>
               </div>

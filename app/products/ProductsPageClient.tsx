@@ -28,18 +28,18 @@ export default function ProductsPageClient() {
   }, [products, activeCategory])
 
   return (
-    <main className="bg-black text-white selection:bg-primary selection:text-white min-h-screen">
+    <main className="bg-light dark:bg-dark text-light-text dark:text-dark-text-primary selection:bg-primary selection:text-light-text dark:selection:text-dark-text-primary min-h-screen">
       {/* Hero Section */}
       <section className="px-6 md:px-12 lg:px-20 pt-32 pb-16">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-baseline gap-4 mb-8">
             <span className="text-[10px] text-primary font-mono tracking-[0.3em] uppercase">01</span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-white tracking-tight uppercase">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-light-text dark:text-dark-text-primary tracking-tight uppercase">
               Industrial Catalog
             </h1>
           </div>
           <div className="h-px w-24 bg-primary/40 mb-8" />
-          <p className="text-xl font-light text-gray-400 max-w-2xl leading-relaxed">
+          <p className="text-xl font-light text-light-text-muted dark:text-dark-text-muted max-w-2xl leading-relaxed">
             Browse our technical equipment range. Select any unit to view full specifications or start a direct technical consultation.
           </p>
         </div>
