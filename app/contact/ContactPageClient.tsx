@@ -144,7 +144,7 @@ export default function ContactPageClient() {
 
             <motion.div variants={itemVariants} className="w-full">
               {/* Location Details - Premium Expanded Card */}
-              <div className="relative p-8 sm:p-10 md:p-12 lg:p-14 border-2 border-gray-800 bg-dark-lighter/50 hover:bg-dark-lighter hover:border-primary/30 transition-all duration-500 group overflow-hidden">
+              <div className="relative p-5 sm:p-8 md:p-12 lg:p-14 border-2 border-gray-800 bg-dark-lighter/50 hover:bg-dark-lighter hover:border-primary/30 transition-all duration-500 group overflow-hidden">
                 {/* Subtle grid pattern */}
                 <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
                   <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -159,52 +159,52 @@ export default function ContactPageClient() {
                 
                 <div className="relative z-10">
                   {/* Header */}
-                  <div className="flex items-center gap-4 mb-8 md:mb-10">
-                    <div className="w-12 h-12 md:w-14 md:h-14 border-2 border-gray-800 flex items-center justify-center group-hover:border-primary transition-colors duration-300">
-                      <MapPin className="w-6 h-6 md:w-7 md:h-7 text-primary" />
+                  <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8 md:mb-10">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 border-2 border-gray-800 flex items-center justify-center group-hover:border-primary transition-colors duration-300 flex-shrink-0">
+                      <MapPin className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-primary" />
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="h-px w-12 md:w-16 bg-primary/40"></div>
-                      <span className="text-[11.5px] md:text-sm text-primary font-mono tracking-[0.4em] uppercase">Address</span>
+                    <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                      <div className="h-px w-8 sm:w-12 md:w-16 bg-primary/40 flex-shrink-0"></div>
+                      <span className="text-[10px] sm:text-[11.5px] md:text-sm text-primary font-mono tracking-[0.3em] sm:tracking-[0.4em] uppercase whitespace-nowrap">Address</span>
                     </div>
                   </div>
                   
                   {/* Location Content */}
-                  <div className="space-y-6 md:space-y-8">
+                  <div className="space-y-5 sm:space-y-6 md:space-y-8">
                     {/* Main Location */}
                     <div>
-                      <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white mb-5 md:mb-6 group-hover:text-primary transition-colors duration-300 leading-tight">
+                      <h3 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-light text-white mb-4 sm:mb-5 md:mb-6 group-hover:text-primary transition-colors duration-300 leading-tight">
                         Nairobi, Kenya
                       </h3>
                       
                       {/* Detailed Address */}
-                      <div className="space-y-3 md:space-y-4 pl-0 md:pl-6 border-l-0 md:border-l border-gray-800 md:border-primary/20">
-                        <p className="text-base sm:text-lg md:text-xl text-gray-300 font-light leading-relaxed">
+                      <div className="space-y-2.5 sm:space-y-3 md:space-y-4 pl-0 md:pl-6 border-l-0 md:border-l border-gray-800 md:border-primary/20">
+                        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 font-light leading-relaxed break-words">
                           Behind Astrol Petrol Station, Utawala.
                         </p>
-                        <p className="text-base sm:text-lg md:text-xl text-gray-300 font-light leading-relaxed">
+                        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 font-light leading-relaxed break-words">
                           Along the Eastern Bypass
                         </p>
                       </div>
                     </div>
                     
                     {/* Description */}
-                    <div className="pt-5 md:pt-6 border-t border-gray-800">
-                      <p className="text-sm sm:text-base md:text-lg text-gray-400 leading-relaxed">
+                    <div className="pt-4 sm:pt-5 md:pt-6 border-t border-gray-800">
+                      <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-400 leading-relaxed">
                         Our headquarters is located in Nairobi, serving clients across Kenya and East Africa.
                       </p>
                     </div>
                     
                     {/* Get Directions CTA */}
-                    <div className="pt-6 md:pt-8 border-t border-gray-800">
+                    <div className="pt-5 sm:pt-6 md:pt-8 border-t border-gray-800">
                       <a
                         href="https://maps.app.goo.gl/DAktGxDSZVFnMbrL7"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 px-6 py-3 md:px-8 md:py-4 border-2 border-primary/30 hover:border-primary bg-primary/5 hover:bg-primary/10 transition-all duration-500 group/link"
+                        className="inline-flex items-center justify-center gap-2.5 sm:gap-3 w-full sm:w-auto px-5 sm:px-6 md:px-8 py-3.5 sm:py-3 md:py-4 border-2 border-primary/30 hover:border-primary bg-primary/5 hover:bg-primary/10 transition-all duration-500 group/link active:scale-[0.98]"
                       >
-                        <span className="text-sm md:text-base text-primary font-light">Get Directions</span>
-                        <ExternalLink className="w-4 h-4 md:w-5 md:h-5 text-primary group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform duration-300" />
+                        <span className="text-xs sm:text-sm md:text-base text-primary font-light">Get Directions</span>
+                        <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-primary group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform duration-300 flex-shrink-0" />
                       </a>
                     </div>
                   </div>
