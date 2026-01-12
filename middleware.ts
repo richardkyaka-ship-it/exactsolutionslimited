@@ -49,25 +49,24 @@ export function middleware(request: NextRequest) {
     return response;
   }
 
-  // 2. Production Access Control - DISABLED FOR SEO TESTING
-  // SPLASH SCREEN IS DISABLED - All pages are accessible
-  // const allowedInProduction = [
-  //   '/splash',     // Splash screen route (for restricted pages)
-  //   '/contact',    // Contact page only
-  //   '/api/contact', // Contact API endpoint
-  //   '/admin',      // Admin routes
-  //   '/api/admin',  // Admin API routes
-  // ];
+  // 2. Production Access Control - SPLASH SCREEN ENABLED
+  const allowedInProduction = [
+    '/splash',     // Splash screen route (for restricted pages)
+    '/contact',    // Contact page only
+    '/api/contact', // Contact API endpoint
+    '/admin',      // Admin routes
+    '/api/admin',  // Admin API routes
+  ];
 
-  // // Check if current path starts with any allowed path
-  // const isAllowed = allowedInProduction.some(path =>
-  //   pathname === path || pathname.startsWith(`${path}/`)
-  // );
+  // Check if current path starts with any allowed path
+  const isAllowed = allowedInProduction.some(path =>
+    pathname === path || pathname.startsWith(`${path}/`)
+  );
 
-  // if (process.env.NODE_ENV === 'production' && !isAllowed) {
-  //   // REWRITE to splash page while keeping the original URL
-  //   return NextResponse.rewrite(new URL('/splash', request.url));
-  // }
+  if (process.env.NODE_ENV === 'production' && !isAllowed) {
+    // REWRITE to splash page while keeping the original URL
+    return NextResponse.rewrite(new URL('/splash', request.url));
+  }
 
   // 3. SEO Headers for all pages
   const response = NextResponse.next();
