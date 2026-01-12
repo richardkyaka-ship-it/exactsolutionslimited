@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
-import { getEmailConfig } from '@/lib/env'
 
 // Initialize Resend client (uses validated environment)
 function getResendClient() {
@@ -532,34 +531,16 @@ export async function POST(request: NextRequest) {
     })
 
     // Check if Resend API key is configured
-    // Try to get email config, but handle gracefully if it fails
-    let emailConfig;
-    try {
-      emailConfig = getEmailConfig();
-    } catch (configError: any) {
-      console.error('Email configuration error:', configError?.message || configError);
-      console.log('Contact Form Submission (Email not sent - config error):', {
-        fullName: fullName.trim(),
-        company: company.trim(),
-        email: email.trim(),
-        phone: phone || 'Not provided',
-        serviceCategory: serviceDisplay,
-        message: message.trim(),
-        timestamp: new Date().toISOString(),
-        error: configError?.message || 'Configuration error',
-      });
-      
-      return NextResponse.json(
-        { success: false, message: 'Email service is not configured. Please contact us directly via phone or WhatsApp.' },
-        { status: 500 }
-      );
-    }
+    // Check environment variables directly (don't validate all env vars, just email ones)
+    const RESEND_API_KEY = process.env.RESEND_API_KEY;
+    const RESEND_FROM_EMAIL = process.env.RESEND_FROM_EMAIL;
+    const CONTACT_EMAIL = process.env.CONTACT_EMAIL;
 
-    if (!emailConfig.RESEND_API_KEY || !emailConfig.RESEND_FROM_EMAIL || !emailConfig.CONTACT_EMAIL) {
+    if (!RESEND_API_KEY || !RESEND_FROM_EMAIL || !CONTACT_EMAIL) {
       console.error('Resend environment variables missing:', {
-        hasApiKey: !!emailConfig.RESEND_API_KEY,
-        hasFromEmail: !!emailConfig.RESEND_FROM_EMAIL,
-        hasContactEmail: !!emailConfig.CONTACT_EMAIL,
+        hasApiKey: !!RESEND_API_KEY,
+        hasFromEmail: !!RESEND_FROM_EMAIL,
+        hasContactEmail: !!CONTACT_EMAIL,
       });
       console.log('Contact Form Submission (Email not sent - env vars missing):', {
         fullName: fullName.trim(),
@@ -579,16 +560,14 @@ export async function POST(request: NextRequest) {
 
     // Send email via Resend
     try {
-      const resend = getResendClient()
+      const resend = getResendClient(RESEND_API_KEY)
       if (!resend) {
-        console.error('Resend client not initialized - API key may be missing');
+        console.error('Resend client not initialized - API key may be invalid');
         return NextResponse.json(
           { success: false, message: 'Email service is not configured. Please contact us directly via phone or WhatsApp.' },
           { status: 500 }
         );
       }
-
-      const { RESEND_FROM_EMAIL, CONTACT_EMAIL } = emailConfig;
       
       const { data, error } = await resend.emails.send({
         from: RESEND_FROM_EMAIL,
