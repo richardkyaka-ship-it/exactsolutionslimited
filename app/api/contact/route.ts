@@ -14,11 +14,12 @@ function getResendClient() {
 }
 
 // Rate limiting: Simple in-memory store (in production, use Redis or similar)
+// Note: In serverless, this resets on each cold start, so it's not perfect but helps with basic spam
 const rateLimitMap = new Map<string, number>()
 const rateLimitViolations = new Map<string, number>() // Track violations per IP
-const RATE_LIMIT_WINDOW = 60 * 1000 // 60 seconds
-const MAX_VIOLATIONS = 5 // Block after 5 violations
-const BLOCK_DURATION = 15 * 60 * 1000 // 15 minutes block
+const RATE_LIMIT_WINDOW = 20 * 1000 // 20 seconds - only block very rapid repeats
+const MAX_VIOLATIONS = 15 // Block after 15 violations (very lenient)
+const BLOCK_DURATION = 10 * 60 * 1000 // 10 minutes block (reduced from 15)
 
 // Request size limits
 const MAX_BODY_SIZE = 50 * 1024 // 50KB max request body
@@ -305,22 +306,35 @@ function checkRateLimit(ip: string): { allowed: boolean; reason?: string } {
     return { allowed: false, reason: 'IP temporarily blocked due to repeated violations' }
   }
   
-  const lastSubmission = rateLimitMap.get(ip)
+  // Get submission history for this IP
+  const submissionHistory = rateLimitMap.get(ip)
   
-  if (lastSubmission && (now - lastSubmission) < RATE_LIMIT_WINDOW) {
-    // Increment violation count
-    const violations = (rateLimitViolations.get(ip) || 0) + 1
-    rateLimitViolations.set(ip, violations)
+  if (submissionHistory) {
+    // Parse the history (stored as timestamp or array of timestamps)
+    const lastSubmission = typeof submissionHistory === 'number' ? submissionHistory : submissionHistory
+    const timeSinceLastSubmission = now - lastSubmission
     
-    // Block if too many violations
-    if (violations >= MAX_VIOLATIONS) {
-      const blockUntil = now + BLOCK_DURATION
-      rateLimitViolations.set(ip, blockUntil)
-      console.warn(`IP ${ip} blocked for ${BLOCK_DURATION / 1000 / 60} minutes due to ${violations} violations`)
-      return { allowed: false, reason: 'Too many rapid submissions. Please try again later.' }
+    // If submitted too recently (within window), check how many times
+    if (timeSinceLastSubmission < RATE_LIMIT_WINDOW) {
+      // Allow a few submissions per window (for typos/corrections)
+      // Only block if it's a very rapid repeat (less than 5 seconds - likely double-click)
+      if (timeSinceLastSubmission < 5 * 1000) {
+        // Very rapid submission - likely spam or accidental double-click
+        const violations = (rateLimitViolations.get(ip) || 0) + 1
+        rateLimitViolations.set(ip, violations)
+        
+        // Block if too many violations
+        if (violations >= MAX_VIOLATIONS) {
+          const blockUntil = now + BLOCK_DURATION
+          rateLimitViolations.set(ip, blockUntil)
+          console.warn(`IP ${ip} blocked for ${BLOCK_DURATION / 1000 / 60} minutes due to ${violations} violations`)
+          return { allowed: false, reason: 'Too many rapid submissions. Please try again later.' }
+        }
+        
+        return { allowed: false, reason: 'Please wait a few seconds before submitting again.' }
+      }
+      // If more than 10 seconds but less than window, allow it (user might be correcting a typo)
     }
-    
-    return { allowed: false, reason: 'Please wait before submitting another message.' }
   }
   
   // Reset violation count on successful submission
@@ -565,23 +579,11 @@ export async function POST(request: NextRequest) {
 
     // Send email via Resend
     try {
-      // Check email configuration first
-      let emailConfig;
-      try {
-        emailConfig = getEmailConfig();
-      } catch (configError) {
-        console.error('Email configuration error:', configError);
-        return NextResponse.json(
-          { success: false, message: 'Email service is not configured. Please contact support directly.' },
-          { status: 500 }
-        );
-      }
-
       const resend = getResendClient()
       if (!resend) {
         console.error('Resend client not initialized - API key may be missing');
         return NextResponse.json(
-          { success: false, message: 'Email service is not configured. Please contact support directly.' },
+          { success: false, message: 'Email service is not configured. Please contact us directly via phone or WhatsApp.' },
           { status: 500 }
         );
       }
