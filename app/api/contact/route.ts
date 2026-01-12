@@ -518,10 +518,13 @@ export async function POST(request: NextRequest) {
     })
 
     // Check if Resend API key is configured
-    if (!process.env.RESEND_API_KEY) {
-      console.error('RESEND_API_KEY is not configured')
-      // Log submission for debugging
-      console.log('Contact Form Submission (Email not sent - API key missing):', {
+    // Try to get email config, but handle gracefully if it fails
+    let emailConfig;
+    try {
+      emailConfig = getEmailConfig();
+    } catch (configError: any) {
+      console.error('Email configuration error:', configError?.message || configError);
+      console.log('Contact Form Submission (Email not sent - config error):', {
         fullName: fullName.trim(),
         company: company.trim(),
         email: email.trim(),
@@ -529,22 +532,61 @@ export async function POST(request: NextRequest) {
         serviceCategory: serviceDisplay,
         message: message.trim(),
         timestamp: new Date().toISOString(),
-      })
+        error: configError?.message || 'Configuration error',
+      });
       
       return NextResponse.json(
-        { success: false, message: 'Email service is not configured. Please contact support.' },
+        { success: false, message: 'Email service is not configured. Please contact us directly via phone or WhatsApp.' },
         { status: 500 }
-      )
+      );
+    }
+
+    if (!emailConfig.RESEND_API_KEY || !emailConfig.RESEND_FROM_EMAIL || !emailConfig.CONTACT_EMAIL) {
+      console.error('Resend environment variables missing:', {
+        hasApiKey: !!emailConfig.RESEND_API_KEY,
+        hasFromEmail: !!emailConfig.RESEND_FROM_EMAIL,
+        hasContactEmail: !!emailConfig.CONTACT_EMAIL,
+      });
+      console.log('Contact Form Submission (Email not sent - env vars missing):', {
+        fullName: fullName.trim(),
+        company: company.trim(),
+        email: email.trim(),
+        phone: phone || 'Not provided',
+        serviceCategory: serviceDisplay,
+        message: message.trim(),
+        timestamp: new Date().toISOString(),
+      });
+      
+      return NextResponse.json(
+        { success: false, message: 'Email service is not configured. Please contact us directly via phone or WhatsApp.' },
+        { status: 500 }
+      );
     }
 
     // Send email via Resend
     try {
-      const resend = getResendClient()
-      if (!resend) {
-        throw new Error('Resend client not initialized')
+      // Check email configuration first
+      let emailConfig;
+      try {
+        emailConfig = getEmailConfig();
+      } catch (configError) {
+        console.error('Email configuration error:', configError);
+        return NextResponse.json(
+          { success: false, message: 'Email service is not configured. Please contact support directly.' },
+          { status: 500 }
+        );
       }
 
-      const { RESEND_FROM_EMAIL, CONTACT_EMAIL } = getEmailConfig()
+      const resend = getResendClient()
+      if (!resend) {
+        console.error('Resend client not initialized - API key may be missing');
+        return NextResponse.json(
+          { success: false, message: 'Email service is not configured. Please contact support directly.' },
+          { status: 500 }
+        );
+      }
+
+      const { RESEND_FROM_EMAIL, CONTACT_EMAIL } = emailConfig;
       
       const { data, error } = await resend.emails.send({
         from: RESEND_FROM_EMAIL,
@@ -635,8 +677,24 @@ export async function POST(request: NextRequest) {
     }
   } catch (error) {
     console.error('Contact form error:', error)
+    // Log more details for debugging
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    console.error('Contact form error details:', {
+      message: errorMessage,
+      stack: errorStack,
+      envCheck: {
+        hasResendKey: !!process.env.RESEND_API_KEY,
+        hasFromEmail: !!process.env.RESEND_FROM_EMAIL,
+        hasContactEmail: !!process.env.CONTACT_EMAIL,
+      }
+    });
+    
     return NextResponse.json(
-      { success: false, message: 'Failed to process request' },
+      { 
+        success: false, 
+        message: 'Failed to process request. Please try again or contact us directly via phone or WhatsApp.' 
+      },
       { status: 500 }
     )
   }
