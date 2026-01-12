@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
-// Initialize Resend client (uses validated environment)
-function getResendClient() {
+// Initialize Resend client (directly from env, no full validation)
+function getResendClient(apiKey?: string) {
+  const key = apiKey || process.env.RESEND_API_KEY
+  if (!key) {
+    return null
+  }
   try {
-    const { RESEND_API_KEY } = getEmailConfig()
-    return new Resend(RESEND_API_KEY)
+    return new Resend(key)
   } catch {
-    // If validation fails, return null (shouldn't happen if validation is working)
     return null
   }
 }
