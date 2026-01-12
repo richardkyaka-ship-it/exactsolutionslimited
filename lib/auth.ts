@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import { getAdminConfig } from './env';
 
 const SESSION_COOKIE_NAME = 'exact_admin_session';
 const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours
@@ -66,9 +67,9 @@ export function isAdminAuthenticated(): boolean {
  * Login admin and create secure session
  */
 export function loginAdmin(password: string, userAgent?: string): boolean {
-  const adminPassword = process.env.ADMIN_PASSWORD || 'Ryan@2025'; // Fallback for dev
+  const { ADMIN_PASSWORD, NODE_ENV } = getAdminConfig();
   
-  if (password === adminPassword) {
+  if (password === ADMIN_PASSWORD) {
     const cookieStore = cookies();
     const sessionToken = createAdminSession(userAgent);
     
@@ -76,7 +77,7 @@ export function loginAdmin(password: string, userAgent?: string): boolean {
       maxAge: SESSION_DURATION / 1000, // Convert to seconds
       path: '/',
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: NODE_ENV === 'production',
       sameSite: 'strict',
     });
     return true;

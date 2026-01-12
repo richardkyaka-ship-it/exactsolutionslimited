@@ -13,17 +13,35 @@ export function getOptimizedAirtableImage(
   imageUrl: string | undefined,
   size: 'small' | 'large' | 'original' = 'large'
 ): string {
-  if (!imageUrl) {
+  if (!imageUrl || typeof imageUrl !== 'string' || imageUrl.trim() === '') {
+    console.warn('[getOptimizedAirtableImage] Invalid image URL provided:', imageUrl)
     return '/placeholder-product.jpg'
   }
 
-  // If it's already an Airtable URL, try to get thumbnail
-  // Airtable URLs typically look like: https://dl.airtable.com/.attachments/...
-  // Thumbnails: add ?thumbnails=true or use specific size parameter
+  // Clean the URL
+  const cleanUrl = imageUrl.trim()
+
+  // Handle Airtable URLs
+  // Airtable URLs can be:
+  // 1. https://dl.airtable.com/.attachments/... (old format)
+  // 2. https://v5.airtableusercontent.com/... (new format)
+  // 3. Cloudinary URLs: https://res.cloudinary.com/...
   
-  // For now, return the original URL
-  // Next.js Image component will handle optimization via CDN
-  return imageUrl
+  // For Airtable URLs, we can optionally request thumbnails
+  // But Next.js Image will handle optimization, so we return the original URL
+  if (cleanUrl.includes('airtable.com') || cleanUrl.includes('airtableusercontent.com')) {
+    // Return the original URL - Next.js will optimize it
+    return cleanUrl
+  }
+
+  // For Cloudinary URLs, they're already optimized
+  if (cleanUrl.includes('cloudinary.com')) {
+    return cleanUrl
+  }
+
+  // For any other URL, return as-is
+  // Next.js Image component will handle optimization if domain is configured
+  return cleanUrl
 }
 
 /**

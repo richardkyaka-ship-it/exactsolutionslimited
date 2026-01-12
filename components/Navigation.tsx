@@ -83,6 +83,7 @@ export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isDark, setIsDark] = useState(false)
   const router = useRouter()
   const navRef = useRef<HTMLDivElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
@@ -93,6 +94,19 @@ export default function Navigation() {
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    const checkDarkMode = () => {
+      setIsDark(document.documentElement.classList.contains('dark'))
+    }
+    checkDarkMode()
+    const observer = new MutationObserver(checkDarkMode)
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    })
+    return () => observer.disconnect()
   }, [])
 
   // Lock body scroll when menu is open - instant updates
@@ -191,11 +205,25 @@ export default function Navigation() {
   return (
     <>
       {/* Logo / Home Link - Premium Styling */}
-      <Link
-        href="/"
-        className="fixed top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 z-[70] flex items-center gap-2 group touch-manipulation"
-        aria-label="Exact Solutions Home"
+      <motion.div
+        className="fixed top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 z-[70]"
+        animate={{
+          backdropFilter: isScrolled ? 'blur(12px)' : 'blur(0px)',
+          backgroundColor: isScrolled 
+            ? (isDark ? 'rgba(26, 26, 26, 0.7)' : 'rgba(232, 228, 222, 0.7)')
+            : 'transparent',
+        }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+        style={{
+          borderRadius: '8px',
+          padding: '8px 12px',
+        }}
       >
+        <Link
+          href="/"
+          className="flex items-center gap-2 group touch-manipulation"
+          aria-label="Exact Solutions Home"
+        >
         <div className="flex flex-col relative">
           {/* Subtle hover accent */}
           <div className="absolute -left-1 top-0 bottom-0 w-px bg-primary/0 group-hover:bg-primary/40 transition-all duration-300" />
@@ -207,21 +235,38 @@ export default function Navigation() {
           </span>
         </div>
       </Link>
+      </motion.div>
 
       {/* Right Side Navigation Controls - Premium Grouped Layout */}
-      <div className="fixed top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-[70] flex items-center gap-2 sm:gap-3">
+      <motion.div 
+        className="fixed top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-[70] flex items-center gap-2 sm:gap-3"
+        animate={{
+          backdropFilter: isScrolled ? 'blur(12px)' : 'blur(0px)',
+          backgroundColor: isScrolled 
+            ? (isDark ? 'rgba(26, 26, 26, 0.7)' : 'rgba(232, 228, 222, 0.7)')
+            : 'transparent',
+        }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+        style={{
+          borderRadius: '8px',
+          padding: '8px 12px',
+        }}
+      >
           {/* Menu Toggle Button - Navigation */}
         <motion.button
           onClick={() => setIsMenuOpen(true)}
           aria-label="open navigation menu"
-          className="w-9 sm:w-10 h-9 sm:h-10 bg-transparent border border-light-border dark:border-dark-border flex items-center justify-center group hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/5 transition-all duration-300 touch-manipulation rounded-sm"
+          className="h-9 sm:h-10 bg-transparent border border-light-border dark:border-dark-border flex items-center justify-center gap-2 px-3 sm:px-4 group hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/5 transition-all duration-300 touch-manipulation rounded-sm"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: isScrolled ? 0.85 : 1, y: 0 }}
           transition={{ duration: 0.2, delay: 0 }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <div className="relative w-5 h-5 md:w-6 md:h-6">
+          <span className="hidden sm:inline text-xs sm:text-sm font-light tracking-wide text-light-text-muted dark:text-dark-text-muted group-hover:text-primary dark:group-hover:text-primary transition-colors duration-300 uppercase">
+            Explore
+          </span>
+          <div className="relative w-4 h-4">
             {/* Blueprint-style dimension lines */}
             <div className="absolute inset-0 flex flex-col justify-center">
               <div className="h-px bg-light-text-subtle dark:bg-dark-text-muted group-hover:bg-primary transition-colors duration-300"></div>
@@ -253,7 +298,7 @@ export default function Navigation() {
         <div className="relative">
           <ThemeSwitcher />
         </div>
-      </div>
+      </motion.div>
 
       {/* Navigation Overlay */}
       <AnimatePresence>

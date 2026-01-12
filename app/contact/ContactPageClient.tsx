@@ -1,47 +1,26 @@
 'use client'
 
-import { motion, Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { MapPin, ExternalLink } from 'lucide-react'
 import ContactForm from '@/components/contact/ContactForm'
 import ContactInfo from '@/components/contact/ContactInfo'
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2,
-    },
-  },
-}
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: [0.4, 0, 0.2, 1] as [number, number, number, number],
-    },
-  },
-}
-
-const fadeInVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 1,
-      ease: [0.4, 0, 0.2, 1] as [number, number, number, number],
-    },
-  },
-}
+import { 
+  staggerContainer, 
+  badgeVariants, 
+  heroVariants, 
+  fadeInUp, 
+  lineReveal,
+  slideInLeft,
+  slideInRight,
+  pageDelays,
+  viewportOptions 
+} from '@/utils/animations'
 
 export default function ContactPageClient() {
+  const delays = pageDelays.contact
+
   return (
-    <main className="min-h-screen bg-light dark:bg-dark text-light-text dark:text-dark-text-primary relative overflow-hidden">
+    <main className="min-h-screen bg-light dark:bg-dark text-light-text dark:text-dark-text-primary selection:bg-primary/20 selection:text-light-text dark:selection:text-dark-text-primary relative overflow-hidden">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.02] pointer-events-none">
         <svg className="w-full h-full text-light-text-subtle dark:text-white" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -54,44 +33,62 @@ export default function ContactPageClient() {
         </svg>
       </div>
 
+      {/* Background Number Element */}
+      <div className="absolute bottom-0 right-0 opacity-[0.02] dark:opacity-[0.02] pointer-events-none">
+        <span className="text-[200px] md:text-[300px] lg:text-[400px] font-extralight text-primary leading-none select-none block">
+          03
+        </span>
+      </div>
+
       <div className="max-w-[1800px] mx-auto relative z-10">
         {/* Section 01: Hero & Contact */}
         <section className="px-6 md:px-12 lg:px-20 pt-24 md:pt-32 pb-24 md:pb-32 lg:pb-48">
           <div className="max-w-[1400px] mx-auto">
             <motion.div
-              variants={containerVariants}
+              variants={staggerContainer}
               initial="hidden"
               animate="visible"
               className="mb-16 md:mb-24 lg:mb-32"
             >
-              <motion.div variants={itemVariants} className="flex items-baseline gap-3 md:gap-4 mb-3 md:mb-4">
+              <motion.div 
+                variants={badgeVariants}
+                transition={{ delay: delays.badge }}
+                className="flex items-baseline gap-3 md:gap-4 mb-3 md:mb-4"
+              >
                 <span className="text-[11.5px] text-primary font-mono tracking-[0.4em] uppercase">01</span>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-light-text dark:text-dark-text-primary leading-[0.95] tracking-tight uppercase">
+                <motion.h1 
+                  variants={heroVariants}
+                  transition={{ delay: delays.title }}
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-light-text dark:text-dark-text-primary leading-[0.95] tracking-tight uppercase"
+                >
                   Contact Us
-                </h1>
+                </motion.h1>
               </motion.div>
               <motion.div
-                variants={fadeInVariants}
-                initial="hidden"
-                animate="visible"
-                className="h-px w-16 md:w-20 bg-gradient-to-r from-primary/60 to-transparent mt-4 md:mt-6 mb-4 md:mb-6"
+                variants={lineReveal}
+                transition={{ delay: delays.title + 0.2 }}
+                className="h-px w-16 md:w-20 bg-gradient-to-r from-primary/60 via-primary/40 to-transparent mt-4 md:mt-6 mb-4 md:mb-6"
               />
-              <motion.div variants={itemVariants} className="max-w-3xl">
+              <motion.div 
+                variants={fadeInUp}
+                transition={{ delay: delays.description }}
+                className="max-w-3xl"
+              >
                 <p className="text-sm sm:text-base md:text-lg text-light-text-muted dark:text-dark-text-muted font-light leading-relaxed">
                   Get in touch with our industrial solutions team. Have a project in mind? Describe your requirements and we'll provide exact solutions tailored to your needs.
                 </p>
               </motion.div>
             </motion.div>
 
-            {/* Enhanced Two-Column Layout with Premium Styling */}
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
+            {/* Enhanced Two-Column Layout - EDGE SLIDE EFFECT */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 lg:gap-16">
-              {/* Left Column: Contact Form (8 cols) - First on Mobile */}
-              <motion.div variants={itemVariants} className="lg:col-span-8 order-1">
+              {/* Left Column: Contact Form - Slide from top-left */}
+              <motion.div 
+                initial={{ opacity: 0, y: -60, x: -30 }}
+                animate={{ opacity: 1, y: 0, x: 0 }}
+                transition={{ duration: 0.9, delay: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
+                className="lg:col-span-8 order-1"
+              >
                 <div className="relative">
                   {/* Subtle accent border */}
                   <div className="absolute -left-4 top-0 bottom-0 w-px bg-gradient-to-b from-primary/20 via-primary/40 to-transparent hidden lg:block"></div>
@@ -99,50 +96,60 @@ export default function ContactPageClient() {
                 </div>
               </motion.div>
 
-              {/* Right Column: Contact Info (4 cols) - Hidden on Mobile, Visible on Desktop */}
-              <motion.div variants={itemVariants} className="hidden lg:block lg:col-span-4">
+              {/* Right Column: Contact Info - Slide from bottom-right */}
+              <motion.div 
+                initial={{ opacity: 0, y: 60, x: 30, rotate: 5 }}
+                animate={{ opacity: 1, y: 0, x: 0, rotate: 0 }}
+                transition={{ duration: 0.9, delay: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+                className="hidden lg:block lg:col-span-4"
+              >
                 <div className="lg:sticky lg:top-32">
                   <ContactInfo />
                 </div>
               </motion.div>
             </div>
-          </motion.div>
           </div>
         </section>
 
         {/* Section 02: Location - Premium Redesign */}
         <div className="h-px bg-gradient-to-r from-transparent via-light-border dark:via-dark-border to-transparent"></div>
         <motion.section
-          variants={containerVariants}
+          variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={viewportOptions}
           className="px-6 md:px-12 lg:px-20 py-24 md:py-32 lg:py-48 relative overflow-hidden"
         >
           {/* Subtle background accent */}
           <div className="absolute right-0 top-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none"></div>
           
           <div className="max-w-[1400px] mx-auto relative z-10">
-            <motion.div variants={itemVariants} className="mb-12 md:mb-16 lg:mb-24">
-              <div className="flex items-baseline gap-3 md:gap-4 mb-3 md:mb-4">
+            <motion.div variants={fadeInUp} className="mb-12 md:mb-16 lg:mb-24">
+              <motion.div 
+                variants={badgeVariants}
+                className="flex items-baseline gap-3 md:gap-4 mb-3 md:mb-4"
+              >
                 <span className="text-[11.5px] text-primary font-mono tracking-[0.4em] uppercase">02</span>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-light-text dark:text-dark-text-primary leading-[0.95] tracking-tight uppercase">
+                <motion.h2 
+                  variants={heroVariants}
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-light-text dark:text-dark-text-primary leading-[0.95] tracking-tight uppercase"
+                >
                   Our Location
-                </h2>
-              </div>
+                </motion.h2>
+              </motion.div>
               <motion.div
-                variants={fadeInVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="h-px w-16 md:w-20 bg-gradient-to-r from-primary/60 to-transparent mt-4 md:mt-6 mb-4 md:mb-6"
+                variants={lineReveal}
+                className="h-px w-16 md:w-20 bg-gradient-to-r from-primary/60 via-primary/40 to-transparent mt-4 md:mt-6 mb-4 md:mb-6"
               />
-              <p className="text-sm sm:text-base md:text-lg text-light-text-muted dark:text-dark-text-muted font-light max-w-2xl">
+              <motion.p 
+                variants={fadeInUp}
+                className="text-sm sm:text-base md:text-lg text-light-text-muted dark:text-dark-text-muted font-light max-w-2xl"
+              >
                 Visit our headquarters in Nairobi, Kenya. We serve clients across Kenya and East Africa.
-              </p>
+              </motion.p>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="w-full">
+            <motion.div variants={fadeInUp} className="w-full">
               {/* Location Details - Premium Expanded Card */}
               <div className="relative p-5 sm:p-8 md:p-12 lg:p-14 border-2 border-light-border dark:border-dark-border bg-light-lighter/50 dark:bg-dark-lighter/50 hover:bg-light-lighter dark:hover:bg-dark-lighter hover:border-primary/30 transition-all duration-500 group overflow-hidden">
                 {/* Subtle grid pattern */}

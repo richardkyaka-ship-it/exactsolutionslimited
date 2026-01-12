@@ -98,6 +98,8 @@ async function retryWithBackoff<T>(
   throw lastError!;
 }
 
+import { getAirtableConfig } from './env';
+
 // Airtable Client Class
 export class AirtableClient {
   private baseUrl: string;
@@ -105,18 +107,12 @@ export class AirtableClient {
   private tableName: string;
 
   constructor() {
-    const apiKey = process.env.AIRTABLE_API_KEY;
-    const baseId = process.env.AIRTABLE_BASE_ID;
-    const tableName = process.env.AIRTABLE_TABLE_NAME || 'Products';
+    const { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_NAME } = getAirtableConfig();
 
-    if (!apiKey || !baseId) {
-      throw new Error('Missing Airtable credentials. Set AIRTABLE_API_KEY and AIRTABLE_BASE_ID in .env.local');
-    }
-
-    this.baseUrl = `https://api.airtable.com/v0/${baseId}`;
-    this.tableName = tableName;
+    this.baseUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}`;
+    this.tableName = AIRTABLE_TABLE_NAME;
     this.headers = {
-      'Authorization': `Bearer ${apiKey}`,
+      'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
       'Content-Type': 'application/json',
     };
   }

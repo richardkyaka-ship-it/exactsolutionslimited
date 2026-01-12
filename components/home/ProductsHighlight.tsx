@@ -16,7 +16,7 @@ export default function ProductsHighlight() {
       try {
         const res = await fetch('/api/admin/products')
         const data = await res.json()
-        setProducts(data.filter((p: Product) => p.featured && p.active).slice(0, 4))
+        setProducts(data.filter((p: Product) => p.featured && p.active).slice(0, 3))
       } catch (error) {
         console.error('Error fetching featured products:', error)
       } finally {
@@ -27,74 +27,77 @@ export default function ProductsHighlight() {
   }, [])
 
   return (
-    <section className="px-4 md:px-12 lg:px-20 py-20 md:py-32 bg-light dark:bg-dark">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-12 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8">
+    <section className="bg-light dark:bg-dark border-t border-light-border/50 dark:border-dark-border/50">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-16 sm:py-20 md:py-24 lg:py-32 xl:py-40">
+        {/* Header */}
+        <div className="mb-12 sm:mb-14 md:mb-16 lg:mb-20 xl:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-6 sm:gap-8">
           <div>
-            <div className="flex items-baseline gap-3 mb-3 md:mb-4">
-              <span className="text-[10px] text-primary font-mono tracking-[0.3em] uppercase">03</span>
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-light text-light-text dark:text-white tracking-tight uppercase">
-                Equipment Catalog
-              </h2>
-            </div>
-            <p className="text-light-text-muted dark:text-dark-text-muted uppercase tracking-widest text-[10px] md:text-sm">Browse industrial equipment</p>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extralight text-light-text dark:text-white tracking-tight mb-2 sm:mb-3">
+              Equipment Catalog
+            </h2>
+            <p className="text-xs sm:text-sm md:text-base text-light-text-muted dark:text-dark-text-muted font-light">
+              Browse industrial equipment
+            </p>
           </div>
           <FastLink
             href="/products"
-            className="text-[10px] text-light-text dark:text-white uppercase tracking-[0.3em] hover:text-primary transition-colors flex items-center gap-2 group w-fit"
+            className="text-xs sm:text-sm text-light-text-muted dark:text-dark-text-muted hover:text-primary transition-colors duration-300 flex items-center gap-2 group w-fit border-b border-transparent hover:border-primary/30 pb-1"
           >
-            Browse Full Catalog <span className="group-hover:translate-x-2 transition-transform duration-300">───→</span>
+            Browse Full Catalog <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
           </FastLink>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+        {/* Products Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12 lg:gap-16">
           {loading ? (
-            <div className="col-span-full py-12 text-center text-light-text-subtle dark:text-gray-800">
-              <p className="text-[10px] uppercase tracking-widest">Loading Featured Assets...</p>
+            <div className="col-span-full py-20 text-center">
+              <div className="inline-block w-6 h-6 border border-light-border dark:border-dark-border border-t-primary animate-spin rounded-full"></div>
             </div>
           ) : products.map((product, i) => (
             <motion.div
               key={product.code}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              viewport={{ once: true }}
-              className="group bg-light-surface dark:bg-dark-light border border-light-border dark:border-dark-border hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-500 flex flex-col"
+              transition={{ delay: i * 0.15, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="group"
             >
-              <div className="relative aspect-square overflow-hidden bg-light-lighter dark:bg-dark-lighter">
+              <div className="relative aspect-[4/3] overflow-hidden bg-light-lighter dark:bg-dark-lighter mb-4 sm:mb-6">
                 {product.images && product.images.length > 0 && product.images[0] ? (
                   <Image
                     src={getOptimizedAirtableImage(product.images[0])}
                     alt={product.name}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                     loading="lazy"
-                    quality={85}
+                    quality={90}
                     placeholder="blur"
                     blurDataURL={generateBlurDataURL()}
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-light-lighter dark:bg-dark-lighter">
-                    <span className="text-[9px] text-light-text-subtle dark:text-dark-text-subtle uppercase tracking-widest font-mono">No Image</span>
+                    <span className="text-[10px] sm:text-xs text-light-text-subtle dark:text-dark-text-subtle uppercase tracking-widest font-mono">No Image</span>
                   </div>
                 )}
-                <div className="absolute top-0 left-0 bg-primary/90 px-2 md:px-3 py-1 z-10">
-                  <span className="text-[8px] md:text-[9px] text-white font-mono uppercase tracking-widest">{product.code}</span>
+                <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
+                  <span className="text-[10px] sm:text-xs text-primary/80 font-mono uppercase tracking-wider">{product.code}</span>
                 </div>
               </div>
-              <div className="p-5 md:p-6 space-y-3 md:space-y-4">
-                <h3 className="text-base font-light text-light-text dark:text-white uppercase tracking-tight line-clamp-1 group-hover:text-primary transition-colors">
+              <div className="space-y-3 sm:space-y-4">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-extralight text-light-text dark:text-white tracking-tight group-hover:text-primary/80 transition-colors duration-300">
                   {product.name}
                 </h3>
-                <p className="text-[9px] md:text-[10px] text-light-text-muted dark:text-dark-text-muted font-mono uppercase tracking-widest border-l border-light-border dark:border-dark-border pl-3">
-                  {product.keySpecs[0]}
-                </p>
+                {product.keySpecs && product.keySpecs[0] && (
+                  <p className="text-[10px] sm:text-xs md:text-sm text-light-text-muted dark:text-dark-text-muted font-light">
+                    {product.keySpecs[0]}
+                  </p>
+                )}
                 <FastLink
                   href={`/products/${product.id}`}
-                  className="inline-block w-full py-2.5 md:py-3 border border-light-border dark:border-dark-border text-light-text-muted dark:text-dark-text-muted text-[10px] uppercase tracking-[0.2em] font-medium text-center hover:border-primary dark:hover:border-primary hover:text-primary dark:hover:text-primary transition-all duration-300"
+                  className="inline-block text-xs sm:text-sm text-light-text-muted dark:text-dark-text-muted hover:text-primary transition-colors duration-300 flex items-center gap-2 group/link border-b border-transparent hover:border-primary/30 pb-1 w-fit"
                 >
-                  View Details
+                  View Details <span className="group-hover/link:translate-x-1 transition-transform duration-300">→</span>
                 </FastLink>
               </div>
             </motion.div>

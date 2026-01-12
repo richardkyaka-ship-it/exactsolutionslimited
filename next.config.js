@@ -1,3 +1,23 @@
+// Environment validation during build
+let envValidated = false;
+
+try {
+  const { validateEnvironment } = require('./lib/env');
+  validateEnvironment();
+  envValidated = true;
+  console.log('✅ Environment validation passed');
+} catch (error) {
+  // Only fail build in production, warn in development
+  if (process.env.NODE_ENV === 'production') {
+    console.error('❌ Environment validation failed during build:');
+    console.error(error.message);
+    process.exit(1);
+  } else {
+    console.warn('⚠️  Environment validation warning (build will continue):');
+    console.warn(error.message);
+  }
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -26,6 +46,16 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: '*.airtableusercontent.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.cloudinary.com',
         pathname: '/**',
       },
     ],
@@ -71,6 +101,21 @@ const nextConfig = {
         ],
       },
     ];
+  },
+  webpack: (config, { isServer, dev }) => {
+    // Validate environment during production build on server-side
+    if (!dev && isServer && !envValidated) {
+      try {
+        const { validateEnvironment } = require('./lib/env');
+        validateEnvironment();
+        console.log('✅ Environment validation passed (webpack)');
+      } catch (error) {
+        console.error('❌ Environment validation failed during webpack build:');
+        console.error(error.message);
+        process.exit(1);
+      }
+    }
+    return config;
   },
 }
 

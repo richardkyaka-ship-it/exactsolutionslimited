@@ -13,17 +13,68 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         const record = await client.getProduct(params.id)
         
         if (!record || !record.fields) {
-            return { title: 'Product Not Found' }
+            return { 
+                title: 'Product Not Found | Exact Solutions Limited',
+                description: 'The requested product could not be found.',
+            }
         }
 
         const product = airtableToProduct(record)
+        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://exactsolutions.co.ke'
+        const productImage = product.images && product.images.length > 0 
+            ? (typeof product.images[0] === 'string' ? product.images[0] : product.images[0])
+            : '/og-image.jpg'
 
         return {
-            title: `${product.name} | Technical Specifications | Exact Solutions`,
-            description: product.shortDescription,
+            title: `${product.name} | Exact Solutions Limited`,
+            description: `${product.name} - ${product.shortDescription || 'Industrial equipment available in Kenya'}. Technical specifications and pricing.`,
+            keywords: [
+                product.name,
+                product.category,
+                'industrial equipment Kenya',
+                'Nairobi',
+                'East Africa'
+            ].filter(Boolean).join(', '),
+            openGraph: {
+                title: `${product.name} | Exact Solutions Limited`,
+                description: product.shortDescription || `${product.name} available in Kenya`,
+                url: `/products/${params.id}`,
+                siteName: 'Exact Solutions Limited',
+                locale: 'en_KE',
+                type: 'website',
+                images: [
+                    {
+                        url: typeof productImage === 'string' ? productImage : productImage,
+                        width: 1200,
+                        height: 630,
+                        alt: product.name,
+                    },
+                ],
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title: `${product.name} | Exact Solutions Limited`,
+                description: product.shortDescription || `${product.name} available in Kenya`,
+                images: [typeof productImage === 'string' ? productImage : productImage],
+            },
+            alternates: {
+                canonical: `/products/${params.id}`,
+            },
+            robots: {
+                index: true,
+                follow: true,
+                googleBot: {
+                    index: true,
+                    follow: true,
+                    'max-image-preview': 'large',
+                },
+            },
         }
     } catch (error) {
-        return { title: 'Product Not Found' }
+        return { 
+            title: 'Product Not Found | Exact Solutions Limited',
+            description: 'The requested product could not be found.',
+        }
     }
 }
 

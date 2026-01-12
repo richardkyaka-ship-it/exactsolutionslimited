@@ -6,6 +6,16 @@ import { Project } from '@/types/projects'
 import ProjectFilter from '@/components/projects/ProjectFilter'
 import ProjectCard from '@/components/projects/ProjectCard'
 import CaseStudyModal from '@/components/projects/CaseStudyModal'
+import Link from 'next/link'
+import { 
+  staggerContainer, 
+  badgeVariants, 
+  heroVariants, 
+  fadeInUp, 
+  lineReveal,
+  pageDelays,
+  viewportOptions 
+} from '@/utils/animations'
 
 type Category = 'all' | 'energy' | 'containers' | 'metal'
 
@@ -171,6 +181,7 @@ const PROJECTS_DATA: Project[] = [
 export default function ProjectsPageClient() {
   const [activeCategory, setActiveCategory] = useState<Category>('all')
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const delays = pageDelays.projects
 
   const filteredProjects = useMemo(() => {
     if (activeCategory === 'all') return PROJECTS_DATA
@@ -178,41 +189,100 @@ export default function ProjectsPageClient() {
   }, [activeCategory])
 
   return (
-    <main className="bg-light dark:bg-black text-light-text dark:text-white selection:bg-primary selection:text-light-text dark:selection:text-white min-h-screen">
-      {/* Hero Section */}
-      <section className="px-6 md:px-12 lg:px-20 pt-32 pb-16">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-baseline gap-4 mb-8">
+    <main className="bg-light dark:bg-black text-light-text dark:text-white selection:bg-primary/20 selection:text-light-text dark:selection:text-white min-h-screen overflow-hidden">
+      {/* Hero Section - WAVE REVEAL */}
+      <section className="px-6 md:px-12 lg:px-20 pt-32 pb-16 relative overflow-hidden">
+        {/* Background Number Element */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 0.02, scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="absolute bottom-0 right-0 dark:opacity-[0.02] pointer-events-none"
+        >
+          <span className="text-[200px] md:text-[300px] lg:text-[400px] font-extralight text-primary leading-none select-none block">
+            05
+          </span>
+        </motion.div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: -30, rotate: -2 }}
+            animate={{ opacity: 1, y: 0, rotate: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex items-baseline gap-4 mb-8"
+          >
             <span className="text-[10px] text-primary font-mono tracking-[0.3em] uppercase">Section 01</span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-light-text dark:text-white tracking-tight uppercase">
+            <motion.h1 
+              initial={{ 
+                opacity: 0, 
+                y: 50,
+                clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)',
+              }}
+              animate={{ 
+                opacity: 1, 
+                y: 0,
+                clipPath: 'polygon(0 0%, 100% 0%, 100% 100%, 0 100%)',
+              }}
+              transition={{ duration: 1.3, delay: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
+              className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-light text-light-text dark:text-white tracking-tight uppercase"
+            >
               Engineering Projects
-            </h1>
-          </div>
-          <div className="h-px w-24 bg-primary/40 mb-8" />
-          <p className="text-xl font-light text-gray-400 max-w-2xl leading-relaxed">
+            </motion.h1>
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ duration: 0.9, delay: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+            className="h-px w-24 bg-gradient-to-r from-primary/60 via-primary/40 to-transparent mb-8" 
+          />
+          <motion.p 
+            initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 1, delay: 0.9 }}
+            className="text-xl md:text-2xl font-light text-gray-400 max-w-2xl leading-relaxed"
+          >
             Technical case studies of precision engineering solutions delivered across East Africa. From power infrastructure to modular logistics.
-          </p>
+          </motion.p>
         </div>
       </section>
 
-      {/* Projects Section */}
+      {/* Projects Section - CASCADE REVEAL EFFECT */}
       <section className="px-6 md:px-12 lg:px-20 pb-32">
         <div className="max-w-7xl mx-auto">
           {/* Filter System */}
-          <ProjectFilter 
-            activeCategory={activeCategory} 
-            onCategoryChange={setActiveCategory} 
-          />
+          <motion.div 
+            initial={{ opacity: 0, y: -30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOptions}
+            transition={{ duration: 0.6 }}
+          >
+            <ProjectFilter 
+              activeCategory={activeCategory} 
+              onCategoryChange={setActiveCategory} 
+            />
+          </motion.div>
 
-          {/* Project Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+          {/* Project Grid - CASCADE WATERFALL EFFECT */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mt-12">
             <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project) => (
-                <ProjectCard 
-                  key={project.id} 
-                  project={project} 
-                  onClick={setSelectedProject}
-                />
+              {filteredProjects.map((project, index) => (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: -100, rotateX: -15 }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, rotateY: 15 }}
+                  transition={{ 
+                    delay: index * 0.1,
+                    duration: 0.8,
+                    ease: [0.34, 1.56, 0.64, 1],
+                  }}
+                  style={{ perspective: '1000px' }}
+                >
+                  <ProjectCard 
+                    project={project} 
+                    onClick={setSelectedProject}
+                  />
+                </motion.div>
               ))}
             </AnimatePresence>
           </div>
@@ -243,7 +313,4 @@ export default function ProjectsPageClient() {
     </main>
   )
 }
-
-// Simple internal Link component wrapper if needed or use Next Link
-import Link from 'next/link'
 

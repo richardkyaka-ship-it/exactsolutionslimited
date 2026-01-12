@@ -69,8 +69,18 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(new URL('/splash', request.url));
   }
 
-  // Allow access in all other cases (development, allowed pages)
-  return NextResponse.next();
+  // 3. SEO Headers for all pages
+  const response = NextResponse.next();
+  
+  // Add SEO-relevant headers (only if not already set for admin pages)
+  if (!pathname.startsWith('/admin')) {
+    response.headers.set('X-Robots-Tag', 'index, follow');
+    response.headers.set('X-Content-Type-Options', 'nosniff');
+    response.headers.set('X-Frame-Options', 'DENY');
+    response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  }
+  
+  return response;
 }
 
 // Apply to all routes except static files

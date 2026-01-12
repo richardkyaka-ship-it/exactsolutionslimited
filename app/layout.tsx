@@ -6,6 +6,22 @@ import PageTransition from '@/components/PageTransition'
 import Preloader from '@/components/Preloader'
 import { SWRProvider } from '@/components/providers/SWRProvider'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import { validateEnvironment } from '@/lib/env'
+import { OrganizationStructuredData } from '@/components/seo/StructuredData'
+
+// Validate environment on server startup
+try {
+  validateEnvironment();
+} catch (error) {
+  // In production, we might want to continue with degraded functionality
+  if (process.env.NODE_ENV === 'production') {
+    console.error('Environment validation failed in production:', error);
+    // Continue, but certain features will be disabled
+  } else {
+    // In development, fail fast with clear error message
+    throw error;
+  }
+}
 
 const inter = Inter({
   subsets: ['latin'],
@@ -15,8 +31,68 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Exact Solutions Limited - Under Development',
-  description: 'Exact Solutions Limited - Website Under Development',
+  title: {
+    default: 'Exact Solutions Limited | Industrial Equipment Kenya',
+    template: '%s | Exact Solutions Limited'
+  },
+  description: 'Premium industrial solutions provider in Kenya: generators, shipping containers, metal fabrication, and custom industrial equipment.',
+  keywords: [
+    'industrial equipment Kenya',
+    'generators Nairobi',
+    'shipping containers Kenya',
+    'metal fabrication Nairobi',
+    'industrial solutions Kenya',
+    'power generators East Africa',
+    'reefer containers Mombasa',
+    'aluminum fabrication Kenya',
+    'stainless steel work Kenya',
+    'B2B industrial supplier'
+  ].join(', '),
+  authors: [{ name: 'Exact Solutions Limited' }],
+  creator: 'Exact Solutions Limited',
+  publisher: 'Exact Solutions Limited',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: true,
+  },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://exactsolutions.co.ke'),
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_KE',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://exactsolutions.co.ke',
+    siteName: 'Exact Solutions Limited',
+    title: 'Exact Solutions Limited | Industrial Equipment Kenya',
+    description: 'Premium industrial solutions provider in Kenya',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Exact Solutions Limited - Industrial Solutions',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Exact Solutions Limited | Industrial Equipment Kenya',
+    description: 'Premium industrial solutions provider in Kenya',
+    images: ['/og-image.jpg'],
+  },
   icons: {
     icon: [
       { url: '/icon.svg', type: 'image/svg+xml' },
@@ -59,7 +135,8 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} font-inter antialiased bg-light dark:bg-dark text-light-text dark:text-dark-text-primary min-h-screen overflow-x-hidden`} suppressHydrationWarning>
+      <body className={`${inter.variable} font-sans antialiased bg-light dark:bg-dark text-light-text dark:text-dark-text-primary min-h-screen overflow-x-hidden`} suppressHydrationWarning>
+        <OrganizationStructuredData />
         <ThemeProvider>
           <SWRProvider>
             <Preloader />

@@ -30,17 +30,17 @@ const config: Config = {
           'border-subtle': '#2f2f2f',  // Matches lighter for consistency
         },
         light: {
-          DEFAULT: '#f8f6f3',
-          light: '#f5f3ef',
-          lighter: '#f2f0eb',
-          lightest: '#efede8',
-          border: '#e8e6e1',
-          'border-subtle': '#f0eee9',
-          text: '#1c1b18',
-          'text-muted': '#6b675f',
-          'text-subtle': '#9a968d',
-          surface: '#ffffff',
-          'surface-elevated': '#fcfbf9',
+          DEFAULT: '#e8e4de',      // Softer, dimmer base - reduced from #f8f6f3
+          light: '#e3dfd9',        // Subtle elevation - flows from DEFAULT
+          lighter: '#dedad4',       // Medium elevation - natural progression
+          lightest: '#d9d5cf',      // Highest elevation - smooth top
+          border: '#d4d0ca',       // More visible but still subtle
+          'border-subtle': '#e0dcd6', // Matches lighter for consistency
+          text: '#2a2824',          // Softer than pure black - easier on eyes
+          'text-muted': '#6b675f',   // Balanced muted - unchanged
+          'text-subtle': '#9a968d', // Subtle but readable - unchanged
+          surface: '#f0ece6',       // Dimmer white - warmer tone
+          'surface-elevated': '#ede9e3', // Elevated surface - softer
         },
       },
       fontFamily: {

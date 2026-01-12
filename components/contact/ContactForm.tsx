@@ -159,6 +159,23 @@ export default function ContactForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6 md:space-y-8">
+        {/* Honeypot field - invisible to humans, bots will fill this */}
+        <input
+          type="text"
+          name="website_url"
+          tabIndex={-1}
+          autoComplete="off"
+          style={{
+            position: 'absolute',
+            left: '-9999px',
+            width: '1px',
+            height: '1px',
+            opacity: 0,
+            pointerEvents: 'none',
+          }}
+          aria-hidden="true"
+        />
+        
         {/* Full Name */}
         <div className="group">
           <label htmlFor="fullName" className="block text-xs sm:text-sm text-light-text-muted dark:text-dark-text-muted mb-2 font-light">

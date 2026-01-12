@@ -1,13 +1,24 @@
 import { NextResponse } from 'next/server';
 import { v2 as cloudinary } from 'cloudinary';
 import { isAdminAuthenticated } from '@/lib/auth';
+import { getCloudinaryConfig } from '@/lib/env';
 
-// Configure Cloudinary
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+// Configure Cloudinary (lazy initialization)
+let cloudinaryConfigured = false;
+
+function configureCloudinary() {
+  if (cloudinaryConfigured) return;
+  
+  const config = getCloudinaryConfig();
+  if (config.isConfigured) {
+    cloudinary.config({
+      cloud_name: config.CLOUDINARY_CLOUD_NAME!,
+      api_key: config.CLOUDINARY_API_KEY!,
+      api_secret: config.CLOUDINARY_API_SECRET!,
+    });
+    cloudinaryConfigured = true;
+  }
+}
 
 export async function POST(request: Request) {
   if (!isAdminAuthenticated()) {
@@ -15,13 +26,17 @@ export async function POST(request: Request) {
   }
 
   // Check if Cloudinary is configured
-  if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+  const cloudinaryConfig = getCloudinaryConfig();
+  if (!cloudinaryConfig.isConfigured) {
     console.error('[Upload API] Cloudinary not configured. Missing environment variables.');
     return NextResponse.json({ 
       error: 'Image upload service not configured. Please set Cloudinary environment variables.',
       details: 'CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET are required'
     }, { status: 500 });
   }
+
+  // Configure Cloudinary if not already configured
+  configureCloudinary();
 
   try {
     const formData = await request.formData();

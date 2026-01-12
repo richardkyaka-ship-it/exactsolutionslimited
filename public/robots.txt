@@ -1,0 +1,25 @@
+# robots.txt for Exact Solutions Limited
+# https://exactsolutions.co.ke/robots.txt
+
+User-agent: *
+Allow: /
+
+Sitemap: https://exactsolutions.co.ke/sitemap.xml
+
+# Development/Staging blocking (if needed)
+User-agent: *
+Disallow: /admin/
+Disallow: /api/
+
+# Common crawlers specific rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 2
